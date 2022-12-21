@@ -1,0 +1,18 @@
+.container {
+  position: relative;
+  contain: content;
+  background-color: var(--coachify-teal-900);
+}
+
+.container::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  height: 100vh;
+  background: linear-gradient(
+    180deg,
+    var(--coachify-teal-700) 0%,
+    var(--coachify-teal-900) 90%
+  );
+  z-index: -1;
+}

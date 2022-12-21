@@ -2,6 +2,8 @@
 
 This is new frontend for the Coachify Project.
 
+[coachify.dev](https://coachify.dev)
+
 ## Getting Started
 
 ```bash

@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --coachify-teal-700: hsl(180deg 25% 10%);
+  --coachify-teal-900: hsl(180deg 5% 5%);
+  --coachify-teal-700-hsl: 180deg 25% 10%;
+  --coachify-teal-900-hsl: 180deg 5% 5%;
+}
+
+html {
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+.nav-bar {
+  background-color: hsla(var(--coachify-teal-700-hsl) / var(--nav-bg-opacity));
+}
+
+.nav-bar::before {
+  content: '';
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 1px;
+  border-bottom: 1px solid hsla(180deg 100% 100% / 10%);
+  opacity: var(--nav-bg-opacity);
+}
