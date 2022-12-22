@@ -5,7 +5,21 @@ module.exports = {
     './src/components/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        'coachify-teal': {
+          700: '#193434',
+          800: '#132020',
+          900: '#171C1C',
+          1000: '#0C0D0D',
+        },
+        'coachify-cyan': {
+          100: '#CCFFFF',
+          300: '#43D5D4',
+          500: '#1AFFFD',
+        },
+      },
+    },
   },
   plugins: [],
 };
