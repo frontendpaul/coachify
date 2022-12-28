@@ -4,11 +4,13 @@ import Logo from './Logo';
 import Search from './Search';
 import styles from './index.module.css';
 import Button from '../Button';
+import { FiMenu, FiGlobe } from 'react-icons/fi';
+import Link from 'next/link';
 
 const Header = ({ headerRef }: any) => {
   const onScroll = useCallback(() => {
     const { pageYOffset, scrollY } = window;
-    const navBgOpacity = Math.min(pageYOffset / 50, 1);
+    const navBgOpacity = Math.min(pageYOffset / 200, 1);
     console.log(navBgOpacity);
     document.documentElement.style.setProperty(
       '--nav-bg-opacity',
@@ -31,18 +33,24 @@ const Header = ({ headerRef }: any) => {
     <header
       className={clsx(
         styles.container,
-        'fixed z-10 flex justify-between w-full px-6 py-3 transition-all text-white'
+        'fixed z-10 flex justify-between items-center w-full px-6 py-3 transition-all text-white'
       )}
       ref={headerRef}
     >
-      <div className="flex gap-6 flex-shrink-0">
-        <button>X</button>
-        <Logo />
+      <div className="flex items-center gap-8 flex-shrink-0">
+        <Button fill="ghost" icon>
+          <FiMenu />
+        </Button>
+        <Link href="/">
+          <Logo />
+        </Link>
       </div>
       <Search />
-      <div className="flex gap-6 flex-shrink-0">
-        <button>lang</button>
-        <button>Log In</button>
+      <div className="flex items-center gap-4 flex-shrink-0">
+        <Button fill="ghost" icon>
+          <FiGlobe />
+        </Button>
+        <Button fill="ghost">Log In</Button>
         <Button onClick={() => console.log('click')}>Sign Up</Button>
       </div>
     </header>

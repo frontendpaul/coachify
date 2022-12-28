@@ -9,10 +9,6 @@
   position: absolute;
   inset: 0;
   height: 100vh;
-  background: linear-gradient(
-    180deg,
-    var(--coachify-teal-700) 0%,
-    var(--coachify-teal-900) 90%
-  );
+  background: url(/coachify-bg-3.png) center top / cover no-repeat;
   z-index: -1;
 }

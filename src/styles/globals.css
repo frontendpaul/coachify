@@ -3,13 +3,23 @@
 @tailwind utilities;
 
 :root {
+  --coachify-blue-500: hsl(190deg 100% 55%);
+  --coachify-blue-500-hsl: 190deg 100% 55%;
+  --coachify-mint-500: hsl(155deg 100% 55%);
+  --coachify-mint-500-hsl: 155deg 100% 55%;
   --coachify-teal-700: hsl(180deg 25% 10%);
-  --coachify-teal-900: hsl(180deg 5% 5%);
   --coachify-teal-700-hsl: 180deg 25% 10%;
+  --coachify-teal-900: hsl(180deg 5% 5%);
   --coachify-teal-900-hsl: 180deg 5% 5%;
 }
 
 html {
   overflow-x: hidden;
   scroll-behavior: smooth;
+}
+
+@layer utilities {
+  .transition-200-out-quart {
+    @apply transition-all duration-200 ease-out-quart;
+  }
 }
