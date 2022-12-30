@@ -4,7 +4,7 @@ import Logo from './Logo';
 import Search from './Search';
 import styles from './index.module.css';
 import Button from '../Button';
-import { FiMenu, FiGlobe, FiSearch } from 'react-icons/fi';
+import { FiMenu, FiSearch } from 'react-icons/fi';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 
@@ -41,7 +41,7 @@ const Header = ({ headerRef }: any) => {
     <header
       className={clsx(
         styles.container,
-        'fixed z-10 flex justify-between items-center gap-4 md:gap-8 w-full pl-3 pr-6 py-2 md:py-3 transition-all text-white'
+        'fixed z-10 flex justify-between items-center gap-4 md:gap-8 w-full pl-3 pr-6 py-3 transition-all text-white'
       )}
       ref={headerRef}
     >

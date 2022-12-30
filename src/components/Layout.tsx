@@ -1,7 +1,6 @@
-import clsx from 'clsx';
+import Image from 'next/image';
 import { useRef, useState, useEffect } from 'react';
 import Header from './Header';
-import styles from './Layout.module.css';
 
 type Props = {
   children?: React.ReactNode;
@@ -18,12 +17,24 @@ const Layout = ({ children }: Props): React.ReactElement => {
     <>
       <Header headerRef={headerRef} />
       <div
-        className={clsx(
-          styles.container,
-          'min-h-screen flex items-start flex-1 text-white'
-        )}
+        className={
+          'min-h-screen flex items-start flex-1 text-white relative isolate bg-coachify-teal-1000'
+        }
         style={{ paddingTop: navHeight }}
       >
+        <div
+          className="absolute -z-10 w-full h-screen"
+          style={{ transform: `translateY(${-navHeight}px)` }}
+        >
+          <Image
+            className="object-cover"
+            src="/coachify-bg-3-min.png"
+            fill
+            alt=""
+            unoptimized
+            priority
+          />
+        </div>
         <aside
           className="h-96 sticky"
           style={{ top: navHeight, height: '120vh' }}
