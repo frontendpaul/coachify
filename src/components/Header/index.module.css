@@ -1,5 +1,4 @@
 .container {
-  contain: content;
   background-color: hsla(
     var(--coachify-teal-700-hsl) / var(--nav-bg-opacity, 0)
   );

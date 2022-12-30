@@ -4,8 +4,16 @@ import Logo from './Logo';
 import Search from './Search';
 import styles from './index.module.css';
 import Button from '../Button';
-import { FiMenu, FiGlobe } from 'react-icons/fi';
+import { FiMenu, FiGlobe, FiSearch } from 'react-icons/fi';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
+
+const UserPopover = dynamic(() => import('./UserPopover'), {
+  ssr: false,
+});
+const LanguageSelect = dynamic(() => import('./LanguageSelect'), {
+  ssr: false,
+});
 
 const Header = ({ headerRef }: any) => {
   const onScroll = useCallback(() => {
@@ -33,25 +41,31 @@ const Header = ({ headerRef }: any) => {
     <header
       className={clsx(
         styles.container,
-        'fixed z-10 flex justify-between items-center w-full px-6 py-3 transition-all text-white'
+        'fixed z-10 flex justify-between items-center gap-4 md:gap-8 w-full pl-3 pr-6 py-2 md:py-3 transition-all text-white'
       )}
       ref={headerRef}
     >
-      <div className="flex items-center gap-8 flex-shrink-0">
-        <Button fill="ghost" icon>
+      <div className="flex items-center gap-4 md:gap-8 flex-shrink-0">
+        <Button fill="ghost" icon="icon-only">
           <FiMenu />
         </Button>
         <Link href="/">
           <Logo />
         </Link>
       </div>
-      <Search />
+
+      <Search className="hidden md:flex" />
+
       <div className="flex items-center gap-4 flex-shrink-0">
-        <Button fill="ghost" icon>
-          <FiGlobe />
+        <Button className="md:hidden" fill="ghost" icon="icon-only">
+          <FiSearch />
         </Button>
-        <Button fill="ghost">Log In</Button>
-        <Button onClick={() => console.log('click')}>Sign Up</Button>
+        <LanguageSelect className="hidden md:block" />
+        <UserPopover className="lg:hidden" />
+        <div className="hidden lg:flex gap-4">
+          <Button fill="ghost">Log In</Button>
+          <Button onClick={() => console.log('click')}>Sign Up</Button>
+        </div>
       </div>
     </header>
   );
