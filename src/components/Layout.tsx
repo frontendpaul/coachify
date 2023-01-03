@@ -1,6 +1,8 @@
 import clsx from 'clsx';
-import { useAtom } from 'jotai';
+import { atom, useAtom } from 'jotai';
 import Image from 'next/image';
+import { useEffect } from 'react';
+import useWindowWidth from '../hooks/useWindowWidth';
 import Header, { isSidenavExpandedAtom } from './Header';
 import Sidenav from './Sidenav';
 
@@ -8,8 +10,21 @@ type Props = {
   children?: React.ReactNode;
 };
 
+export const isMobileAtom = atom<boolean>(true);
+
 const Layout = ({ children }: Props): React.ReactElement => {
-  const [isSidenavExpanded] = useAtom(isSidenavExpandedAtom);
+  const [isSidenavExpanded, setIsSidenavExpanded] = useAtom(
+    isSidenavExpandedAtom
+  );
+  const [, setIsMobile] = useAtom(isMobileAtom);
+
+  const windowWidth = useWindowWidth();
+
+  useEffect(() => {
+    const isMobile = windowWidth < 768;
+    setIsMobile(isMobile);
+    setIsSidenavExpanded(!isMobile);
+  }, [windowWidth]);
 
   return (
     <>

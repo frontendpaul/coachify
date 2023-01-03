@@ -7,28 +7,23 @@ import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { atom, useAtom } from 'jotai';
 import useWindowWidth from '../../hooks/useWindowWidth';
+import LanguageSelect from './LanguageSelect';
+import UserPopover from './UserPopover';
 
-const UserPopover = dynamic(() => import('./UserPopover'), {
-  ssr: false,
-});
-const LanguageSelect = dynamic(() => import('./LanguageSelect'), {
-  ssr: false,
-});
+// const UserPopover = dynamic(() => import('./UserPopover'), {
+//   ssr: false,
+// });
+// const LanguageSelect = dynamic(() => import('./LanguageSelect'), {
+//   ssr: false,
+// });
 
 export const isSidenavExpandedAtom = atom<boolean>(true);
 export const isSidenavTransitioningAtom = atom<boolean>(false);
 
 const Header = ({ headerRef }: any) => {
-  const windowWidth = useWindowWidth();
-  const [isMobile, setIsMobile] = useState(false);
-
   const [isSidenavExpanded, setIsSidenavExpanded] = useAtom(
     isSidenavExpandedAtom
   );
-  useEffect(() => {
-    setIsMobile(windowWidth < 768);
-    setIsSidenavExpanded(!isMobile);
-  }, [windowWidth]);
 
   const [, setIsSidenavTransitioning] = useAtom(isSidenavTransitioningAtom);
   const toggleSidenav = () => {
@@ -57,7 +52,7 @@ const Header = ({ headerRef }: any) => {
     <header
       className="fixed top-0 z-10 flex justify-between items-center gap-4 md:gap-8 
       w-full pl-3 pr-6 py-3 isolate transition-all text-white before:absolute 
-      before:-z-10 before:inset-0 before:bg-coachify-gradient before:opacity-[var(--nav-bg-opacity)]"
+      before:-z-10 before:inset-0 before:bg-coachify-gradient before:opacity-[var(--nav-bg-opacity)] before:pointer-events-none"
       ref={headerRef}
     >
       <div className="flex items-center gap-4 md:gap-8 flex-shrink-0">

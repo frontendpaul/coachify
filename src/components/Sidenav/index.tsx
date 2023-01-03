@@ -5,6 +5,7 @@ import { useAtom } from 'jotai';
 import { isSidenavExpandedAtom, isSidenavTransitioningAtom } from '../Header';
 import clsx from 'clsx';
 import Button from '../Button';
+import { isMobileAtom } from '../Layout';
 
 const Sidenav = () => {
   type Link = {
@@ -42,6 +43,7 @@ const Sidenav = () => {
   const [isSidenavTransitioning, setIsSidenavTransitioning] = useAtom(
     isSidenavTransitioningAtom
   );
+  const [isMobile] = useAtom(isMobileAtom);
 
   const toggleSidenav = () => {
     setIsSidenavExpanded(!isSidenavExpanded);
@@ -50,41 +52,61 @@ const Sidenav = () => {
   };
 
   return (
-    <aside
-      className={clsx(
-        `fixed z-10 
+    <>
+      <div
+        className={clsx(
+          'fixed z-20 invisible inset-0 bg-coachify-teal-1000 bg-opacity-0 transition-200-out-quart md:hidden',
+          isSidenavExpanded && 'bg-opacity-50 !visible',
+          isSidenavTransitioning && '!visible'
+        )}
+        onClick={() => toggleSidenav()}
+      ></div>
+      <aside
+        className={clsx(
+          `fixed z-30 
         top-0 md:top-[var(--header-height)]
         h-screen md:h-[calc(100vh-var(--header-height))]
         pb-6 pt-3 md:pt-6 pl-3 
         overflow-hidden bg-coachify-gradient md:bg-none text-white
         -translate-x-60 md:transform-none
-         md:!transition-none`,
-        isSidenavTransitioning && 'transition-x transition-200-out-quart',
-        isSidenavExpanded ? 'w-60 pr-6 !translate-x-0' : 'w-60 md:w-16 pr-3'
-      )}
-    >
-      <div className="md:hidden mb-9">
-        <Button
-          fill="ghost"
-          icon="icon-only"
-          onClick={() => toggleSidenav()}
-          aria-label="close-sidenav-button"
-          aria-controls="sidenav"
-          aria-expanded={isSidenavExpanded}
-        >
-          <FiX />
-        </Button>
-      </div>
-      <nav id="sidenav">
-        <ul className="flex flex-col gap-3">
-          {links.map((link, index) => (
-            <li key={index}>
-              <ActiveLink href={link.href} text={link.text} icon={link.icon} />
-            </li>
-          ))}
-        </ul>
-      </nav>
-    </aside>
+        md:!transition-none
+        custom-scrollbar`,
+          isSidenavTransitioning && 'transition-x transition-200-out-quart',
+          isSidenavExpanded
+            ? 'w-60 pr-6 !translate-x-0 before:bg-opacity-50'
+            : 'w-60 md:w-16 pr-3'
+        )}
+      >
+        <div className="md:hidden mb-9">
+          <Button
+            fill="ghost"
+            icon="icon-only"
+            onClick={() => toggleSidenav()}
+            aria-label="close-sidenav-button"
+            aria-controls="sidenav"
+            aria-expanded={isSidenavExpanded}
+          >
+            <FiX />
+          </Button>
+        </div>
+        <nav id="sidenav">
+          <ul className="flex flex-col gap-3">
+            {links.map((link, index) => (
+              <li key={index}>
+                <ActiveLink
+                  href={link.href}
+                  text={link.text}
+                  icon={link.icon}
+                  onClick={() => {
+                    isMobile && toggleSidenav();
+                  }}
+                />
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </aside>
+    </>
   );
 };
 export default Sidenav;

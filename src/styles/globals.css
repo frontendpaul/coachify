@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 :root {
+  --white-hsl: 0deg 0% 100%;
   --coachify-blue-500: hsl(190deg 100% 55%);
   --coachify-blue-500-hsl: 190deg 100% 55%;
   --coachify-mint-500: hsl(155deg 100% 55%);
@@ -50,6 +51,22 @@ html {
     transition-property: transform;
   }
 
-  .custom-srollbar {
+  .custom-scrollbar {
+    overflow: auto;
+    scrollbar-gutter: stable;
+    scrollbar-width: thin;
+    scrollbar-color: transparent hsla(var(--white-hsl) / 25%);
+  }
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 6px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: hsla(var(--white-hsl) / 25%);
+    border-radius: 6px;
   }
 }
