@@ -1,48 +1,42 @@
+import clsx from 'clsx';
+import { useAtom } from 'jotai';
 import Image from 'next/image';
-import { useRef, useState, useEffect } from 'react';
-import Header from './Header';
+import Header, { isSidenavExpandedAtom } from './Header';
+import Sidenav from './Sidenav';
 
 type Props = {
   children?: React.ReactNode;
 };
 
 const Layout = ({ children }: Props): React.ReactElement => {
-  const headerRef = useRef<HTMLElement>(null);
-  const [navHeight, setNavHeight] = useState<number>(66);
-  useEffect(() => {
-    setNavHeight(headerRef.current?.offsetHeight as number);
-  }, [headerRef]);
+  const [isSidenavExpanded] = useAtom(isSidenavExpandedAtom);
 
   return (
     <>
-      <Header headerRef={headerRef} />
+      <Header />
+      <Sidenav />
       <div
         className={
-          'min-h-screen flex items-start flex-1 text-white relative isolate bg-coachify-teal-1000'
+          'min-h-screen flex items-start flex-1 text-white relative isolate bg-coachify-teal-1000 mt-[var(--header-height)]'
         }
-        style={{ paddingTop: navHeight }}
       >
-        <div
-          className="absolute -z-10 w-full h-screen"
-          style={{ transform: `translateY(${-navHeight}px)` }}
-        >
+        <div className="absolute -z-10 w-full h-screen -translate-y-[var(--header-height)]">
           <Image
             className="object-cover"
-            src="/coachify-bg-3-min.png"
+            src="/coachify-bg-3-min.webp"
             fill
             alt=""
             unoptimized
             priority
           />
         </div>
-        <aside
-          className="h-96 sticky"
-          style={{ top: navHeight, height: '120vh' }}
+        <div
+          className={clsx(
+            'flex-1 flex flex-col',
+            isSidenavExpanded ? 'md:ml-60' : 'md:ml-16'
+          )}
         >
-          Sidebar
-        </aside>
-        <div className="flex-1 flex flex-col" style={{ height: '200vh' }}>
-          <main>{children}</main>
+          <main className="p-6 h-[200vh]">{children}</main>
           <footer id="footer" className="mt-auto">
             Footer
           </footer>

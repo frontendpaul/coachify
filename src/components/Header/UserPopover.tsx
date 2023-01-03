@@ -1,13 +1,14 @@
 import { Popover, Transition } from '@headlessui/react';
 import clsx from 'clsx';
+import React from 'react';
 import { FiUser } from 'react-icons/fi';
 import Button from '../Button';
 
 const UserPopover = ({ className }: { className?: string }) => {
   return (
     <Popover className={clsx(className, 'relative')}>
-      <Popover.Button as="div">
-        <Button icon="icon-only">
+      <Popover.Button as={React.Fragment}>
+        <Button icon="icon-only" aria-label="user-menu-button">
           <FiUser />
         </Button>
       </Popover.Button>

@@ -1,13 +1,18 @@
 import { Popover, Transition } from '@headlessui/react';
 import clsx from 'clsx';
+import React from 'react';
 import { FiGlobe } from 'react-icons/fi';
 import Button from '../Button';
 
 const LanguageSelect = ({ className }: { className?: string }) => {
   return (
     <Popover className={clsx(className, 'relative')}>
-      <Popover.Button as="div">
-        <Button fill="ghost" icon="icon-only">
+      <Popover.Button as={React.Fragment}>
+        <Button
+          fill="ghost"
+          icon="icon-only"
+          aria-label="language-select-button"
+        >
           <FiGlobe />
         </Button>
       </Popover.Button>

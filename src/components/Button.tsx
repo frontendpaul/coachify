@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import { forwardRef } from 'react';
 
 interface Props extends React.HTMLProps<HTMLButtonElement> {
   children: React.ReactNode;
@@ -10,23 +11,27 @@ interface Props extends React.HTMLProps<HTMLButtonElement> {
   className?: string;
 }
 
-const Button = ({
-  children,
-  fill = 'fill',
-  fullWidth = false,
-  icon,
-  intent = 'primary',
-  type = 'button',
-  className,
-  ...props
-}: Props) => {
+const ButtonElement = (
+  {
+    children,
+    fill = 'fill',
+    fullWidth = false,
+    icon,
+    intent = 'primary',
+    type = 'button',
+    className,
+    ...props
+  }: Props,
+  ref: any
+) => {
   return (
     <button
+      ref={ref}
       className={clsx(
         'flex justify-center gap-4 leading-none rounded-lg border border-transparent transition-200-out-quart',
         fullWidth && 'w-full',
         !icon && 'px-6 py-3',
-        icon === 'icon-only' && 'p-2 text-2xl leading-none',
+        icon === 'icon-only' && 'p-[10px] text-xl',
         icon === 'icon-left' && 'pl-4 pr-6 py-3',
         icon === 'icon-right' && 'pl-6 pr-4 py-3',
         icon === 'icon-both' && 'px-4 py-3',
@@ -45,4 +50,7 @@ const Button = ({
     </button>
   );
 };
+
+const Button = forwardRef(ButtonElement);
+
 export default Button;
