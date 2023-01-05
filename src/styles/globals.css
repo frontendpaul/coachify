@@ -91,4 +91,13 @@ html {
       box-shadow: 4px 0px 0px 4px hsla(var(--white-hsl) / 25%) inset;
     }
   }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
 }
