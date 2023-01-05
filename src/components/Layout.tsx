@@ -21,9 +21,10 @@ const Layout = ({ children }: Props): React.ReactElement => {
   const windowWidth = useWindowWidth();
 
   useEffect(() => {
+    const isMediumScreen = windowWidth < 1024;
     const isMobile = windowWidth < 768;
     setIsMobile(isMobile);
-    setIsSidenavExpanded(!isMobile);
+    setIsSidenavExpanded(!isMediumScreen);
   }, [windowWidth]);
 
   return (
@@ -32,7 +33,7 @@ const Layout = ({ children }: Props): React.ReactElement => {
       <Sidenav />
       <div
         className={
-          'min-h-screen flex items-start flex-1 text-white relative isolate bg-coachify-teal-1000 mt-[var(--header-height)]'
+          'min-h-screen text-white relative isolate bg-coachify-teal-1000 mt-[var(--header-height)]'
         }
       >
         <div className="absolute -z-10 w-full h-screen -translate-y-[var(--header-height)]">
@@ -47,11 +48,11 @@ const Layout = ({ children }: Props): React.ReactElement => {
         </div>
         <div
           className={clsx(
-            'flex-1 flex flex-col',
+            'flex flex-col',
             isSidenavExpanded ? 'md:ml-60' : 'md:ml-16'
           )}
         >
-          <main className="p-6 h-[200vh]">{children}</main>
+          <main className="py-6 h-[200vh]">{children}</main>
           <footer id="footer" className="mt-auto">
             Footer
           </footer>
