@@ -4,11 +4,11 @@ import Search from './Search';
 import Button from '../Button';
 import { FiMenu, FiSearch } from 'react-icons/fi';
 import Link from 'next/link';
-import dynamic from 'next/dynamic';
 import { atom, useAtom } from 'jotai';
-import useWindowWidth from '../../hooks/useWindowWidth';
 import LanguageSelect from './LanguageSelect';
 import UserPopover from './UserPopover';
+import clsx from 'clsx';
+import debounce from '../../helpers/debounce';
 
 // const UserPopover = dynamic(() => import('./UserPopover'), {
 //   ssr: false,
@@ -20,7 +20,7 @@ import UserPopover from './UserPopover';
 export const isSidenavExpandedAtom = atom<boolean>(true);
 export const isSidenavTransitioningAtom = atom<boolean>(false);
 
-const Header = ({ headerRef }: any) => {
+const Header = () => {
   const [isSidenavExpanded, setIsSidenavExpanded] = useAtom(
     isSidenavExpandedAtom
   );
@@ -32,14 +32,16 @@ const Header = ({ headerRef }: any) => {
     setTimeout(() => setIsSidenavTransitioning(false), 200);
   };
 
-  const onScroll = useCallback(() => {
+  const [isWindowScrolled, setIsWindowScrolled] = useState(false);
+
+  const onScroll = debounce(() => {
     const { pageYOffset } = window;
-    const navBgOpacity = Math.min(pageYOffset / 200, 1);
-    document.documentElement.style.setProperty(
-      '--nav-bg-opacity',
-      navBgOpacity.toString()
-    );
-  }, []);
+    if (pageYOffset > 0) {
+      setIsWindowScrolled(true);
+    } else {
+      setIsWindowScrolled(false);
+    }
+  }, 25);
 
   useEffect(() => {
     window.addEventListener('scroll', onScroll, { passive: true });
@@ -50,10 +52,14 @@ const Header = ({ headerRef }: any) => {
 
   return (
     <header
-      className="fixed top-0 z-10 flex justify-between items-center gap-4 md:gap-8 
-      w-full pl-3 pr-6 py-3 isolate transition-all text-white before:absolute 
-      before:-z-10 before:inset-0 before:bg-coachify-gradient before:opacity-[var(--nav-bg-opacity)] before:pointer-events-none"
-      ref={headerRef}
+      className={clsx(
+        `fixed top-0 z-10 flex justify-between items-center gap-4 md:gap-8 
+        w-full pl-3 pr-4 md:pr-6 py-3 isolate text-white 
+        before:absolute before:-z-10 before:inset-0 before:bg-coachify-gradient before:pointer-events-none 
+        before:border-b before:border-white before:border-opacity-10 
+        before:opacity-0 before:transition-200-out-quart`,
+        isWindowScrolled && 'before:opacity-100'
+      )}
     >
       <div className="flex items-center gap-4 md:gap-8 flex-shrink-0">
         <Button
