@@ -56,7 +56,7 @@ const Layout = ({ children }: Props): React.ReactElement => {
             isSidenavExpanded ? 'md:ml-60' : 'md:ml-16'
           )}
         >
-          <main className="py-6 h-[200vh]">{children}</main>
+          <main className="py-6">{children}</main>
           <footer id="footer" className="mt-auto">
             Footer
           </footer>

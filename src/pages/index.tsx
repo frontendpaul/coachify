@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import TopRanked from '../components/TopRanked';
 import Statistics from '../components/Statistics';
+import RecentlyAdded from '@components/RecentlyAdded';
 
 export default function Home() {
   return (
@@ -11,6 +12,7 @@ export default function Home() {
       </Head>
       <TopRanked />
       <Statistics />
+      <RecentlyAdded />
     </>
   );
 }

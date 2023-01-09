@@ -66,11 +66,10 @@ const Sidenav = () => {
           `fixed z-30 
         top-0 md:top-[var(--header-height)]
         h-screen md:h-[calc(100vh-var(--header-height))]
-        pb-6 pt-3 md:pt-6 pl-3 
-        overflow-hidden bg-coachify-gradient md:bg-none text-white
+        pb-6 pt-3 md:pt-6 pl-3 bg-coachify-gradient md:bg-none text-white
         -translate-x-60 md:transform-none
         md:!transition-none
-        custom-scrollbar`,
+        custom-scrollbar !overflow-x-hidden`,
           isSidenavTransitioning && 'transition-x transition-200-out-quart',
           isSidenavExpanded
             ? 'w-60 pr-6 !translate-x-0 before:bg-opacity-50'

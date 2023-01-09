@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import { AiOutlineTrophy } from 'react-icons/ai';
 import { FiClock, FiStar, FiUser } from 'react-icons/fi';
 import { Product } from '../../server/products';
@@ -10,12 +11,19 @@ const ProductCard = ({
   index: number;
 }) => {
   return (
-    <div className="flex flex-col justify-between aspect-[16/10] rounded-xl bg-coachify-teal-900 relative isolate overflow-hidden">
-      <div
-        className="absolute inset-0 -z-10
-        before:absolute before:inset-0 before:bg-coachify-teal-1000 before:bg-opacity-60 before:z-10"
-      >
-        <Image src={product.coverImage} fill alt="" sizes="640px" priority />
+    <Link
+      href={'/courses/' + product.id}
+      className="group flex flex-col justify-between aspect-[16/10] rounded-xl bg-coachify-teal-900 relative isolate overflow-hidden"
+    >
+      <div className="absolute inset-0 -z-10">
+        <Image
+          src={product.coverImage}
+          fill
+          alt=""
+          sizes="640px"
+          priority
+          className="brightness-50 transition-200-out-quart group-hover:scale-105"
+        />
       </div>
       <div className="flex justify-between p-3 md:p-4 pb-0">
         <div className="flex items-center gap-2 py-2 px-3 leading-none text-sm rounded-full bg-coachify-teal-1000 bg-opacity-50 backdrop-blur">
@@ -23,6 +31,11 @@ const ProductCard = ({
           <span>Rank {index + 1}</span>
         </div>
         <div className="py-2 px-3 leading-none text-sm rounded-full bg-coachify-teal-1000 bg-opacity-50 backdrop-blur">
+          {product.oldPrice && (
+            <span className="mr-2 text-xs text-white text-opacity-75 line-through">
+              {product.oldPrice.toString().replace(/\./g, ',') + ' €'}
+            </span>
+          )}
           {product.price
             ? product.price.toString().replace(/\./g, ',') + ' €'
             : 'Free'}
@@ -48,7 +61,7 @@ const ProductCard = ({
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 export default ProductCard;

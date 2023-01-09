@@ -9,6 +9,7 @@ const Logo = () => {
           alt="coachify logo"
           fill
           sizes="(min-width: 768px) 2rem, 1.75rem"
+          priority
         />
       </div>
       <span className="text-xl md:text-2xl font-semibold tracking-wide">
