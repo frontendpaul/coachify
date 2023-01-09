@@ -21,7 +21,7 @@ const TopRanked = () => {
         </h2>
         <Link
           href="/browse"
-          className="flex items-center gap-2 text-sm md:mb-0.5 transition-200-out-quart hover:gap-3"
+          className="flex items-center gap-2 hover:gap-3 text-sm md:mb-0.5 transition-200-out-quart"
         >
           <span>Browse all top ranked courses</span>
           <FiChevronRight />
