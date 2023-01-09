@@ -1,3 +1,4 @@
+import { Open_Sans } from '@next/font/google';
 import clsx from 'clsx';
 import { atom, useAtom } from 'jotai';
 import Image from 'next/image';
@@ -5,6 +6,8 @@ import { useEffect } from 'react';
 import useWindowWidth from '../hooks/useWindowWidth';
 import Header, { isSidenavExpandedAtom } from './Header';
 import Sidenav from './Sidenav';
+
+const openSans = Open_Sans({ subsets: ['latin'] });
 
 type Props = {
   children?: React.ReactNode;
@@ -32,9 +35,10 @@ const Layout = ({ children }: Props): React.ReactElement => {
       <Header />
       <Sidenav />
       <div
-        className={
-          'min-h-screen text-white relative isolate bg-coachify-teal-1000 mt-[var(--header-height)]'
-        }
+        className={clsx(
+          'min-h-screen text-white relative isolate bg-coachify-teal-1000 mt-[var(--header-height)]',
+          openSans.className
+        )}
       >
         <div className="absolute -z-10 w-full h-screen -translate-y-[var(--header-height)]">
           <Image

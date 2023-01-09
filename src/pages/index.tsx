@@ -1,8 +1,6 @@
 import Head from 'next/head';
-import { Inter } from '@next/font/google';
 import TopRanked from '../components/TopRanked';
-
-const inter = Inter({ subsets: ['latin'] });
+import Statistics from '../components/Statistics';
 
 export default function Home() {
   return (
@@ -12,6 +10,7 @@ export default function Home() {
         <meta name="description" content="Coachify app" />
       </Head>
       <TopRanked />
+      <Statistics />
     </>
   );
 }
