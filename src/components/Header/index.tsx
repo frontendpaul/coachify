@@ -1,7 +1,7 @@
 import { useEffect, useCallback, useState } from 'react';
 import Logo from './Logo';
 import Search from './Search';
-import Button from '../Button';
+import Button from '@ui/Button';
 import { FiMenu, FiSearch } from 'react-icons/fi';
 import Link from 'next/link';
 import { atom, useAtom } from 'jotai';

@@ -2,7 +2,7 @@ import { Popover, Transition } from '@headlessui/react';
 import clsx from 'clsx';
 import React from 'react';
 import { FiUser } from 'react-icons/fi';
-import Button from '../Button';
+import Button from '@ui/Button';
 
 const UserPopover = ({ className }: { className?: string }) => {
   return (

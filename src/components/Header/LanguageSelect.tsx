@@ -2,7 +2,7 @@ import { Popover, Transition } from '@headlessui/react';
 import clsx from 'clsx';
 import React from 'react';
 import { FiGlobe } from 'react-icons/fi';
-import Button from '../Button';
+import Button from '@ui/Button';
 
 const LanguageSelect = ({ className }: { className?: string }) => {
   return (
