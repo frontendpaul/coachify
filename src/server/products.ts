@@ -13,7 +13,7 @@ export type Product = {
   coverImage: string;
 };
 
-export const products: Product[] = [
+const products: Product[] = [
   {
     id: 'UJV8zBbfNsSYscnIK7fJ_',
     name: 'How to create stunning motion Scenes',

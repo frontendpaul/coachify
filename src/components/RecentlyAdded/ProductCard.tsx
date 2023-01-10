@@ -2,13 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { FiClock, FiStar, FiUser } from 'react-icons/fi';
 import { Product } from '../../server/products';
-const ProductCard = ({
-  product,
-  index,
-}: {
-  product: Product;
-  index: number;
-}) => {
+const ProductCard = ({ product }: { product: Product }) => {
   return (
     <Link
       href={'/courses/' + product.id}

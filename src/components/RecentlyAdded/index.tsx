@@ -17,8 +17,8 @@ const RecentlyAdded = () => {
         auto-rows-[0] grid-rows-[repeat(4,auto)] xl:grid-rows-[repeat(3,auto)] 2xl:grid-rows-[repeat(2,auto)]
         [&>*]:mb-4 md:[&>*]:mb-6 -mb-4 md:-mb-6"
       >
-        {products.map((product, index) => (
-          <ProductCard product={product} index={index} key={product.id} />
+        {products.map((product) => (
+          <ProductCard product={product} key={product.id} />
         ))}
       </div>
     </section>
