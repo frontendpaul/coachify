@@ -6,9 +6,11 @@ import { Product } from '../../server/products';
 const ProductCard = ({
   product,
   index,
+  isPriority = false,
 }: {
   product: Product;
   index: number;
+  isPriority?: boolean;
 }) => {
   return (
     <Link
@@ -21,7 +23,7 @@ const ProductCard = ({
           fill
           alt=""
           sizes="640px"
-          priority
+          priority={isPriority}
           className="brightness-50 transition-200-out-quart group-hover:scale-105"
         />
       </div>

@@ -26,9 +26,18 @@ const TopRanked = () => {
         auto-cols-[min(452px,90%)] xl:auto-cols-[40%] 2xl:auto-cols-[min(452px,30%)]
         gap-4 md:gap-6 pr-4 md:pr-6 overflow-auto cursor-grab scrollbar-hide"
       >
-        {topRankedProducts.map((product, index) => (
-          <ProductCard product={product} index={index} key={product.id} />
-        ))}
+        {topRankedProducts.map((product, index) =>
+          index < 4 ? (
+            <ProductCard
+              product={product}
+              index={index}
+              key={product.id}
+              isPriority={true}
+            />
+          ) : (
+            <ProductCard product={product} index={index} key={product.id} />
+          )
+        )}
       </div>
     </section>
   );
