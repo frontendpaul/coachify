@@ -14,14 +14,13 @@ const ProductCard = ({
       href={'/courses/' + product.id}
       className="group flex flex-col rounded-xl bg-coachify-teal-800 relative isolate overflow-hidden"
     >
-      <div className="aspect-[16/10] relative overflow-hidden">
+      <div className=" relative overflow-hidden">
         <Image
           src={product.coverImage}
-          fill
+          width={500}
+          height={312}
           alt=""
-          sizes="640px"
-          priority
-          className="brightness-50 transition-200-out-quart group-hover:scale-105"
+          className="aspect-[16/10] transition-200-out-quart group-hover:scale-105"
         />
         <div className="absolute z-10 bottom-0 w-full flex justify-between leading-none text-sm p-3 md:p-4 bg-coachify-teal-1000 bg-opacity-50 backdrop-blur">
           <div className="flex items-center gap-2">
