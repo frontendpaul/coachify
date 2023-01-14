@@ -40,7 +40,7 @@ const ButtonElement = (
           'font-semibold bg-coachify-cyan-300 text-coachify-teal-1000 hover:bg-coachify-cyan-500',
         intent === 'primary' &&
           fill === 'ghost' &&
-          'bg-transparent text-white hover:bg-coachify-teal-1000 hover:bg-opacity-20',
+          'bg-transparent text-white hover:bg-white/5',
         className
       )}
       type={type}

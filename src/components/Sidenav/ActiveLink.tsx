@@ -34,7 +34,7 @@ const ActiveLink = ({
 
   return (
     <Link
-      className="flex items-center gap-6 rounded-lg transition-200-out-quart hover:bg-coachify-teal-1000 hover:bg-opacity-20"
+      className="flex items-center gap-6 rounded-lg transition-200-out-quart hover:bg-white/5"
       {...props}
     >
       <div
