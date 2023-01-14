@@ -2,7 +2,7 @@ import StatisticCard from './StatisticCard';
 
 const Statistics = () => {
   return (
-    <div className="px-4 md:px-6 py-16 md:py-32">
+    <div className="px-4 md:px-6">
       <h2 className="sr-only">Statistics</h2>
       <div
         className="grid grid-cols-2 gap-4 md:gap-6 max-w-lg mx-auto 

@@ -28,13 +28,13 @@ const ProductCard = ({
         />
       </div>
       <div className="flex justify-between p-3 md:p-4 pb-0">
-        <div className="flex items-center gap-2 py-2 px-3 leading-none text-sm rounded-full bg-coachify-teal-1000 bg-opacity-50 backdrop-blur">
+        <div className="flex items-center gap-2 py-2 px-3 leading-none text-sm rounded-full bg-coachify-teal-1000/50 backdrop-blur">
           <AiOutlineTrophy />
           <span>Rank {index + 1}</span>
         </div>
-        <div className="py-2 px-3 leading-none text-sm rounded-full bg-coachify-teal-1000 bg-opacity-50 backdrop-blur">
+        <div className="py-2 px-3 leading-none text-sm rounded-full bg-coachify-teal-1000/50 backdrop-blur">
           {product.oldPrice && (
-            <span className="mr-2 text-xs text-white text-opacity-75 line-through">
+            <span className="mr-2 text-xs text-white text-opacity-75 line-through leading-none">
               {product.oldPrice.toString().replace(/\./g, ',') + ' €'}
             </span>
           )}

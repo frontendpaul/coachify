@@ -16,7 +16,7 @@ const ProductCard = ({ product }: { product: Product }) => {
           alt=""
           className="aspect-[16/10] transition-200-out-quart group-hover:scale-105"
         />
-        <div className="absolute z-10 bottom-0 w-full flex justify-between leading-none text-sm p-3 md:p-4 bg-coachify-teal-1000 bg-opacity-50 backdrop-blur">
+        <div className="absolute z-10 bottom-0 w-full flex justify-between leading-none text-sm p-3 md:p-4 bg-coachify-teal-1000/50 backdrop-blur">
           <div className="flex items-center gap-2">
             <FiStar />
             {product.rating}

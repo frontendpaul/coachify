@@ -11,11 +11,12 @@ export default function Home() {
         <title>Coachify</title>
         <meta name="description" content="Coachify app" />
       </Head>
-      <TopRanked />
-      <Statistics />
-      <RecentlyAdded />
-      <div className="mt-16 md:mt-32"></div>
-      <Categories />
+      <div className="grid gap-16 md:gap-32">
+        <TopRanked />
+        <Statistics />
+        <RecentlyAdded />
+        <Categories />
+      </div>
     </>
   );
 }
