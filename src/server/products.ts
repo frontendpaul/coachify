@@ -23,7 +23,7 @@ const products: Product[] = [
     rating: 4.9,
     participants: 320,
     duration: '4h30min',
-    coverImage: '/courses/filmmaking.webp',
+    coverImage: '/courses/filmmaking.jpg',
   },
   {
     id: 'dsiXfimpcH9MMMYNLyVh6',
@@ -35,7 +35,7 @@ const products: Product[] = [
     rating: 4.7,
     participants: 120,
     duration: '30min',
-    coverImage: '/courses/mobile-app.webp',
+    coverImage: '/courses/mobile-app.jpg',
   },
   {
     id: 'PbyyCZFTzlhEW6Un83LcC',
@@ -45,7 +45,7 @@ const products: Product[] = [
     rating: 5.0,
     participants: 17,
     duration: '1h27min',
-    coverImage: '/courses/cooking.webp',
+    coverImage: '/courses/cooking.jpg',
   },
   {
     id: 'F3SzYuhyZ4jS-paCf8SYm',
@@ -56,7 +56,7 @@ const products: Product[] = [
     rating: 4.8,
     participants: 78,
     duration: '7h12min',
-    coverImage: '/courses/coding.webp',
+    coverImage: '/courses/coding.jpg',
   },
   {
     id: 'REuq4PB-2OU1NGKvfoSNI',
@@ -67,7 +67,7 @@ const products: Product[] = [
     rating: 4.8,
     participants: 3,
     duration: '7h12min',
-    coverImage: '/courses/knitting.webp',
+    coverImage: '/courses/knitting.jpg',
   },
   {
     id: 'cKSDVDId2kbIsGoZcKqrr',
@@ -78,7 +78,7 @@ const products: Product[] = [
     rating: 4.8,
     participants: 33,
     duration: '2h42min',
-    coverImage: '/courses/painting.webp',
+    coverImage: '/courses/painting.jpg',
   },
   {
     id: 'UJV8zBbfNsSYscnIK7f',
@@ -89,7 +89,7 @@ const products: Product[] = [
     rating: 4.0,
     participants: 320,
     duration: '4h30min',
-    coverImage: '/courses/filmmaking.webp',
+    coverImage: '/courses/filmmaking.jpg',
   },
   {
     id: 'dsiXfimpcH9MMMYNLyV',
@@ -100,7 +100,7 @@ const products: Product[] = [
     rating: 4.7,
     participants: 420,
     duration: '30min',
-    coverImage: '/courses/mobile-app.webp',
+    coverImage: '/courses/mobile-app.jpg',
   },
   {
     id: 'PbyyCZFTzlhEW6Un83L',
@@ -110,7 +110,7 @@ const products: Product[] = [
     rating: 5.0,
     participants: 170,
     duration: '1h27min',
-    coverImage: '/courses/cooking.webp',
+    coverImage: '/courses/cooking.jpg',
   },
   {
     id: 'F3SzYuhyZ4jS-paCf8S',
@@ -122,7 +122,7 @@ const products: Product[] = [
     rating: 4.8,
     participants: 780,
     duration: '7h12min',
-    coverImage: '/courses/coding.webp',
+    coverImage: '/courses/coding.jpg',
   },
   {
     id: 'REuq4PB-2OU1NGKvfoS',
@@ -133,7 +133,7 @@ const products: Product[] = [
     rating: 4.8,
     participants: 30,
     duration: '7h12min',
-    coverImage: '/courses/knitting.webp',
+    coverImage: '/courses/knitting.jpg',
   },
   {
     id: 'cKSDVDId2kbIsGoZcKq',
@@ -144,7 +144,7 @@ const products: Product[] = [
     rating: 4.8,
     participants: 330,
     duration: '2h42min',
-    coverImage: '/courses/painting.webp',
+    coverImage: '/courses/painting.jpg',
   },
   {
     id: 'UJV8zBbfNsSYscnIK',
@@ -155,7 +155,7 @@ const products: Product[] = [
     rating: 4.0,
     participants: 32,
     duration: '4h30min',
-    coverImage: '/courses/filmmaking.webp',
+    coverImage: '/courses/filmmaking.jpg',
   },
   {
     id: 'dsiXfimpcH9MMMYNL',
@@ -166,7 +166,7 @@ const products: Product[] = [
     rating: 4.7,
     participants: 42,
     duration: '30min',
-    coverImage: '/courses/mobile-app.webp',
+    coverImage: '/courses/mobile-app.jpg',
   },
   {
     id: 'PbyyCZFTzlhEW6Un8',
@@ -176,7 +176,7 @@ const products: Product[] = [
     rating: 5.0,
     participants: 17,
     duration: '1h27min',
-    coverImage: '/courses/cooking.webp',
+    coverImage: '/courses/cooking.jpg',
   },
   {
     id: 'F3SzYuhyZ4jS-paCf',
@@ -188,7 +188,7 @@ const products: Product[] = [
     rating: 4.8,
     participants: 78,
     duration: '7h12min',
-    coverImage: '/courses/coding.webp',
+    coverImage: '/courses/coding.jpg',
   },
   {
     id: 'REuq4PB-2OU1NGKvf',
@@ -199,7 +199,7 @@ const products: Product[] = [
     rating: 4.8,
     participants: 10,
     duration: '7h12min',
-    coverImage: '/courses/knitting.webp',
+    coverImage: '/courses/knitting.jpg',
   },
   {
     id: 'cKSDVDId2kbIsGoZc',
@@ -210,7 +210,7 @@ const products: Product[] = [
     rating: 4.8,
     participants: 30,
     duration: '2h42min',
-    coverImage: '/courses/painting.webp',
+    coverImage: '/courses/painting.jpg',
   },
 ];
 

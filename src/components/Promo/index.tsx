@@ -47,7 +47,7 @@ const Promo = () => {
             </Button>
             <LinkWithChevron
               href="/become-a-creator"
-              text="Learn more"
+              text="More about Creators Program"
               className="text-base font-semibold"
             />
           </div>
