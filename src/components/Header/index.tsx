@@ -17,7 +17,9 @@ import debounce from '../../helpers/debounce';
 //   ssr: false,
 // });
 
-export const isSidenavExpandedAtom = atom<boolean>(true);
+export const isSidenavExpandedAtom = atom<boolean>(false);
+
+isSidenavExpandedAtom.debugLabel = 'isSidenavExpandedAtom';
 export const isSidenavTransitioningAtom = atom<boolean>(false);
 
 const Header = () => {

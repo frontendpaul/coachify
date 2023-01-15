@@ -57,7 +57,7 @@ const Layout = ({ children }: Props): React.ReactElement => {
           )}
         >
           <main className="py-6">{children}</main>
-          <footer id="footer" className="mt-auto">
+          <footer id="footer" className="pt-16 md:pt-32 px-4 md:px-6">
             Footer
           </footer>
         </div>

@@ -30,21 +30,15 @@ html {
 
 @layer utilities {
   .bg-coachify-gradient {
-    background: linear-gradient(
-        to right,
+    background: linear-gradient(to right,
         hsla(var(--coachify-teal-1000-hsl) / 50%),
-        hsla(var(--coachify-teal-1000-hsl) / 50%)
-      ),
-      linear-gradient(
-        to right,
+        hsla(var(--coachify-teal-1000-hsl) / 50%)),
+      linear-gradient(to right,
         hsla(var(--coachify-blue-500-hsl) / 25%),
-        hsla(var(--coachify-mint-500-hsl) / 25%)
-      ),
-      linear-gradient(
-        to right,
+        hsla(var(--coachify-mint-500-hsl) / 25%)),
+      linear-gradient(to right,
         var(--coachify-teal-800),
-        var(--coachify-teal-800)
-      );
+        var(--coachify-teal-800));
   }
 
   .transition-x {
@@ -57,14 +51,17 @@ html {
     scrollbar-width: thin;
     scrollbar-color: transparent hsla(var(--white-hsl) / 25%);
   }
+
   .custom-scrollbar::-webkit-scrollbar {
     width: 8px;
     height: 8px;
   }
+
   .custom-scrollbar::-webkit-scrollbar-track {
     background: transparent;
     border-radius: 8px;
   }
+
   .custom-scrollbar::-webkit-scrollbar-thumb {
     background-color: hsla(var(--white-hsl) / 25%);
     border-radius: 8px;
@@ -76,14 +73,17 @@ html {
       scrollbar-width: thin;
       scrollbar-color: transparent hsla(var(--white-hsl) / 25%);
     }
+
     .custom-scrollbar::-webkit-scrollbar {
       width: 16px;
       height: 16px;
     }
+
     .custom-scrollbar::-webkit-scrollbar-track {
       background: transparent;
       border-radius: 8px;
     }
+
     .custom-scrollbar::-webkit-scrollbar-thumb {
       background-color: transparent;
       border-radius: 8px;
@@ -93,8 +93,10 @@ html {
   }
 
   .scrollbar-hide {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
   }
 
   .scrollbar-hide::-webkit-scrollbar {

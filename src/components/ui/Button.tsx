@@ -6,7 +6,7 @@ interface Props extends React.HTMLProps<HTMLButtonElement> {
   fill?: 'fill' | 'ghost'; // ghost -> text only, no bg
   fullWidth?: boolean;
   icon?: 'icon-only' | 'icon-left' | 'icon-right' | 'icon-both';
-  intent?: 'primary'; // Color variants, more to come
+  intent?: 'primary' | 'secondary'; // Color variants, more to come
   type?: 'submit' | 'reset' | 'button';
   className?: string;
 }
@@ -37,7 +37,10 @@ const ButtonElement = (
         icon === 'icon-both' && 'px-4 py-3',
         intent === 'primary' &&
           !(fill === 'ghost') &&
-          'font-semibold bg-coachify-cyan-300 text-coachify-teal-1000 hover:bg-coachify-cyan-500',
+          'font-semibold bg-coachify-cyan-700 text-coachify-teal-1000 hover:bg-coachify-cyan-600',
+        intent === 'secondary' &&
+          !(fill === 'ghost') &&
+          'font-semibold bg-amber-400 text-coachify-teal-1000 hover:bg-yellow-400',
         intent === 'primary' &&
           fill === 'ghost' &&
           'bg-transparent text-white hover:bg-white/5',

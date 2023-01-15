@@ -1,4 +1,4 @@
-import { FiHome, FiMenu, FiSearch, FiX } from 'react-icons/fi';
+import { FiHome, FiSearch, FiX } from 'react-icons/fi';
 import { AiOutlineTrophy } from 'react-icons/ai';
 import ActiveLink from './ActiveLink';
 import { useAtom } from 'jotai';
