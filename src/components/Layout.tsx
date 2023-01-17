@@ -4,6 +4,7 @@ import { atom, useAtom } from 'jotai';
 import Image from 'next/image';
 import { useEffect } from 'react';
 import useWindowWidth from '../hooks/useWindowWidth';
+import Footer from './Footer';
 import Header, { isSidenavExpandedAtom } from './Header';
 import Sidenav from './Sidenav';
 
@@ -57,9 +58,7 @@ const Layout = ({ children }: Props): React.ReactElement => {
           )}
         >
           <main className="py-6">{children}</main>
-          <footer id="footer" className="pt-16 md:pt-32 px-4 md:px-6">
-            Footer
-          </footer>
+          <Footer />
         </div>
       </div>
     </>
