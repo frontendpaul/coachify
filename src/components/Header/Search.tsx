@@ -9,7 +9,8 @@ const Search = ({ className }: { className?: string }) => {
     <div
       className={clsx(
         className,
-        'flex items-center gap-3 flex-1 pr-0 pl-3 max-w-lg rounded-full border border-white border-opacity-40 transition-200-out-quart focus-within:border-opacity-100'
+        'flex items-center gap-3 flex-1 pr-0 pl-3 max-w-lg rounded-full border border-white border-opacity-40',
+        'transition-200-out-quart focus-within:border-opacity-100'
       )}
     >
       <input

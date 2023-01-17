@@ -19,11 +19,9 @@ const Promo = () => {
           alt=""
           quality={100}
           className={clsx(
-            `w-[min(80%,320px)] mx-auto -translate-y-8
-            md:absolute md:bottom-0 md:left-[52vw]
-            md:translate-y-0 md:w-auto md:h-[120%]
-            lg:left-[53%]
-            xl:h-[150%] xl:bottom-[-30%] xl:[clip-path:polygon(0_0,100%_0,100%_80%,0_80%)]`,
+            'w-[min(80%,320px)] mx-auto -translate-y-8',
+            'md:absolute md:bottom-0 md:left-[52vw] md:translate-y-0 md:w-auto md:h-[120%]',
+            'lg:left-[53%] xl:h-[150%] xl:bottom-[-30%] xl:[clip-path:polygon(0_0,100%_0,100%_80%,0_80%)]',
             isSidenavExpanded && 'md:hidden lg:block'
           )}
         />

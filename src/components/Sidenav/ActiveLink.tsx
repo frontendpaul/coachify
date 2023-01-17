@@ -5,7 +5,7 @@ import clsx from 'clsx';
 
 type ActiveLinkProps = LinkProps & {
   text: string;
-  icon?: React.ReactNode;
+  icon?: React.ReactNode; // React Icons OR SVG
 };
 const ActiveLink = ({
   text,
