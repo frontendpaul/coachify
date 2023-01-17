@@ -5,7 +5,7 @@ import Button from '@ui/Button';
 import { FiMenu, FiSearch } from 'react-icons/fi';
 import Link from 'next/link';
 import { atom, useAtom } from 'jotai';
-import LanguageSelect from './LanguageSelect';
+import LanguageSelect from '@ui/LanguageSelect';
 import UserPopover from './UserPopover';
 import clsx from 'clsx';
 import debounce from '../../helpers/debounce';
@@ -55,11 +55,11 @@ const Header = () => {
   return (
     <header
       className={clsx(
-        `fixed top-0 z-10 flex justify-between items-center gap-4 md:gap-8 
-        w-full pl-3 pr-4 md:pr-6 py-3 isolate text-white 
-        before:absolute before:-z-10 before:inset-0 before:bg-coachify-gradient before:pointer-events-none 
-        before:border-b before:border-white before:border-opacity-10 
-        before:opacity-0 before:transition-200-out-quart`,
+        'fixed top-0 z-10 flex justify-between items-center gap-4 md:gap-8',
+        'w-full pl-3 pr-4 md:pr-6 py-3 isolate text-white',
+        'before:absolute before:-z-10 before:inset-0 before:bg-coachify-gradient before:pointer-events-none',
+        'before:border-b before:border-white before:border-opacity-10',
+        'before:opacity-0 before:transition-200-out-quart',
         isWindowScrolled && 'before:opacity-100'
       )}
     >
