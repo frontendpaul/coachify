@@ -29,10 +29,10 @@ const Layout = ({ children }: Props): React.ReactElement => {
     const isMobile = windowWidth < 768;
     setIsMobile(isMobile);
     setIsSidenavExpanded(!isMediumScreen);
-  }, [windowWidth]);
+  }, [windowWidth, setIsMobile, setIsSidenavExpanded]);
 
   return (
-    <>
+    <div className="isolate">
       <Header />
       <Sidenav />
       <div
@@ -61,7 +61,7 @@ const Layout = ({ children }: Props): React.ReactElement => {
           <Footer />
         </div>
       </div>
-    </>
+    </div>
   );
 };
 export default Layout;

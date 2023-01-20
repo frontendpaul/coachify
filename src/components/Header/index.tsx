@@ -9,6 +9,7 @@ import LanguageSelect from '@ui/LanguageSelect';
 import UserPopover from './UserPopover';
 import clsx from 'clsx';
 import debounce from '../../helpers/debounce';
+import AuthDialog, { AuthIntent } from './AuthDialog';
 
 // const UserPopover = dynamic(() => import('./UserPopover'), {
 //   ssr: false,
@@ -50,7 +51,15 @@ const Header = () => {
     return () => {
       window.removeEventListener('scroll', onScroll);
     };
-  }, []);
+  }, [onScroll]);
+
+  const [isAuthDialogOpen, setIsAuthDialogOpen] = useState(false);
+  const [authIntent, setAuthIntent] = useState<AuthIntent>('signup');
+
+  const openAuthDialog = (intent: AuthIntent) => {
+    setAuthIntent(intent);
+    setIsAuthDialogOpen(true);
+  };
 
   return (
     <header
@@ -60,7 +69,8 @@ const Header = () => {
         'before:absolute before:-z-10 before:inset-0 before:bg-coachify-gradient before:pointer-events-none',
         'before:border-b before:border-white before:border-opacity-10',
         'before:opacity-0 before:transition-200-out-quart',
-        isWindowScrolled && 'before:opacity-100'
+        isWindowScrolled && 'before:opacity-100',
+        isAuthDialogOpen && '!pr-10'
       )}
     >
       <div className="flex items-center gap-4 md:gap-8 flex-shrink-0">
@@ -91,14 +101,24 @@ const Header = () => {
           <FiSearch />
         </Button>
         <LanguageSelect className="hidden md:block" />
-        <UserPopover className="lg:hidden" />
+        <UserPopover className="lg:hidden" openAuthDialog={openAuthDialog} />
         <div className="hidden lg:flex gap-4">
-          <Button fill="ghost" icon="icon-left">
+          <Button
+            fill="ghost"
+            icon="icon-left"
+            onClick={() => openAuthDialog('login')}
+          >
             Log In
           </Button>
-          <Button onClick={() => console.log('click')}>Sign Up</Button>
+          <Button onClick={() => openAuthDialog('signup')}>Sign Up</Button>
         </div>
       </div>
+      <AuthDialog
+        open={isAuthDialogOpen}
+        setIsOpen={setIsAuthDialogOpen}
+        intent={authIntent}
+        setAuthIntent={setAuthIntent}
+      />
     </header>
   );
 };

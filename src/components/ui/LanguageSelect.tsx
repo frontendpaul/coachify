@@ -33,12 +33,7 @@ const LanguageSelect = ({
   const [selectedLanguage, setSelectedLanguage] = useAtom(selectedLanguageAtom);
 
   const button = footer ? (
-    <Button
-      fill="ghost"
-      icon="icon-both"
-      aria-label="language-select-button"
-      className="border !border-white"
-    >
+    <Button fill="outline" icon="icon-both" aria-label="language-select-button">
       <FiGlobe />
       {selectedLanguage.name}
       <FiChevronDown />

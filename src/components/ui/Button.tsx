@@ -3,7 +3,7 @@ import { forwardRef } from 'react';
 
 interface Props extends React.HTMLProps<HTMLButtonElement> {
   children: React.ReactNode;
-  fill?: 'fill' | 'ghost'; // ghost -> text only, no bg
+  fill?: 'fill' | 'ghost' | 'outline'; // ghost -> text only, no bg
   fullWidth?: boolean;
   icon?: 'icon-only' | 'icon-left' | 'icon-right' | 'icon-both';
   intent?: 'primary' | 'secondary'; // Color variants, more to come
@@ -37,13 +37,16 @@ const ButtonElement = (
         icon === 'icon-both' && 'px-4 py-3',
         intent === 'primary' &&
           !(fill === 'ghost') &&
-          'font-semibold bg-coachify-cyan-700 text-coachify-teal-1000 hover:bg-coachify-cyan-600',
+          'font-semibold bg-coachify-cyan-700 text-coachify-teal-1000 hover:bg-coachify-cyan-500',
         intent === 'secondary' &&
           !(fill === 'ghost') &&
           'font-semibold bg-amber-400 text-coachify-teal-1000 hover:bg-yellow-400',
         intent === 'primary' &&
           fill === 'ghost' &&
           'bg-transparent text-white hover:bg-white/5',
+        intent === 'primary' &&
+          fill === 'outline' &&
+          '!bg-transparent font-normal !text-white hover:!bg-white/5 !border-white focus-within:!bg-white/5',
         className
       )}
       type={type}

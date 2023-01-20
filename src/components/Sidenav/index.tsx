@@ -56,17 +56,18 @@ const Sidenav = () => {
       <div
         className={clsx(
           'fixed z-20 invisible inset-0 bg-coachify-teal-1000/0 transition-200-out-quart md:hidden',
-          isSidenavExpanded && '!bg-coachify-teal-1000/50 !visible',
+          isSidenavExpanded && '!bg-coachify-teal-1000/75 !visible',
           isSidenavTransitioning && '!visible'
         )}
         onClick={() => toggleSidenav()}
+        aria-hidden="true"
       ></div>
       <aside
         className={clsx(
           'fixed z-30 top-0 md:top-[var(--header-height)]',
           'h-screen md:h-[calc(100vh-var(--header-height))]',
           'pb-6 pt-3 md:pt-6 pl-3 bg-coachify-gradient md:bg-none text-white',
-          '-translate-x-60 md:transform-none custom-scrollbar !overflow-x-hidden',
+          '-translate-x-60 md:transform-none custom-scrollbar !overflow-x-hidden isolate',
           isSidenavTransitioning && 'transition-x transition-200-out-quart',
           isSidenavExpanded ? 'w-60 pr-6 !translate-x-0' : 'w-60 md:w-16 pr-3'
         )}
@@ -84,7 +85,7 @@ const Sidenav = () => {
           </Button>
         </div>
         <nav id="sidenav">
-          <ul className="flex flex-col gap-3">
+          <ul className="flex flex-col gap-4">
             {links.map((link, index) => (
               <li key={index}>
                 <ActiveLink

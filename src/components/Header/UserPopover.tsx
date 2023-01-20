@@ -4,7 +4,13 @@ import React from 'react';
 import { FiUser } from 'react-icons/fi';
 import Button from '@ui/Button';
 
-const UserPopover = ({ className }: { className?: string }) => {
+const UserPopover = ({
+  className,
+  openAuthDialog,
+}: {
+  className?: string;
+  openAuthDialog: any;
+}) => {
   return (
     <Popover className={clsx(className, 'relative')}>
       <Popover.Button as={React.Fragment}>
@@ -21,8 +27,10 @@ const UserPopover = ({ className }: { className?: string }) => {
         leaveTo="transform scale-95 opacity-0"
       >
         <Popover.Panel className="absolute z-10 right-0 mt-4 w-40 flex flex-col gap-1 p-4 rounded-xl bg-coachify-teal-800 shadow-lg">
-          <Button fill="ghost">Log In</Button>
-          <Button onClick={() => console.log('click')}>Sign Up</Button>
+          <Button fill="ghost" onClick={() => openAuthDialog('login')}>
+            Log In
+          </Button>
+          <Button onClick={() => openAuthDialog('signup')}>Sign Up</Button>
         </Popover.Panel>
       </Transition>
     </Popover>
