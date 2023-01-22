@@ -4,6 +4,8 @@ import Button from '@components/ui/Button';
 import { FiMail, FiX } from 'react-icons/fi';
 import { BsApple, BsGoogle } from 'react-icons/bs';
 import Link from 'next/link';
+import clsx from 'clsx';
+import InputWithLabel from '@components/ui/InputWithLabel';
 
 type AuthDialogProps = {
   open: boolean;
@@ -51,7 +53,7 @@ const AuthDialog = ({
                   fill="ghost"
                   icon="icon-only"
                   onClick={() => setIsOpen(false)}
-                  className="place-self-end -mt-2 -mr-2 ml-auto sm:-mt-4 sm:-mr-4"
+                  className="absolute top-2 right-2 sm:top-4 sm:right-4"
                   aria-label="close-dialog-button"
                 >
                   <FiX />
@@ -81,7 +83,7 @@ const SignUp = ({ setAuthIntent }: any) => {
         <Dialog.Title as="h3" className="text-xl font-medium">
           We’re glad you’re here!
         </Dialog.Title>
-        <p className="mt-2 text-sm text-white/75">
+        <p className="mt-4 text-sm text-white/75">
           Create a free account and start learning today from world-class
           teachers!
         </p>
@@ -110,24 +112,26 @@ const SignUp = ({ setAuthIntent }: any) => {
           </>
         )}
       </div>
-      <p className="text-sm text-white/75">
-        Aleady have an account?{' '}
-        <button
-          className="underline text-coachify-cyan-700 hover:text-coachify-cyan-500 transition-200-out-quart"
-          onClick={() => setAuthIntent('login')}
-        >
-          Log In
-        </button>
-      </p>
-      <p className="text-sm text-white/75 mt-4">
-        Are you a teacher?{' '}
-        <button
-          className="underline text-coachify-cyan-700 hover:text-coachify-cyan-500 transition-200-out-quart"
-          onClick={() => setAuthIntent('creator-signup')}
-        >
-          Register a creator account
-        </button>
-      </p>
+      <div className="grid gap-3">
+        <p className="text-sm text-white/75">
+          Aleady have an account?{' '}
+          <button
+            className="underline text-coachify-cyan-700 hover:text-coachify-cyan-500 transition-200-out-quart"
+            onClick={() => setAuthIntent('login')}
+          >
+            Log In
+          </button>
+        </p>
+        <p className="text-sm text-white/75">
+          Are you a teacher?{' '}
+          <button
+            className="underline text-coachify-cyan-700 hover:text-coachify-cyan-500 transition-200-out-quart"
+            onClick={() => setAuthIntent('creator-signup')}
+          >
+            Register a creator account
+          </button>
+        </p>
+      </div>
       <p className="text-xs text-white/50">
         By continuing, you agree to our{' '}
         <Link href="/terms-of-use" className="underline hover:text-white">
@@ -152,7 +156,7 @@ const CreatorSignUp = ({ setAuthIntent }: any) => {
         <Dialog.Title as="h3" className="text-xl font-medium">
           We’re glad you’re here!
         </Dialog.Title>
-        <p className="mt-2 text-sm text-white/75">
+        <p className="mt-4 text-sm text-white/75">
           Create a free account and start teaching today!
         </p>
       </div>
@@ -180,24 +184,26 @@ const CreatorSignUp = ({ setAuthIntent }: any) => {
           </>
         )}
       </div>
-      <p className="text-sm text-white/75">
-        Aleady have an account?{' '}
-        <button
-          className="underline text-coachify-cyan-700 hover:text-coachify-cyan-500 transition-200-out-quart"
-          onClick={() => setAuthIntent('login')}
-        >
-          Log In
-        </button>
-      </p>
-      <p className="text-sm text-white/75 mt-4">
-        Are you a student?{' '}
-        <button
-          className="underline text-coachify-cyan-700 hover:text-coachify-cyan-500 transition-200-out-quart"
-          onClick={() => setAuthIntent('signup')}
-        >
-          Register a student account
-        </button>
-      </p>
+      <div className="grid gap-3">
+        <p className="text-sm text-white/75">
+          Aleady have an account?{' '}
+          <button
+            className="underline text-coachify-cyan-700 hover:text-coachify-cyan-500 transition-200-out-quart"
+            onClick={() => setAuthIntent('login')}
+          >
+            Log In
+          </button>
+        </p>
+        <p className="text-sm text-white/75">
+          Are you a student?{' '}
+          <button
+            className="underline text-coachify-cyan-700 hover:text-coachify-cyan-500 transition-200-out-quart"
+            onClick={() => setAuthIntent('signup')}
+          >
+            Register a student account
+          </button>
+        </p>
+      </div>
       <p className="text-xs text-white/50">
         By continuing, you agree to our{' '}
         <Link href="/terms-of-use" className="underline hover:text-white">
@@ -215,54 +221,88 @@ const CreatorSignUp = ({ setAuthIntent }: any) => {
 
 const SignUpForm = ({ isCreator }: { isCreator: boolean }) => {
   return (
-    <form action="">
-      <label htmlFor="name">Name</label>
-      <input type="text" id="name" autoComplete="given-name" />
-      <label htmlFor="email">Email</label>
-      <input type="email" id="email" autoComplete="email" />
-      <label htmlFor="password">Password</label>
-      <input type="password" id="password" autoComplete="new-password" />
-      <label htmlFor="isCreator">isCreator</label>
-      <input type="checkbox" id="isCreator" checked={isCreator} />
+    <form id="signup" className="grid gap-3" onSubmit={() => {}}>
+      <InputWithLabel id="Name" label="Full name" autoComplete="name" />
+      <InputWithLabel
+        type="email"
+        id="email"
+        label="Email address"
+        autoComplete="email"
+      />
+      <InputWithLabel
+        type="password"
+        id="password"
+        label="Password"
+        autoComplete="new-password"
+      />
+      <div className="flex gap-2">
+        <label htmlFor="isCreator">isCreator (for test only)</label>
+        <input type="checkbox" id="isCreator" checked={isCreator} />
+      </div>
+      <Button type="submit">Create an account</Button>
+    </form>
+  );
+};
+
+const LogInForm = () => {
+  return (
+    <form id="login" className="grid gap-3" onSubmit={() => {}}>
+      <InputWithLabel
+        type="email"
+        id="email"
+        label="Email address"
+        autoComplete="email"
+      />
+      <InputWithLabel
+        type="password"
+        id="password"
+        label="Password"
+        autoComplete="current-password"
+      />
+      <Button type="submit" className="mt-2">
+        Log In
+      </Button>
+      <button
+        className="underline text-coachify-cyan-700 hover:text-coachify-cyan-500 transition-200-out-quart mr-auto text-sm"
+        onClick={() => {}}
+      >
+        Restore password
+      </button>
     </form>
   );
 };
 
 const LogIn = ({ setAuthIntent }: any) => {
-  const [isEmail, setIsEmail] = useState(false);
   return (
     <div className="grid gap-6">
       <div>
         <Dialog.Title as="h3" className="text-xl font-medium">
           Welcome back!
         </Dialog.Title>
-        <p className="mt-2 text-sm text-white/75">
+        <p className="mt-4 text-sm text-white/75">
           Please log in using one of the methods below.
         </p>
       </div>
       <div className="grid gap-3">
-        {isEmail ? (
-          <SignUpForm />
-        ) : (
-          <>
-            <Button fill="outline" icon="icon-left">
-              <BsApple />
-              Continue with Apple
-            </Button>
-            <Button fill="outline" icon="icon-left">
-              <BsGoogle />
-              Continue with Google
-            </Button>
-            <Button
-              fill="outline"
-              icon="icon-left"
-              onClick={() => setIsEmail(true)}
-            >
-              <FiMail />
-              Continue with Email
-            </Button>
-          </>
-        )}
+        <Button fill="outline" icon="icon-left">
+          <BsApple />
+          Continue with Apple
+        </Button>
+        <Button fill="outline" icon="icon-left">
+          <BsGoogle />
+          Continue with Google
+        </Button>
+        <div className="relative isolate flex">
+          <p
+            className={clsx(
+              'mx-auto px-4 bg-coachify-teal-800 text-xs text-white/50',
+              'before:absolute before:-z-10 before:left-0 before:top-1/2 before:h-px before:w-full before:bg-white/50'
+            )}
+          >
+            OR
+          </p>
+        </div>
+        <LogInForm />
       </div>
       <p className="text-sm text-white/75">
         Don&apos;t have an account yet?{' '}

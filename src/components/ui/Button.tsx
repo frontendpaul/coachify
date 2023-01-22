@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import { forwardRef } from 'react';
 
-interface Props extends React.HTMLProps<HTMLButtonElement> {
+type Props = React.HTMLAttributes<HTMLButtonElement> & {
   children: React.ReactNode;
   fill?: 'fill' | 'ghost' | 'outline'; // ghost -> text only, no bg
   fullWidth?: boolean;
@@ -9,7 +9,7 @@ interface Props extends React.HTMLProps<HTMLButtonElement> {
   intent?: 'primary' | 'secondary'; // Color variants, more to come
   type?: 'submit' | 'reset' | 'button';
   className?: string;
-}
+};
 
 const ButtonElement = (
   {
@@ -46,7 +46,7 @@ const ButtonElement = (
           'bg-transparent text-white hover:bg-white/5',
         intent === 'primary' &&
           fill === 'outline' &&
-          '!bg-transparent font-normal !text-white hover:!bg-white/5 !border-white focus-within:!bg-white/5',
+          '!bg-transparent font-normal !text-white hover:!bg-white/5 !border-white',
         className
       )}
       type={type}
