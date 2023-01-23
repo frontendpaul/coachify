@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import Button from '@components/ui/Button';
 import { FiMail, FiX } from 'react-icons/fi';
@@ -6,6 +6,8 @@ import { BsApple, BsGoogle } from 'react-icons/bs';
 import Link from 'next/link';
 import clsx from 'clsx';
 import InputWithLabel from '@components/ui/InputWithLabel';
+import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react';
+import { useRouter } from 'next/router';
 
 type AuthDialogProps = {
   open: boolean;
@@ -16,12 +18,54 @@ type AuthDialogProps = {
 
 export type AuthIntent = 'login' | 'signup' | 'creator-signup';
 
+// TODO: handle auth errors and form validation
 const AuthDialog = ({
   open,
   setIsOpen,
   intent,
   setAuthIntent,
 }: AuthDialogProps) => {
+  const user = useUser();
+  const supabaseClient = useSupabaseClient();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (user) setIsOpen(false);
+  }, [user, setIsOpen]);
+
+  const signInWithGoogle = async () => {
+    const { data, error } = await supabaseClient.auth.signInWithOAuth({
+      provider: 'google',
+    });
+  };
+
+  const signUpWithEmail = async (
+    email: string,
+    password: string,
+    name: string,
+    isCreator: boolean
+  ) => {
+    try {
+      const { data, error } = await supabaseClient.auth.signUp({
+        email: email,
+        password: password,
+        options: {
+          data: {
+            name: name,
+            isCreator: isCreator,
+          },
+        },
+      });
+
+      if (error) throw error;
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      // router.replace('/');
+    }
+  };
+
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={setIsOpen}>
@@ -34,7 +78,7 @@ const AuthDialog = ({
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-coachify-teal-1000/75" />
+          <div className="fixed inset-0 bg-coachify-teal-1000/75 backdrop-brightness-[.5]" />
         </Transition.Child>
 
         <div className="fixed inset-0 z-10 overflow-y-auto">
@@ -48,7 +92,7 @@ const AuthDialog = ({
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <Dialog.Panel className="overflow-hidden rounded-lg bg-coachify-teal-800 shadow-xl text-white transition-200-out-quart sm:my-8 w-full max-w-sm p-4 sm:p-6">
+              <Dialog.Panel className="relative overflow-hidden rounded-lg bg-coachify-teal-800 shadow-xl text-white transition-200-out-quart sm:my-8 w-full max-w-sm p-4 sm:p-6">
                 <Button
                   fill="ghost"
                   icon="icon-only"
@@ -59,12 +103,25 @@ const AuthDialog = ({
                   <FiX />
                 </Button>
                 {intent === 'signup' && (
-                  <SignUp setAuthIntent={setAuthIntent} />
+                  <SignUp
+                    setAuthIntent={setAuthIntent}
+                    signInWithGoogle={signInWithGoogle}
+                    signUpWithEmail={signUpWithEmail}
+                  />
                 )}
                 {intent === 'creator-signup' && (
-                  <CreatorSignUp setAuthIntent={setAuthIntent} />
+                  <CreatorSignUp
+                    setAuthIntent={setAuthIntent}
+                    signInWithGoogle={signInWithGoogle}
+                    signUpWithEmail={signUpWithEmail}
+                  />
                 )}
-                {intent === 'login' && <LogIn setAuthIntent={setAuthIntent} />}
+                {intent === 'login' && (
+                  <LogIn
+                    setAuthIntent={setAuthIntent}
+                    signInWithGoogle={signInWithGoogle}
+                  />
+                )}
               </Dialog.Panel>
             </Transition.Child>
           </div>
@@ -74,7 +131,7 @@ const AuthDialog = ({
   );
 };
 
-const SignUp = ({ setAuthIntent }: any) => {
+const SignUp = ({ setAuthIntent, signInWithGoogle, signUpWithEmail }: any) => {
   const [isEmail, setIsEmail] = useState(false);
 
   return (
@@ -90,14 +147,18 @@ const SignUp = ({ setAuthIntent }: any) => {
       </div>
       <div className="grid gap-3">
         {isEmail ? (
-          <SignUpForm isCreator={false} />
+          <SignUpForm isCreator={false} signUpWithEmail={signUpWithEmail} />
         ) : (
           <>
-            <Button fill="outline" icon="icon-left">
+            <Button fill="outline" icon="icon-left" disabled>
               <BsApple />
               Continue with Apple
             </Button>
-            <Button fill="outline" icon="icon-left">
+            <Button
+              fill="outline"
+              icon="icon-left"
+              onClick={() => signInWithGoogle()}
+            >
               <BsGoogle />
               Continue with Google
             </Button>
@@ -147,7 +208,11 @@ const SignUp = ({ setAuthIntent }: any) => {
   );
 };
 
-const CreatorSignUp = ({ setAuthIntent }: any) => {
+const CreatorSignUp = ({
+  setAuthIntent,
+  signInWithGoogle,
+  signUpWithEmail,
+}: any) => {
   const [isEmail, setIsEmail] = useState(false);
 
   return (
@@ -162,14 +227,18 @@ const CreatorSignUp = ({ setAuthIntent }: any) => {
       </div>
       <div className="grid gap-3">
         {isEmail ? (
-          <SignUpForm isCreator={true} />
+          <SignUpForm isCreator={true} signUpWithEmail={signUpWithEmail} />
         ) : (
           <>
-            <Button fill="outline" icon="icon-left">
+            <Button fill="outline" icon="icon-left" disabled>
               <BsApple />
               Continue with Apple
             </Button>
-            <Button fill="outline" icon="icon-left">
+            <Button
+              fill="outline"
+              icon="icon-left"
+              onClick={() => signInWithGoogle()}
+            >
               <BsGoogle />
               Continue with Google
             </Button>
@@ -219,27 +288,53 @@ const CreatorSignUp = ({ setAuthIntent }: any) => {
   );
 };
 
-const SignUpForm = ({ isCreator }: { isCreator: boolean }) => {
+const SignUpForm = ({
+  isCreator,
+  signUpWithEmail,
+}: {
+  isCreator: boolean;
+  signUpWithEmail: any;
+}) => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
   return (
-    <form id="signup" className="grid gap-3" onSubmit={() => {}}>
-      <InputWithLabel id="Name" label="Full name" autoComplete="name" />
+    <form id="signup" className="grid gap-3">
+      <InputWithLabel
+        id="Name"
+        label="Full name"
+        autoComplete="name"
+        onChange={(e) => {
+          setName(e.target.value);
+        }}
+      />
       <InputWithLabel
         type="email"
         id="email"
         label="Email address"
         autoComplete="email"
+        onChange={(e) => setEmail(e.target.value)}
       />
       <InputWithLabel
         type="password"
         id="password"
         label="Password"
         autoComplete="new-password"
+        onChange={(e) => setPassword(e.target.value)}
       />
       <div className="flex gap-2">
         <label htmlFor="isCreator">isCreator (for test only)</label>
-        <input type="checkbox" id="isCreator" checked={isCreator} />
+        <input type="checkbox" id="isCreator" checked={isCreator} readOnly />
       </div>
-      <Button type="submit">Create an account</Button>
+      <Button
+        onClick={(e) => {
+          e.preventDefault();
+          signUpWithEmail(email, password, name, isCreator);
+        }}
+      >
+        Create an account
+      </Button>
     </form>
   );
 };
@@ -272,7 +367,7 @@ const LogInForm = () => {
   );
 };
 
-const LogIn = ({ setAuthIntent }: any) => {
+const LogIn = ({ setAuthIntent, signInWithGoogle }: any) => {
   return (
     <div className="grid gap-6">
       <div>
@@ -284,11 +379,15 @@ const LogIn = ({ setAuthIntent }: any) => {
         </p>
       </div>
       <div className="grid gap-3">
-        <Button fill="outline" icon="icon-left">
+        <Button fill="outline" icon="icon-left" disabled>
           <BsApple />
           Continue with Apple
         </Button>
-        <Button fill="outline" icon="icon-left">
+        <Button
+          fill="outline"
+          icon="icon-left"
+          onClick={() => signInWithGoogle()}
+        >
           <BsGoogle />
           Continue with Google
         </Button>

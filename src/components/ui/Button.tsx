@@ -8,6 +8,7 @@ type Props = React.HTMLAttributes<HTMLButtonElement> & {
   icon?: 'icon-only' | 'icon-left' | 'icon-right' | 'icon-both';
   intent?: 'primary' | 'secondary'; // Color variants, more to come
   type?: 'submit' | 'reset' | 'button';
+  disabled?: boolean;
   className?: string;
 };
 
@@ -19,6 +20,7 @@ const ButtonElement = (
     icon,
     intent = 'primary',
     type = 'button',
+    disabled,
     className,
     ...props
   }: Props,
@@ -28,7 +30,7 @@ const ButtonElement = (
     <button
       ref={ref}
       className={clsx(
-        'flex justify-center gap-4 leading-none rounded-lg border border-transparent transition-200-out-quart',
+        'flex justify-center gap-4 leading-none [&>*]:leading-none rounded-lg border border-transparent transition-200-out-quart',
         fullWidth && 'w-full',
         !icon && 'px-6 py-3',
         icon === 'icon-only' && 'p-[10px] text-xl',
@@ -47,6 +49,7 @@ const ButtonElement = (
         intent === 'primary' &&
           fill === 'outline' &&
           '!bg-transparent font-normal !text-white hover:!bg-white/5 !border-white',
+        disabled && '!opacity-50 pointer-events-none',
         className
       )}
       type={type}

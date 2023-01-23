@@ -8,15 +8,10 @@ import { atom, useAtom } from 'jotai';
 import LanguageSelect from '@ui/LanguageSelect';
 import UserPopover from './UserPopover';
 import clsx from 'clsx';
-import debounce from '../../helpers/debounce';
 import AuthDialog, { AuthIntent } from './AuthDialog';
-
-// const UserPopover = dynamic(() => import('./UserPopover'), {
-//   ssr: false,
-// });
-// const LanguageSelect = dynamic(() => import('./LanguageSelect'), {
-//   ssr: false,
-// });
+import debounce from 'utils/helpers';
+import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react';
+import SignedUserPopover from './SignedUserPopover';
 
 export const isSidenavExpandedAtom = atom<boolean>(false);
 
@@ -61,6 +56,12 @@ const Header = () => {
     setIsAuthDialogOpen(true);
   };
 
+  // TODO: remove unused logs
+  const user = useUser();
+  useEffect(() => {
+    console.log(user);
+  });
+
   return (
     <header
       className={clsx(
@@ -101,24 +102,33 @@ const Header = () => {
           <FiSearch />
         </Button>
         <LanguageSelect className="hidden md:block" />
-        <UserPopover className="lg:hidden" openAuthDialog={openAuthDialog} />
-        <div className="hidden lg:flex gap-4">
-          <Button
-            fill="ghost"
-            icon="icon-left"
-            onClick={() => openAuthDialog('login')}
-          >
-            Log In
-          </Button>
-          <Button onClick={() => openAuthDialog('signup')}>Sign Up</Button>
-        </div>
+        {user ? (
+          <SignedUserPopover user={user} />
+        ) : (
+          <>
+            <UserPopover
+              className="lg:hidden"
+              openAuthDialog={openAuthDialog}
+            />
+            <div className="hidden lg:flex gap-4">
+              <Button
+                fill="ghost"
+                icon="icon-left"
+                onClick={() => openAuthDialog('login')}
+              >
+                Log In
+              </Button>
+              <Button onClick={() => openAuthDialog('signup')}>Sign Up</Button>
+            </div>
+            <AuthDialog
+              open={isAuthDialogOpen}
+              setIsOpen={setIsAuthDialogOpen}
+              intent={authIntent}
+              setAuthIntent={setAuthIntent}
+            />
+          </>
+        )}
       </div>
-      <AuthDialog
-        open={isAuthDialogOpen}
-        setIsOpen={setIsAuthDialogOpen}
-        intent={authIntent}
-        setAuthIntent={setAuthIntent}
-      />
     </header>
   );
 };
