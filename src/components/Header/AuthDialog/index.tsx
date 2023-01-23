@@ -27,17 +27,10 @@ const AuthDialog = ({
 }: AuthDialogProps) => {
   const user = useUser();
   const supabaseClient = useSupabaseClient();
-  const router = useRouter();
 
   useEffect(() => {
     if (user) setIsOpen(false);
   }, [user, setIsOpen]);
-
-  const signInWithGoogle = async () => {
-    const { data, error } = await supabaseClient.auth.signInWithOAuth({
-      provider: 'google',
-    });
-  };
 
   const signUpWithEmail = async (
     email: string,
@@ -45,25 +38,19 @@ const AuthDialog = ({
     name: string,
     isCreator: boolean
   ) => {
-    try {
-      const { data, error } = await supabaseClient.auth.signUp({
-        email: email,
-        password: password,
-        options: {
-          data: {
-            name: name,
-            isCreator: isCreator,
-          },
+    const { data, error } = await supabaseClient.auth.signUp({
+      email: email,
+      password: password,
+      options: {
+        data: {
+          name: name,
+          isCreator: isCreator,
         },
-      });
+      },
+    });
 
-      if (error) throw error;
-      console.log(data);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      // router.replace('/');
-    }
+    if (error) throw error;
+    console.log(data);
   };
 
   return (
@@ -105,23 +92,16 @@ const AuthDialog = ({
                 {intent === 'signup' && (
                   <SignUp
                     setAuthIntent={setAuthIntent}
-                    signInWithGoogle={signInWithGoogle}
                     signUpWithEmail={signUpWithEmail}
                   />
                 )}
                 {intent === 'creator-signup' && (
                   <CreatorSignUp
                     setAuthIntent={setAuthIntent}
-                    signInWithGoogle={signInWithGoogle}
                     signUpWithEmail={signUpWithEmail}
                   />
                 )}
-                {intent === 'login' && (
-                  <LogIn
-                    setAuthIntent={setAuthIntent}
-                    signInWithGoogle={signInWithGoogle}
-                  />
-                )}
+                {intent === 'login' && <LogIn setAuthIntent={setAuthIntent} />}
               </Dialog.Panel>
             </Transition.Child>
           </div>
@@ -131,9 +111,7 @@ const AuthDialog = ({
   );
 };
 
-const SignUp = ({ setAuthIntent, signInWithGoogle, signUpWithEmail }: any) => {
-  const [isEmail, setIsEmail] = useState(false);
-
+const SignUp = ({ setAuthIntent, signUpWithEmail }: any) => {
   return (
     <div className="grid gap-6">
       <div>
@@ -145,34 +123,7 @@ const SignUp = ({ setAuthIntent, signInWithGoogle, signUpWithEmail }: any) => {
           teachers!
         </p>
       </div>
-      <div className="grid gap-3">
-        {isEmail ? (
-          <SignUpForm isCreator={false} signUpWithEmail={signUpWithEmail} />
-        ) : (
-          <>
-            <Button fill="outline" icon="icon-left" disabled>
-              <BsApple />
-              Continue with Apple
-            </Button>
-            <Button
-              fill="outline"
-              icon="icon-left"
-              onClick={() => signInWithGoogle()}
-            >
-              <BsGoogle />
-              Continue with Google
-            </Button>
-            <Button
-              fill="outline"
-              icon="icon-left"
-              onClick={() => setIsEmail(true)}
-            >
-              <FiMail />
-              Continue with Email
-            </Button>
-          </>
-        )}
-      </div>
+      <SignUpForm isCreator={false} signUpWithEmail={signUpWithEmail} />
       <div className="grid gap-3">
         <p className="text-sm text-white/75">
           Aleady have an account?{' '}
@@ -208,11 +159,7 @@ const SignUp = ({ setAuthIntent, signInWithGoogle, signUpWithEmail }: any) => {
   );
 };
 
-const CreatorSignUp = ({
-  setAuthIntent,
-  signInWithGoogle,
-  signUpWithEmail,
-}: any) => {
+const CreatorSignUp = ({ setAuthIntent, signUpWithEmail }: any) => {
   const [isEmail, setIsEmail] = useState(false);
 
   return (
@@ -225,34 +172,7 @@ const CreatorSignUp = ({
           Create a free account and start teaching today!
         </p>
       </div>
-      <div className="grid gap-3">
-        {isEmail ? (
-          <SignUpForm isCreator={true} signUpWithEmail={signUpWithEmail} />
-        ) : (
-          <>
-            <Button fill="outline" icon="icon-left" disabled>
-              <BsApple />
-              Continue with Apple
-            </Button>
-            <Button
-              fill="outline"
-              icon="icon-left"
-              onClick={() => signInWithGoogle()}
-            >
-              <BsGoogle />
-              Continue with Google
-            </Button>
-            <Button
-              fill="outline"
-              icon="icon-left"
-              onClick={() => setIsEmail(true)}
-            >
-              <FiMail />
-              Continue with Email
-            </Button>
-          </>
-        )}
-      </div>
+      <SignUpForm isCreator={true} signUpWithEmail={signUpWithEmail} />
       <div className="grid gap-3">
         <p className="text-sm text-white/75">
           Aleady have an account?{' '}
@@ -378,31 +298,7 @@ const LogIn = ({ setAuthIntent, signInWithGoogle }: any) => {
           Please log in using one of the methods below.
         </p>
       </div>
-      <div className="grid gap-3">
-        <Button fill="outline" icon="icon-left" disabled>
-          <BsApple />
-          Continue with Apple
-        </Button>
-        <Button
-          fill="outline"
-          icon="icon-left"
-          onClick={() => signInWithGoogle()}
-        >
-          <BsGoogle />
-          Continue with Google
-        </Button>
-        <div className="relative isolate flex">
-          <p
-            className={clsx(
-              'mx-auto px-4 bg-coachify-teal-800 text-xs text-white/50',
-              'before:absolute before:-z-10 before:left-0 before:top-1/2 before:h-px before:w-full before:bg-white/50'
-            )}
-          >
-            OR
-          </p>
-        </div>
-        <LogInForm />
-      </div>
+      <LogInForm />
       <p className="text-sm text-white/75">
         Don&apos;t have an account yet?{' '}
         <button
