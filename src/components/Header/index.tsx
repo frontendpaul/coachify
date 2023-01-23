@@ -62,6 +62,10 @@ const Header = () => {
     console.log(user);
   });
 
+  useEffect(() => {
+    if (user) setIsAuthDialogOpen(false);
+  }, [user, setIsAuthDialogOpen]);
+
   return (
     <header
       className={clsx(

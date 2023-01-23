@@ -22,15 +22,12 @@ export type AuthIntent = 'login' | 'signup' | 'creator-signup';
 const AuthDialog = ({
   open,
   setIsOpen,
-  intent,
+  intent = 'signup',
   setAuthIntent,
 }: AuthDialogProps) => {
-  const user = useUser();
   const supabaseClient = useSupabaseClient();
 
-  useEffect(() => {
-    if (user) setIsOpen(false);
-  }, [user, setIsOpen]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const signUpWithEmail = async (
     email: string,
@@ -38,19 +35,43 @@ const AuthDialog = ({
     name: string,
     isCreator: boolean
   ) => {
-    const { data, error } = await supabaseClient.auth.signUp({
-      email: email,
-      password: password,
-      options: {
-        data: {
-          name: name,
-          isCreator: isCreator,
-        },
-      },
-    });
+    try {
+      setIsLoading(true);
 
-    if (error) throw error;
-    console.log(data);
+      const { data, error } = await supabaseClient.auth.signUp({
+        email: email,
+        password: password,
+        options: {
+          data: {
+            name: name,
+            isCreator: isCreator,
+          },
+        },
+      });
+
+      if (error) throw error;
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const logInWithEmail = async (email: string, password: string) => {
+    try {
+      setIsLoading(true);
+
+      const { data, error } = await supabaseClient.auth.signInWithPassword({
+        email: email,
+        password: password,
+      });
+
+      if (error) throw error;
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -89,19 +110,114 @@ const AuthDialog = ({
                 >
                   <FiX />
                 </Button>
-                {intent === 'signup' && (
-                  <SignUp
-                    setAuthIntent={setAuthIntent}
-                    signUpWithEmail={signUpWithEmail}
-                  />
-                )}
-                {intent === 'creator-signup' && (
-                  <CreatorSignUp
-                    setAuthIntent={setAuthIntent}
-                    signUpWithEmail={signUpWithEmail}
-                  />
-                )}
-                {intent === 'login' && <LogIn setAuthIntent={setAuthIntent} />}
+                {/* Title */}
+                <div className="grid gap-6">
+                  <div>
+                    <Dialog.Title as="h3" className="text-xl font-medium">
+                      {intent === 'signup' && 'We’re glad you’re here!'}
+                      {intent === 'creator-signup' && 'We’re glad you’re here!'}
+                      {intent === 'login' && 'Welcome back!'}
+                    </Dialog.Title>
+                    <p className="mt-2 text-sm text-white/75">
+                      {intent === 'signup' &&
+                        'Create a free account and start learning today from world-class teachers!'}
+                      {intent === 'creator-signup' &&
+                        'Create a free account and start teaching today!'}
+                      {intent === 'login' &&
+                        'Please enter your credentials to log in.'}
+                    </p>
+                  </div>
+                  {/* Form */}
+                  {intent === 'signup' && (
+                    <SignUpForm
+                      isCreator={false}
+                      signUpWithEmail={signUpWithEmail}
+                      isLoading={isLoading}
+                    />
+                  )}
+                  {intent === 'creator-signup' && (
+                    <SignUpForm
+                      isCreator={true}
+                      signUpWithEmail={signUpWithEmail}
+                      isLoading={isLoading}
+                    />
+                  )}
+                  {intent === 'login' && (
+                    <LogInForm
+                      logInWithEmail={logInWithEmail}
+                      isLoading={isLoading}
+                    />
+                  )}
+                  {/* Intent changing links */}
+                  <div className="grid gap-2">
+                    {/* Sign Up */}
+                    {intent != 'login' && (
+                      <>
+                        <p className="text-sm text-white/75">
+                          Aleady have an account?{' '}
+                          <button
+                            className="underline text-coachify-cyan-700 hover:text-coachify-cyan-500 transition-200-out-quart"
+                            onClick={() => setAuthIntent('login')}
+                          >
+                            Log In
+                          </button>
+                        </p>
+                        {intent === 'signup' && (
+                          <p className="text-sm text-white/75">
+                            Are you a teacher?{' '}
+                            <button
+                              className="underline text-coachify-cyan-700 hover:text-coachify-cyan-500 transition-200-out-quart"
+                              onClick={() => setAuthIntent('creator-signup')}
+                            >
+                              Register a creator account
+                            </button>
+                          </p>
+                        )}
+                        {intent === 'creator-signup' && (
+                          <p className="text-sm text-white/75">
+                            Are you a student?{' '}
+                            <button
+                              className="underline text-coachify-cyan-700 hover:text-coachify-cyan-500 transition-200-out-quart"
+                              onClick={() => setAuthIntent('signup')}
+                            >
+                              Register a student account
+                            </button>
+                          </p>
+                        )}
+                      </>
+                    )}
+                    {/* Log In */}
+                    {intent === 'login' && (
+                      <p className="text-sm text-white/75">
+                        Don&apos;t have an account yet?{' '}
+                        <button
+                          className="underline text-coachify-cyan-700 hover:text-coachify-cyan-500 transition-200-out-quart"
+                          onClick={() => setAuthIntent('signup')}
+                        >
+                          Sign Up
+                        </button>
+                      </p>
+                    )}
+                  </div>
+                  {/* Footer */}
+                  <p className="text-xs text-white/50">
+                    By continuing, you agree to our{' '}
+                    <Link
+                      href="/terms-of-use"
+                      className="underline hover:text-white"
+                    >
+                      Terms of Use
+                    </Link>{' '}
+                    and{' '}
+                    <Link
+                      href="/privacy-policy"
+                      className="underline hover:text-white"
+                    >
+                      Privacy Policy
+                    </Link>
+                    .
+                  </p>
+                </div>
               </Dialog.Panel>
             </Transition.Child>
           </div>
@@ -111,109 +227,14 @@ const AuthDialog = ({
   );
 };
 
-const SignUp = ({ setAuthIntent, signUpWithEmail }: any) => {
-  return (
-    <div className="grid gap-6">
-      <div>
-        <Dialog.Title as="h3" className="text-xl font-medium">
-          We’re glad you’re here!
-        </Dialog.Title>
-        <p className="mt-4 text-sm text-white/75">
-          Create a free account and start learning today from world-class
-          teachers!
-        </p>
-      </div>
-      <SignUpForm isCreator={false} signUpWithEmail={signUpWithEmail} />
-      <div className="grid gap-3">
-        <p className="text-sm text-white/75">
-          Aleady have an account?{' '}
-          <button
-            className="underline text-coachify-cyan-700 hover:text-coachify-cyan-500 transition-200-out-quart"
-            onClick={() => setAuthIntent('login')}
-          >
-            Log In
-          </button>
-        </p>
-        <p className="text-sm text-white/75">
-          Are you a teacher?{' '}
-          <button
-            className="underline text-coachify-cyan-700 hover:text-coachify-cyan-500 transition-200-out-quart"
-            onClick={() => setAuthIntent('creator-signup')}
-          >
-            Register a creator account
-          </button>
-        </p>
-      </div>
-      <p className="text-xs text-white/50">
-        By continuing, you agree to our{' '}
-        <Link href="/terms-of-use" className="underline hover:text-white">
-          Terms of Use
-        </Link>{' '}
-        and{' '}
-        <Link href="/privacy-policy" className="underline hover:text-white">
-          Privacy Policy
-        </Link>
-        .
-      </p>
-    </div>
-  );
-};
-
-const CreatorSignUp = ({ setAuthIntent, signUpWithEmail }: any) => {
-  const [isEmail, setIsEmail] = useState(false);
-
-  return (
-    <div className="grid gap-6">
-      <div>
-        <Dialog.Title as="h3" className="text-xl font-medium">
-          We’re glad you’re here!
-        </Dialog.Title>
-        <p className="mt-4 text-sm text-white/75">
-          Create a free account and start teaching today!
-        </p>
-      </div>
-      <SignUpForm isCreator={true} signUpWithEmail={signUpWithEmail} />
-      <div className="grid gap-3">
-        <p className="text-sm text-white/75">
-          Aleady have an account?{' '}
-          <button
-            className="underline text-coachify-cyan-700 hover:text-coachify-cyan-500 transition-200-out-quart"
-            onClick={() => setAuthIntent('login')}
-          >
-            Log In
-          </button>
-        </p>
-        <p className="text-sm text-white/75">
-          Are you a student?{' '}
-          <button
-            className="underline text-coachify-cyan-700 hover:text-coachify-cyan-500 transition-200-out-quart"
-            onClick={() => setAuthIntent('signup')}
-          >
-            Register a student account
-          </button>
-        </p>
-      </div>
-      <p className="text-xs text-white/50">
-        By continuing, you agree to our{' '}
-        <Link href="/terms-of-use" className="underline hover:text-white">
-          Terms of Use
-        </Link>{' '}
-        and{' '}
-        <Link href="/privacy-policy" className="underline hover:text-white">
-          Privacy Policy
-        </Link>
-        .
-      </p>
-    </div>
-  );
-};
-
 const SignUpForm = ({
   isCreator,
   signUpWithEmail,
+  isLoading,
 }: {
   isCreator: boolean;
   signUpWithEmail: any;
+  isLoading: boolean;
 }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -243,15 +264,14 @@ const SignUpForm = ({
         autoComplete="new-password"
         onChange={(e) => setPassword(e.target.value)}
       />
-      <div className="flex gap-2">
-        <label htmlFor="isCreator">isCreator (for test only)</label>
-        <input type="checkbox" id="isCreator" checked={isCreator} readOnly />
-      </div>
       <Button
+        type="submit"
+        className="mt-1"
         onClick={(e) => {
           e.preventDefault();
           signUpWithEmail(email, password, name, isCreator);
         }}
+        disabled={isLoading}
       >
         Create an account
       </Button>
@@ -259,7 +279,16 @@ const SignUpForm = ({
   );
 };
 
-const LogInForm = () => {
+const LogInForm = ({
+  isLoading,
+  logInWithEmail,
+}: {
+  isLoading: boolean;
+  logInWithEmail: any;
+}) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
   return (
     <form id="login" className="grid gap-3" onSubmit={() => {}}>
       <InputWithLabel
@@ -267,14 +296,24 @@ const LogInForm = () => {
         id="email"
         label="Email address"
         autoComplete="email"
+        onChange={(e) => setEmail(e.target.value)}
       />
       <InputWithLabel
         type="password"
         id="password"
         label="Password"
         autoComplete="current-password"
+        onChange={(e) => setPassword(e.target.value)}
       />
-      <Button type="submit" className="mt-2">
+      <Button
+        type="submit"
+        className="mt-1"
+        onClick={(e) => {
+          e.preventDefault();
+          logInWithEmail(email, password);
+        }}
+        disabled={isLoading}
+      >
         Log In
       </Button>
       <button
@@ -284,42 +323,6 @@ const LogInForm = () => {
         Restore password
       </button>
     </form>
-  );
-};
-
-const LogIn = ({ setAuthIntent, signInWithGoogle }: any) => {
-  return (
-    <div className="grid gap-6">
-      <div>
-        <Dialog.Title as="h3" className="text-xl font-medium">
-          Welcome back!
-        </Dialog.Title>
-        <p className="mt-4 text-sm text-white/75">
-          Please log in using one of the methods below.
-        </p>
-      </div>
-      <LogInForm />
-      <p className="text-sm text-white/75">
-        Don&apos;t have an account yet?{' '}
-        <button
-          className="underline text-coachify-cyan-700 hover:text-coachify-cyan-500 transition-200-out-quart"
-          onClick={() => setAuthIntent('signup')}
-        >
-          Sign Up
-        </button>
-      </p>
-      <p className="text-xs text-white/50 mt-4">
-        By continuing, you agree to our{' '}
-        <Link href="/terms-of-use" className="underline hover:text-white">
-          Terms of Use
-        </Link>{' '}
-        and{' '}
-        <Link href="/privacy-policy" className="underline hover:text-white">
-          Privacy Policy
-        </Link>
-        .
-      </p>
-    </div>
   );
 };
 
