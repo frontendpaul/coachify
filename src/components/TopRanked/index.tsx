@@ -1,8 +1,8 @@
 import TitleWithLink from '@components/ui/TitleWithLink';
 import { useRef } from 'react';
 import { useDraggable } from 'react-use-draggable-scroll';
-import { getTopRankedProducts } from '../../server/products';
-import ProductCard from './ProductCard';
+import { getTopRankedCourses } from '../../server/courses';
+import CourseCard from './CourseCard';
 
 const TopRanked = () => {
   const sliderRef = useRef<HTMLDivElement>(
@@ -11,7 +11,7 @@ const TopRanked = () => {
 
   const { events } = useDraggable(sliderRef);
 
-  const topRankedProducts = getTopRankedProducts().slice(0, 9);
+  const topRankedCourses = getTopRankedCourses().slice(0, 9);
   return (
     <section className="pl-4 md:pl-6">
       <TitleWithLink
@@ -26,16 +26,16 @@ const TopRanked = () => {
         auto-cols-[min(452px,90%)] xl:auto-cols-[40%] 2xl:auto-cols-[min(452px,30%)]
         gap-4 md:gap-6 pr-4 md:pr-6 overflow-auto cursor-grab scrollbar-hide"
       >
-        {topRankedProducts.map((product, index) =>
+        {topRankedCourses.map((course, index) =>
           index < 4 ? (
-            <ProductCard
-              product={product}
+            <CourseCard
+              course={course}
               index={index}
-              key={product.id}
+              key={course.id}
               isPriority={true}
             />
           ) : (
-            <ProductCard product={product} index={index} key={product.id} />
+            <CourseCard course={course} index={index} key={course.id} />
           )
         )}
       </div>
