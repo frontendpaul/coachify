@@ -41,9 +41,9 @@ const CourseCard = ({ course }: { course: Course }) => {
             ? course.price.toString().replace(/\./g, ',') + ' €'
             : 'Free'}
           {course.old_price && (
-            <span className="ml-2 text-sm text-white text-opacity-75 line-through">
+            <s className="ml-2 text-sm text-white text-opacity-75 line-through">
               {course.old_price.toString().replace(/\./g, ',') + ' €'}
-            </span>
+            </s>
           )}
         </p>
       </div>

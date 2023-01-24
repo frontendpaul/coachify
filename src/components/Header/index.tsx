@@ -59,11 +59,9 @@ const Header = () => {
   // TODO: remove unused logs
   const user = useUser();
   useEffect(() => {
-    console.log(user);
-  });
-
-  useEffect(() => {
     if (user) setIsAuthDialogOpen(false);
+
+    // console.log(user);
   }, [user, setIsAuthDialogOpen]);
 
   return (

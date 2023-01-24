@@ -36,7 +36,7 @@ const year = new Date().getFullYear();
 
 const Footer = () => {
   return (
-    <footer className="pt-16 md:pt-32 pb-4 md:mb-6 px-4 md:px-6">
+    <footer className="w-full max-w-7xl mx-auto pt-16 md:pt-32 pb-4 md:pb-6 px-4 md:px-6">
       <div className="lg:grid lg:grid-flow-col">
         <div className="mb-6 lg:mb-0 lg:order-2 lg:ml-auto">
           <LanguageSelect footer />

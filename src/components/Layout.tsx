@@ -53,11 +53,11 @@ const Layout = ({ children }: Props): React.ReactElement => {
         </div>
         <div
           className={clsx(
-            'flex flex-col',
+            'flex flex-col min-h-[calc(100vh-var(--header-height))]',
             isSidenavExpanded ? 'md:ml-60' : 'md:ml-16'
           )}
         >
-          <main className="py-6">{children}</main>
+          <main className="py-6 flex-1">{children}</main>
           <Footer />
         </div>
       </div>

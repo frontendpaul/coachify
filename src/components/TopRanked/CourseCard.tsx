@@ -34,9 +34,9 @@ const CourseCard = ({
         </div>
         <div className="py-2 px-3 leading-none text-sm rounded-full bg-coachify-teal-1000/50 backdrop-blur">
           {course.old_price && (
-            <span className="mr-2 text-xs text-white text-opacity-75 line-through leading-none">
+            <s className="mr-2 text-xs text-white text-opacity-75 line-through leading-none">
               {course.old_price.toString().replace(/\./g, ',') + ' €'}
-            </span>
+            </s>
           )}
           {course.price
             ? course.price.toString().replace(/\./g, ',') + ' €'

@@ -9,10 +9,10 @@ import rocketImage from '../../../public/rocket.png';
 const Promo = () => {
   const [isSidenavExpanded] = useAtom(isSidenavExpandedAtom);
   return (
-    <section className="px-4 md:px-6">
+    <section className="px-4 md:px-6 w-full max-w-7xl mx-auto">
       <div
         className="relative px-4 pb-6 text-coachify-teal-1000 bg-gradient-to-tr from-coachify-cyan-200 to-coachify-teal-200 rounded-xl
-        md:p-8 lg:p-10 xl:p-16 w-full max-w-[1615px] mx-auto"
+        md:p-8 lg:p-10 xl:p-16"
       >
         <Image
           src={rocketImage}

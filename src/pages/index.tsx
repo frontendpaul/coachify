@@ -13,6 +13,10 @@ export default function Home() {
         <meta name="description" content="Coachify app" />
       </Head>
       <div className="grid gap-16 md:gap-32">
+        <h1 className="sr-only">
+          Discover hundreds of courses from world-class teachers - welcome to
+          the Coachify Marketplace!
+        </h1>
         <TopRanked />
         <Statistics />
         <RecentlyAdded />
