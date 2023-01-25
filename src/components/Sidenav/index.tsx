@@ -55,8 +55,8 @@ const Sidenav = () => {
     <>
       <div
         className={clsx(
-          'fixed z-20 invisible inset-0 bg-coachify-teal-1000/0 transition-200-out-quart md:hidden',
-          isSidenavExpanded && '!bg-coachify-teal-1000/75 !visible',
+          'fixed z-20 invisible inset-0 bg-coachify-teal-1000/75 backdrop-brightness-[.5] opacity-0 transition-200-out-quart md:hidden',
+          isSidenavExpanded && '!opacity-100 !visible',
           isSidenavTransitioning && '!visible'
         )}
         onClick={() => toggleSidenav()}

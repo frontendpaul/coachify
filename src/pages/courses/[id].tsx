@@ -4,39 +4,26 @@ import { getCourseById } from 'server/courses';
 import Image from 'next/image';
 import DOMPurify from 'isomorphic-dompurify';
 import Button from '@components/ui/Button';
-import { FiHeart, FiShare2 } from 'react-icons/fi';
+import { FiGlobe, FiHeart, FiShare2 } from 'react-icons/fi';
+import { AiFillStar } from 'react-icons/ai';
+import clsx from 'clsx';
 
 const Course = () => {
   const router = useRouter();
   const id = router.query.id as string;
   const course = getCourseById(id);
 
-  const usersInput = `
-  <p>
-  <strong>
-    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tempora, in.
-  </strong>
-</p>
-<br />
-<p>
-  Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium,
-  dolorem? Quisquam eius soluta, natus dolores recusandae quae modi totam.
-  Quaerat!
-</p>
-<br />
-<p>
-  Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione vitae
-  molestias debitis! Culpa provident sapiente praesentium id, expedita,
-  quibusdam a necessitatibus maxime quasi officiis maiores suscipit eum
-  tempore temporibus sit.
-</p>
-  `;
+  let level = 0;
+  if (course?.course_metadata.level === 'All levels') level = 0;
+  if (course?.course_metadata.level === 'Beginner') level = 1;
+  if (course?.course_metadata.level === 'Intermediate') level = 2;
+  if (course?.course_metadata.level === 'Expert') level = 3;
 
-  const clean = DOMPurify.sanitize(usersInput, {
+  const clean = DOMPurify.sanitize('<strong>text</strong>', {
     ALLOWED_TAGS: ['h3', 'p', 'span', 'strong', 'br', 'ul', 'li'],
   });
 
-  if (!course)
+  if (!course) {
     return (
       <div className="grid place-items-center mt-20">
         <h3 className="text-xl text-semibold">No such course found.</h3>
@@ -45,11 +32,14 @@ const Course = () => {
         </Link>
       </div>
     );
+  }
+
   return (
     <section
-      className="max-w-7xl mx-auto px-4 md:px-6
-    xl:grid xl:grid-cols-[1fr,480px] xl:gap-6"
+      className="max-w-2xl xl:max-w-7xl mx-auto px-4 md:px-6
+      xl:grid xl:grid-cols-[1fr,min(35%,480px)] xl:gap-6"
     >
+      {/* lg:grid lg:grid-cols-[3fr,2fr] lg:gap-2  */}
       <div className="mb-6 xl:mb-0 xl:order-2">
         {/* <Image src={course.cover_image} width={640} height={360} alt="" /> */}
         <video
@@ -61,8 +51,14 @@ const Course = () => {
 
       <div className="grid gap-16">
         <div className="grid gap-6">
-          <h1 className="text-3xl font-semibold">{course.title}</h1>
-          <p className="text-lg">{course.course_metadata.short_description}</p>
+          <div>
+            <h1 className="text-2xl lg:text-3xl font-semibold mb-3">
+              {course.title}
+            </h1>
+            <p className="lg:text-lg">
+              {course.course_metadata.short_description}
+            </p>
+          </div>
           <div className="flex items-center gap-4">
             <Image
               src="/demo_profile_pic.png"
@@ -83,17 +79,19 @@ const Course = () => {
               </s>
             )}
           </p>
-          <div className="flex flex-wrap gap-4 max-w-sm sm:max-w-none">
+          <div className="grid grid-cols-2 justify-items-start gap-4 sm:flex w-full">
             <Button className="w-full sm:w-44">
               {course.free ? 'Enroll now' : 'Buy now'}
             </Button>
             <Button
               fill="outline"
               icon="icon-left"
-              className="flex-1 sm:flex-none"
+              className="w-full sm:w-auto"
             >
               <FiHeart />
-              <span>Save for later</span>
+              <span>
+                Save <span className="hidden sm:inline">for later</span>
+              </span>
             </Button>
             <Button fill="outline" icon="icon-only">
               <FiShare2 />
@@ -102,7 +100,60 @@ const Course = () => {
           </div>
         </div>
 
-        <div>cards</div>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 2xl:gap-6">
+          <div className="grid justify-items-center gap-2 p-4 2xl:p-6 bg-coachify-teal-700 rounded-lg">
+            {level === 0 && (
+              <Image
+                src="/icons/bars_blank.svg"
+                alt=""
+                width={32}
+                height={32}
+              />
+            )}
+            {level === 1 && (
+              <Image
+                src="/icons/bars_beginner.svg"
+                alt=""
+                width={32}
+                height={32}
+              />
+            )}
+            {level === 2 && (
+              <Image
+                src="/icons/bars_intermediate.svg"
+                alt=""
+                width={32}
+                height={32}
+              />
+            )}
+            {level === 3 && (
+              <Image
+                src="/icons/bars_expert.svg"
+                alt=""
+                width={32}
+                height={32}
+              />
+            )}
+            <span>{course.course_metadata.level}</span>
+          </div>
+          <div className="grid justify-items-center gap-2 p-4 2xl:p-6 bg-coachify-teal-700 rounded-lg">
+            <FiGlobe className="w-8 h-8" />
+            <span>{course.course_metadata.language}</span>
+          </div>
+          <div className="grid justify-items-center gap-2 p-4 2xl:p-6 bg-coachify-teal-700 rounded-lg">
+            <span className="text-2xl font-bold">
+              {course.course_metadata.participants}
+            </span>
+            <span>Students</span>
+          </div>
+          <div className="grid justify-items-center gap-2 p-4 2xl:p-6 bg-coachify-teal-700 rounded-lg">
+            <div className="flex items-center gap-2 text-2xl">
+              <span className="font-bold">{course.course_metadata.rating}</span>
+              <AiFillStar />
+            </div>
+            <span>Avg. Rating</span>
+          </div>
+        </div>
 
         <div>course content</div>
 
