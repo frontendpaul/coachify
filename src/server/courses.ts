@@ -101,8 +101,8 @@ const courses: Course[] = [
               id: '9MMMYNLyVh6',
               title: 'What you will learn',
               video: {
-                url: 'https://www.w3schools.com/html/mov_bbb.mp4',
-                duration: '0m31s',
+                url: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+                duration: '10m53s',
               },
             },
           ],
@@ -183,8 +183,8 @@ const courses: Course[] = [
               id: '9MMMYNLyVh6',
               title: 'Chapter title',
               video: {
-                url: 'https://www.w3schools.com/html/mov_bbb.mp4',
-                duration: '0m31s',
+                url: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
+                duration: '10m53s',
               },
             },
           ],
