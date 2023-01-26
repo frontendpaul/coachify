@@ -3,7 +3,7 @@ import { nanoid } from 'nanoid';
 export type Course = {
   id: string;
   title: string;
-  owner: string;
+  owner: Creator;
   free: boolean;
   price?: number;
   old_price?: number;
@@ -61,11 +61,43 @@ type Chapter = {
   };
 };
 
+export type User = {
+  id: string;
+  name: string;
+  avatar?: string;
+  //TODO: to be addded later
+  email?: string;
+  courses_acquired?: Course[];
+  contracts?: any[];
+};
+
+type Creator = User & {
+  courses_owned?: Course[];
+  description?: string;
+};
+
 const courses: Course[] = [
   {
     id: 'UJV8zBbfNsSYscnIK7fJ_',
     title: 'How to create stunning motion Scenes',
-    owner: 'John Smith',
+    owner: {
+      id: 'Tiglc-I33dZmoHGeK-9wB',
+      name: 'John Smith',
+      avatar: '/avatar_man.jpeg',
+      description: `
+        <p><strong>Turn your dreams of YouTube stardom into a reality with Marques
+              Brownlee, the self-taught creator who grew his love of tech into a
+              channel with 13M subscribers and counting!</strong></p>
+          <p>Today Marques, known on the internet as MKBHD, draws millions of
+            views with his tech review videos. But it wasn’t always that way: he
+            started out in his parent’s basement, creating videos on his
+            computer’s built-in camera, and slowly building a following on
+            YouTube. If you’re like Marques—you have an itch to share your
+            passion and opinions with the world—then this class will help you
+            translate that point of view into engaging, authentic, and wildly
+            watchable videos.</p>
+        `,
+    },
     free: false,
     price: 14.99,
     cover_image: '/courses/filmmaking.jpg',
@@ -149,7 +181,13 @@ const courses: Course[] = [
   {
     id: 'dsiXfimpcH9MMMYNLyVh6',
     title: 'Create native mobile Apps add more text for testing',
-    owner: 'Sara Doe',
+    owner: {
+      id: 'XEdQwMmgZmkpH5sd7f2zx',
+      name: 'Michelle Shaw',
+      avatar: '/avatar_woman.png',
+      description:
+        'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Culpa nihil possimus reiciendis. Dolores officia maxime eum amet est odit quam ducimus eaque nemo pariatur aperiam libero recusandae soluta aliquid praesentium, dolorum nobis culpa. Blanditiis, consequatur natus aspernatur id veniam voluptate maiores accusantium odit eius excepturi animi et alias sit ad praesentium beatae dolores ea provident iure impedit libero necessitatibus, non deleniti? Ut qui modi neque eius nemo. Aperiam quaerat magni perferendis voluptatibus sed nesciunt fuga et amet, rerum corrupti praesentium ut delectus reiciendis vero omnis iusto, soluta dolorum porro eligendi explicabo earum. Omnis optio libero nobis officia repudiandae sunt in.',
+    },
     free: false,
     price: 114.99,
     old_price: 249.99,
@@ -375,7 +413,11 @@ const courses: Course[] = [
   {
     id: 'PbyyCZFTzlhEW6Un83LcC',
     title: 'Cooking 101',
-    owner: 'Sara Doe',
+    owner: {
+      id: 'hbfvhafQHiQErihjGBjYU',
+      name: 'Sara Johnson',
+      description: 'description',
+    },
     free: true,
     cover_image: '/courses/cooking.jpg',
     course_metadata: {
@@ -429,7 +471,10 @@ const courses: Course[] = [
   {
     id: 'F3SzYuhyZ4jS-paCf8SYm',
     title: 'Learn JavaScript',
-    owner: 'Poul Sparrow',
+    owner: {
+      id: 'PHr9n_flxqMwDaYUhK6Mj',
+      name: 'John Snow',
+    },
     free: false,
     price: 99.99,
     cover_image: '/courses/coding.jpg',
@@ -484,7 +529,10 @@ const courses: Course[] = [
   {
     id: 'REuq4PB-2OU1NGKvfoSNI',
     title: 'Knitting',
-    owner: 'Sara Doe',
+    owner: {
+      id: 'PHr9n_flxqMwDaYUhK6Mj',
+      name: 'John Snow',
+    },
     free: false,
     price: 69.99,
     cover_image: '/courses/knitting.jpg',
@@ -539,7 +587,10 @@ const courses: Course[] = [
   {
     id: 'cKSDVDId2kbIsGoZcKqrr',
     title: 'Oil Painting',
-    owner: 'Sara Doe',
+    owner: {
+      id: 'PHr9n_flxqMwDaYUhK6Mj',
+      name: 'John Snow',
+    },
     free: false,
     price: 39.99,
     cover_image: '/courses/painting.jpg',
@@ -594,7 +645,10 @@ const courses: Course[] = [
   {
     id: 'UJV8zBbfNsSYscnIK7f',
     title: 'How to create stunning motion Scenes',
-    owner: 'John Smith',
+    owner: {
+      id: 'PHr9n_flxqMwDaYUhK6Mj',
+      name: 'John Snow',
+    },
     free: false,
     price: 14.99,
     cover_image: '/courses/filmmaking.jpg',
@@ -649,7 +703,10 @@ const courses: Course[] = [
   {
     id: 'dsiXfimpcH9MMMYNLyV',
     title: 'Create native mobile Apps add more text for testing',
-    owner: 'Sara Doe',
+    owner: {
+      id: 'PHr9n_flxqMwDaYUhK6Mj',
+      name: 'John Snow',
+    },
     free: false,
     price: 114.99,
     cover_image: '/courses/mobile-app.jpg',
@@ -704,7 +761,10 @@ const courses: Course[] = [
   {
     id: 'PbyyCZFTzlhEW6Un83L',
     title: 'Cooking 101',
-    owner: 'Sara Doe',
+    owner: {
+      id: 'PHr9n_flxqMwDaYUhK6Mj',
+      name: 'John Snow',
+    },
     free: true,
     cover_image: '/courses/cooking.jpg',
     course_metadata: {
@@ -758,7 +818,10 @@ const courses: Course[] = [
   {
     id: 'F3SzYuhyZ4jS-paCf8S',
     title: 'Learn JavaScript',
-    owner: 'Poul Sparrow',
+    owner: {
+      id: 'PHr9n_flxqMwDaYUhK6Mj',
+      name: 'John Snow',
+    },
     free: false,
     price: 29.99,
     old_price: 99.99,
@@ -814,7 +877,10 @@ const courses: Course[] = [
   {
     id: 'REuq4PB-2OU1NGKvfoS',
     title: 'Knitting',
-    owner: 'Sara Doe',
+    owner: {
+      id: 'PHr9n_flxqMwDaYUhK6Mj',
+      name: 'John Snow',
+    },
     free: false,
     price: 69.99,
     cover_image: '/courses/knitting.jpg',
@@ -869,7 +935,10 @@ const courses: Course[] = [
   {
     id: 'cKSDVDId2kbIsGoZcKq',
     title: 'Oil Painting',
-    owner: 'Sara Doe',
+    owner: {
+      id: 'PHr9n_flxqMwDaYUhK6Mj',
+      name: 'John Snow',
+    },
     free: false,
     price: 39.99,
     cover_image: '/courses/painting.jpg',
@@ -924,7 +993,10 @@ const courses: Course[] = [
   {
     id: 'UJV8zBbfNsSYscnIK',
     title: 'How to create stunning motion Scenes',
-    owner: 'John Smith',
+    owner: {
+      id: 'PHr9n_flxqMwDaYUhK6Mj',
+      name: 'John Snow',
+    },
     free: false,
     price: 14.99,
     cover_image: '/courses/filmmaking.jpg',
@@ -979,7 +1051,10 @@ const courses: Course[] = [
   {
     id: 'dsiXfimpcH9MMMYNL',
     title: 'Create native mobile Apps add more text for testing',
-    owner: 'Sara Doe',
+    owner: {
+      id: 'PHr9n_flxqMwDaYUhK6Mj',
+      name: 'John Snow',
+    },
     free: false,
     price: 114.99,
     cover_image: '/courses/mobile-app.jpg',
@@ -1034,7 +1109,10 @@ const courses: Course[] = [
   {
     id: 'PbyyCZFTzlhEW6Un8',
     title: 'Cooking 101',
-    owner: 'Sara Doe',
+    owner: {
+      id: 'PHr9n_flxqMwDaYUhK6Mj',
+      name: 'John Snow',
+    },
     free: true,
     cover_image: '/courses/cooking.jpg',
     course_metadata: {
@@ -1088,7 +1166,10 @@ const courses: Course[] = [
   {
     id: 'F3SzYuhyZ4jS-paCf',
     title: 'Learn JavaScript',
-    owner: 'Poul Sparrow',
+    owner: {
+      id: 'PHr9n_flxqMwDaYUhK6Mj',
+      name: 'John Snow',
+    },
     free: false,
     price: 29.99,
     old_price: 99.99,
@@ -1144,7 +1225,10 @@ const courses: Course[] = [
   {
     id: 'REuq4PB-2OU1NGKvf',
     title: 'Knitting',
-    owner: 'Sara Doe',
+    owner: {
+      id: 'PHr9n_flxqMwDaYUhK6Mj',
+      name: 'John Snow',
+    },
     free: false,
     price: 69.99,
     cover_image: '/courses/knitting.jpg',
@@ -1199,7 +1283,10 @@ const courses: Course[] = [
   {
     id: 'cKSDVDId2kbIsGoZc',
     title: 'Oil Painting',
-    owner: 'Sara Doe',
+    owner: {
+      id: 'PHr9n_flxqMwDaYUhK6Mj',
+      name: 'John Snow',
+    },
     free: false,
     price: 39.99,
     cover_image: '/courses/painting.jpg',

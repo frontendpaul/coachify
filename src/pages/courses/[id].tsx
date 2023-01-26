@@ -16,6 +16,7 @@ import { AiFillStar } from 'react-icons/ai';
 import clsx from 'clsx';
 import * as Accordion from '@radix-ui/react-accordion';
 import { useEffect, useRef, useState } from 'react';
+import Avatar from '@components/ui/Avatar';
 
 const Course = () => {
   const router = useRouter();
@@ -35,8 +36,16 @@ const Course = () => {
     0
   );
 
-  const sanitizedDescription = DOMPurify.sanitize(
+  const sanitizedCourseDescription = DOMPurify.sanitize(
     course?.course_metadata.description as string,
+    {
+      ALLOWED_TAGS: ['p', 'span', 'strong', 'br', 'ul', 'ol', 'li', 'a'],
+      FORBID_ATTR: ['style'],
+    }
+  );
+
+  const sanitizedCreatorDescription = DOMPurify.sanitize(
+    course?.owner.description as string,
     {
       ALLOWED_TAGS: ['p', 'span', 'strong', 'br', 'ul', 'ol', 'li', 'a'],
       FORBID_ATTR: ['style'],
@@ -106,14 +115,10 @@ const Course = () => {
             </p>
           </div>
           <div className="flex items-center gap-4">
-            <Image
-              src="/demo_profile_pic.png"
-              alt=""
-              width={40}
-              height={40}
-              className="w-10 h-10 rounded-full"
-            />
-            <p className="leading-none">{course.owner}</p>
+            <div className="w-10 h-10">
+              <Avatar user={course.owner} />
+            </div>
+            <p className="leading-none">{course.owner.name}</p>
           </div>
           <p className="text-2xl font-semibold">
             {course.price
@@ -308,7 +313,7 @@ const Course = () => {
                 ))}
             </ol>
 
-            {!showAllSections && (
+            {!showAllSections && course.course_content.sections.length > 5 && (
               <div className="flex justify-center mt-4">
                 <Button
                   fill="ghost"
@@ -395,7 +400,7 @@ const Course = () => {
             >
               <div
                 className="grid gap-4 [&_a]:underline [&_li]:list-inside [&_ul]:list-disc [&_ol]:list-decimal"
-                dangerouslySetInnerHTML={{ __html: sanitizedDescription }}
+                dangerouslySetInnerHTML={{ __html: sanitizedCourseDescription }}
               ></div>
               {makeDescriptionCollapsible && (
                 <div
@@ -441,7 +446,21 @@ const Course = () => {
           </ul>
         </section>
 
-        <div>teacher</div>
+        <section>
+          <h2 className="text-xl xl:text-2xl font-semibold mb-6">
+            Meet your teacher
+          </h2>
+          <div className="flex items-center gap-4 mb-6">
+            <div className="w-10 h-10">
+              <Avatar user={course.owner} />
+            </div>
+            <p className="leading-none">{course.owner.name}</p>
+          </div>
+          <div
+            className="grid gap-4 [&_a]:underline [&_li]:list-inside [&_ul]:list-disc [&_ol]:list-decimal"
+            dangerouslySetInnerHTML={{ __html: sanitizedCreatorDescription }}
+          ></div>
+        </section>
 
         <div>reviews</div>
 

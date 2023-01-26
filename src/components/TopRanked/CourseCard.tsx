@@ -48,7 +48,7 @@ const CourseCard = ({
           {course.title}
         </h3>
         <p className="leading-none mb-3 md:mb-4 text-white text-opacity-75 text-sm">
-          by {course.owner}
+          by {course.owner.name}
         </p>
         <div className="flex gap-8 md:gap-10 leading-none text-sm">
           <div className="flex items-center gap-2">

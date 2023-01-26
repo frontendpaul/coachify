@@ -34,7 +34,7 @@ const CourseCard = ({ course }: { course: Course }) => {
       <div className="flex flex-col flex-1 p-4 pt-3 md:p-4 md:pt-3">
         <h3 className="font-semibold mb-2">{course.title}</h3>
         <p className="leading-none mb-3 text-white text-opacity-75 text-sm">
-          by {course.owner}
+          by {course.owner.name}
         </p>
         <p className="mt-auto">
           {course.price
