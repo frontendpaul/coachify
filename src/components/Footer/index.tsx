@@ -67,7 +67,10 @@ const Footer = () => {
       <ul className="flex gap-6 mt-6 lg:mt-8 text-xl">
         {socialLinks.map((link) => (
           <li key={link.name}>
-            <Link href={link.href}>{link.icon}</Link>
+            <Link href={link.href}>
+              <span className="sr-only">{link.name}</span>
+              {link.icon}
+            </Link>
           </li>
         ))}
       </ul>
