@@ -64,7 +64,7 @@ const Course = () => {
       cssHeight
     );
 
-    if (descriptionHeight > 396) {
+    if (descriptionHeight > 448) {
       setMakeDescriptionCollapsible(true);
     }
   }, [descriptionHeight]);
@@ -86,9 +86,7 @@ const Course = () => {
       className="max-w-2xl xl:max-w-7xl mx-auto px-4 md:px-6
       xl:grid xl:grid-cols-[1fr,min(35%,480px)] xl:gap-6"
     >
-      {/* lg:grid lg:grid-cols-[3fr,2fr] lg:gap-2  */}
       <div className="mb-6 xl:mb-0 xl:order-2">
-        {/* <Image src={course.cover_image} width={640} height={360} alt="" /> */}
         <video
           className="w-full aspect-video"
           src={course.course_content.sections[0].chapters[0].video.url}
@@ -392,7 +390,7 @@ const Course = () => {
               className={clsx(
                 'relative transition-200-out-quart overflow-hidden',
                 makeDescriptionCollapsible &&
-                  'data-[state=open]:max-h-[var(--radix-collapsible-content-height)] data-[state=closed]:max-h-96'
+                  'data-[state=open]:max-h-[var(--radix-collapsible-content-height)] data-[state=closed]:max-h-[448px]'
               )}
             >
               <div
@@ -427,7 +425,21 @@ const Course = () => {
           </div>
         </section>
 
-        <div>skills</div>
+        <section>
+          <h2 className="text-xl xl:text-2xl font-semibold mb-6">
+            Skills you will gain
+          </h2>
+          <ul className="flex align-top gap-3 flex-wrap">
+            {course.course_metadata.skill_tags.map((tag) => (
+              <li
+                key={tag}
+                className="px-6 py-3 border border-white/50 rounded-full text-sm leading-none"
+              >
+                {tag}
+              </li>
+            ))}
+          </ul>
+        </section>
 
         <div>teacher</div>
 
