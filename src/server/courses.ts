@@ -112,7 +112,7 @@ const courses: Course[] = [
           title: 'What is ReactJS?',
           chapters: [
             {
-              id: 'SYscnIK7fJ',
+              id: 'SYsnIK7fJ',
               title: 'A little bit of history',
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
@@ -122,7 +122,7 @@ const courses: Course[] = [
               },
             },
             {
-              id: '9MMMYNLyVh6',
+              id: '9MMYNLyVh6',
               title: 'Basics',
               video: {
                 url: 'https://www.w3schools.com/html/mov_bbb.mp4',
@@ -194,7 +194,7 @@ const courses: Course[] = [
           title: 'Section title',
           chapters: [
             {
-              id: 'SYscnIK7fJ',
+              id: 'SYscIK7fJ',
               title: 'Chapter title',
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
@@ -214,7 +214,7 @@ const courses: Course[] = [
               },
             },
             {
-              id: 'SIK7fJ',
+              id: 'SK7fJ',
               title: 'Chapter title',
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
@@ -262,7 +262,7 @@ const courses: Course[] = [
           ],
         },
         {
-          id: 'yCZFTzlhEW6U',
+          id: 'yCZFTzlhEW6',
           title: 'Section title',
           chapters: [
             {
@@ -278,7 +278,7 @@ const courses: Course[] = [
           ],
         },
         {
-          id: 'yCZFTzlhEW6U',
+          id: 'yCZFTzlhEW',
           title: 'Section title',
           chapters: [
             {
@@ -294,7 +294,7 @@ const courses: Course[] = [
           ],
         },
         {
-          id: 'yCZFTzlhEW6U',
+          id: 'yCZFTzlhE',
           title: 'Section title',
           chapters: [
             {
@@ -310,7 +310,7 @@ const courses: Course[] = [
           ],
         },
         {
-          id: 'yCZFTzlhEW6U',
+          id: 'yCZFTzl',
           title: 'Section title',
           chapters: [
             {
@@ -326,7 +326,7 @@ const courses: Course[] = [
           ],
         },
         {
-          id: 'yCZFTzlhEW6U',
+          id: 'yCZFTz',
           title: 'Section title',
           chapters: [
             {
@@ -342,7 +342,7 @@ const courses: Course[] = [
           ],
         },
         {
-          id: 'yCZFTzlhEW6U',
+          id: 'CZFTzlhEW6U',
           title: 'Section title',
           chapters: [
             {
