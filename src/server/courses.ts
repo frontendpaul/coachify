@@ -77,8 +77,20 @@ const courses: Course[] = [
       level: 'Beginner',
       short_description:
         'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
-      description:
-        'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Culpa nihil possimus reiciendis. Dolores officia maxime eum amet est odit quam ducimus eaque nemo pariatur aperiam libero recusandae soluta aliquid praesentium, dolorum nobis culpa. Blanditiis, consequatur natus aspernatur id veniam voluptate maiores accusantium odit eius excepturi animi et alias sit ad praesentium beatae dolores ea provident iure impedit libero necessitatibus, non deleniti? Ut qui modi neque eius nemo. Aperiam quaerat magni perferendis voluptatibus sed nesciunt fuga et amet, rerum corrupti praesentium ut delectus reiciendis vero omnis iusto, soluta dolorum porro eligendi explicabo earum. Omnis optio libero nobis officia repudiandae sunt in.',
+      description: `
+<p style="font-size: 2rem"><strong>Embroidery is for everyone with something to say — and Danielle Clough is here to help you find your voice.</strong></p>
+<p><span style="font-weight:400;">Stuffy embroidery with rigid rules is a thing of the past — find new inspiration and a new way to express your creativity with master embroiderer Danielle Clough! Known for her groundbreaking techniques and nontraditional materials, Danielle’s warm and funny teaching style will make you wonder why you’ve never tried this before.</span></p>
+<p>Danielle believes that embroidery is for absolutely everyone, and her colorful class breaks down the process of stitching into simple, easy to follow steps. From preparing your needle, thread, and fabric, through basic stitches, to her signature (and surprisingly simple) color-blending stitching technique, this class will have you working with fabric and thread as comfortably as you do with your tablet, your paints, or your pencils.</p>
+<ol><li><span style="font-weight:400;">Use stitching to create different textures, color gradients, and dimension</span></li>
+<li><span style="font-weight:400;">Prepare your fabric, hoop, design, and needle and thread</span></li>
+<li><span style="font-weight:400;">Create a complete (and beautiful) floral embroidery</span></li></ol>
+<p>Working with Danielle, you’ll learn how to:</p>
+<ul><li><span style="font-weight:400;">Create a variety of basic stitches, including French knots</span></li>
+<li><span style="font-weight:400;">Use stitching to create different textures, color gradients, and dimension</span></li>
+<li><span style="font-weight:400;">Prepare your fabric, hoop, design, and needle and thread</span></li>
+<li><span style="font-weight:400;">Create a complete (and beautiful) floral embroidery</span></li>
+</ul><p><span style="font-weight:400;">Pick up a </span><a href="https://www.amazon.com/Caydo-Embroidery-Instruction-Pattern-Threads/dp/B07RWX5M9K/ref=sr_1_40?gclid=EAIaIQobChMI1c-L3ump5wIVyp-zCh3vXw9HEAAYASAAEgLIzvD_BwE&amp;hvadid=177578537506&amp;hvdev=c&amp;hvlocphy=9004338&amp;hvnetw=g&amp;hvqmt=b&amp;hvrand=4043106024154581224&amp;hvtargid=kwd-267468683987&amp;hydadcr=29537_10164147&amp;keywords=embroidery+kit+beginner+adults&amp;qid=1580335833&amp;sr=8-40" rel="nofollow noreferrer noopener" target="_blank"><span style="font-weight:400;">complete beginner kit</span></a><span style="font-weight:400;"> (don’t forget your </span><a href="https://www.amazon.com/Caydo-Pieces-Embroidery-Plastic-Multicolor/dp/B01LCEOMRE/ref=sr_1_16?keywords=embroidery+kit+beginner+adults+plastic+hoops&amp;qid=1580335964&amp;sr=8-16" rel="nofollow noreferrer noopener" target="_blank"><span style="font-weight:400;">plastic hoops</span></a><span style="font-weight:400;">) and get started with a brand new way to explore your creative voice!</span></p><p></p>
+        `,
       skill_tags: ['HTML', 'CSS', 'JavaScript'],
     },
     course_content: {

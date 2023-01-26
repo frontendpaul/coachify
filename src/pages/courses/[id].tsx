@@ -15,7 +15,7 @@ import {
 import { AiFillStar } from 'react-icons/ai';
 import clsx from 'clsx';
 import * as Accordion from '@radix-ui/react-accordion';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const Course = () => {
   const router = useRouter();
@@ -35,13 +35,39 @@ const Course = () => {
     0
   );
 
-  const clean = DOMPurify.sanitize('<strong>text</strong>', {
-    ALLOWED_TAGS: ['h3', 'p', 'span', 'strong', 'br', 'ul', 'li'],
-  });
+  const sanitizedDescription = DOMPurify.sanitize(
+    course?.course_metadata.description as string,
+    {
+      ALLOWED_TAGS: ['p', 'span', 'strong', 'br', 'ul', 'ol', 'li', 'a'],
+      FORBID_ATTR: ['style'],
+    }
+  );
 
   const videoPlayer = useRef<HTMLVideoElement>(null);
   const [activeChapter, setActiveChapter] = useState(0);
   const [showAllSections, setShowAllSections] = useState(false);
+  const collapsibleDescription = useRef<HTMLDivElement>(null);
+  const [makeDescriptionCollapsible, setMakeDescriptionCollapsible] =
+    useState(false);
+  const [showFullDescription, setShowFullDescription] = useState(false);
+  const [descriptionHeight, setDescriptionHeight] = useState(0);
+
+  useEffect(() => {
+    const height = collapsibleDescription.current?.scrollHeight as number;
+    setDescriptionHeight(height);
+  });
+
+  useEffect(() => {
+    const cssHeight = descriptionHeight + 'px';
+    collapsibleDescription.current?.style.setProperty(
+      '--radix-collapsible-content-height',
+      cssHeight
+    );
+
+    if (descriptionHeight > 396) {
+      setMakeDescriptionCollapsible(true);
+    }
+  }, [descriptionHeight]);
 
   if (!course) {
     return (
@@ -354,10 +380,52 @@ const Course = () => {
           </Accordion.Root>
         </section>
 
-        <div>
-          description
-          <div dangerouslySetInnerHTML={{ __html: clean }}></div>
-        </div>
+        <section>
+          <h2 className="text-xl xl:text-2xl font-semibold mb-6">
+            About this course
+          </h2>
+          <div>
+            <div
+              ref={collapsibleDescription}
+              data-state={showFullDescription ? 'open' : 'closed'}
+              data-id="collapsible-description"
+              className={clsx(
+                'relative transition-200-out-quart overflow-hidden',
+                makeDescriptionCollapsible &&
+                  'data-[state=open]:max-h-[var(--radix-collapsible-content-height)] data-[state=closed]:max-h-96'
+              )}
+            >
+              <div
+                className="grid gap-4 [&_a]:underline [&_li]:list-inside [&_ul]:list-disc [&_ol]:list-decimal"
+                dangerouslySetInnerHTML={{ __html: sanitizedDescription }}
+              ></div>
+              {makeDescriptionCollapsible && (
+                <div
+                  className={clsx(
+                    'absolute bottom-0 w-full h-24 bg-gradient-to-b from-transparent to-coachify-teal-1000 transition-200-out-quart',
+                    showFullDescription
+                      ? 'opacity-0 invisible'
+                      : 'opacity-100 visible'
+                  )}
+                ></div>
+              )}
+            </div>
+            {makeDescriptionCollapsible && !showFullDescription && (
+              <div className="flex justify-center mt-4">
+                <Button
+                  fill="ghost"
+                  icon="icon-right"
+                  onClick={() => setShowFullDescription(true)}
+                  aria-controls="collapsible-description"
+                  data-state={showFullDescription ? 'open' : 'closed'}
+                >
+                  Show full description
+                  <FiChevronDown />
+                </Button>
+              </div>
+            )}
+          </div>
+        </section>
 
         <div>skills</div>
 
