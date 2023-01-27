@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { getCourseById } from 'server/courses';
+import { getCourseById, Review } from 'server/courses';
 import Image from 'next/image';
 import DOMPurify from 'isomorphic-dompurify';
 import Button from '@components/ui/Button';
@@ -18,6 +18,8 @@ import * as Accordion from '@radix-ui/react-accordion';
 import { useEffect, useRef, useState } from 'react';
 import Avatar from '@components/ui/Avatar';
 import Head from 'next/head';
+import Stars from '@components/course/Reviews/Stars';
+import LinkWithChevron from '@components/ui/LinkWithChevron';
 
 const Course = () => {
   const router = useRouter();
@@ -62,6 +64,11 @@ const Course = () => {
   const [showFullDescription, setShowFullDescription] = useState(false);
   const [descriptionHeight, setDescriptionHeight] = useState(0);
 
+  /*
+  On initial render def is undefined.
+  No effect dependecies in order to get height on second (end every further) render.
+  */
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     const height = collapsibleDescription.current?.scrollHeight as number;
     setDescriptionHeight(height);
@@ -78,6 +85,10 @@ const Course = () => {
       setMakeDescriptionCollapsible(true);
     }
   }, [descriptionHeight]);
+
+  const [hasMoreThan3Reviews, setHasMoreThan3Reviews] = useState(
+    (course?.reviews?.length as number) > 3
+  );
 
   if (!course) {
     return (
@@ -111,9 +122,10 @@ const Course = () => {
       </Head>
       <section
         className="max-w-2xl xl:max-w-7xl mx-auto px-4 md:px-6
-      xl:grid xl:grid-cols-[1fr,min(35%,480px)] xl:gap-6"
+      xl:grid xl:grid-cols-[1fr,min(35%,400px)] xl:gap-6"
       >
         <div className="mb-6 xl:mb-0 xl:order-2">
+          {/* TODO: Make the video player sticky to the top/nabar */}
           <video
             className="w-full aspect-video"
             src={course.course_content.sections[0].chapters[0].video.url}
@@ -253,7 +265,7 @@ const Course = () => {
                             className={clsx(
                               'flex items-center justify-between w-full',
                               'p-2 sm:p-3 rounded-lg transition-200-out-quart',
-                              'hover:bg-coachify-teal-700/25 data-[state=open]:bg-coachify-teal-700'
+                              'hover:bg-white/5 data-[state=open]:bg-coachify-teal-700'
                             )}
                           >
                             <div className="flex items-center gap-2 sm:gap-4">
@@ -432,7 +444,7 @@ const Course = () => {
                 {makeDescriptionCollapsible && (
                   <div
                     className={clsx(
-                      'absolute bottom-0 w-full h-24 bg-gradient-to-b from-transparent to-coachify-teal-1000 transition-200-out-quart',
+                      'absolute bottom-0 w-full h-24 bg-gradient-to-b from-transparent to-coachify-teal-900 transition-200-out-quart',
                       showFullDescription
                         ? 'opacity-0 invisible'
                         : 'opacity-100 visible'
@@ -489,7 +501,41 @@ const Course = () => {
             ></div>
           </section>
 
-          <div>reviews</div>
+          <section className="grid gap-6">
+            <h2 className="text-xl xl:text-2xl font-semibold">
+              What others say
+            </h2>
+            {!course.reviews || course.reviews.length === 0 ? (
+              <h3>No reviews yet.</h3>
+            ) : (
+              <>
+                <div>
+                  <div className="flex items-center gap-2 text-xl">
+                    <AiFillStar />
+                    <p>{course.course_metadata.rating}</p>
+                  </div>
+                  <p className="text-sm text-white/75">
+                    {course.reviews.length}{' '}
+                    {course.reviews.length === 1 ? 'review' : 'reviews'}
+                  </p>
+                </div>
+
+                <ul className="grid grid-cols-1 sm:grid-cols-2 2xl:grid-cols-3 gap-4">
+                  {/* Display at most 4 reviews */}
+                  {course.reviews.slice(0, 4).map((review) => (
+                    <Review
+                      key={review.id}
+                      review={review}
+                      moreThan3={hasMoreThan3Reviews}
+                    />
+                  ))}
+                </ul>
+                <Button fill="outline" className="place-self-start">
+                  Show all reviews
+                </Button>
+              </>
+            )}
+          </section>
 
           <div>more from creator</div>
         </div>
@@ -498,3 +544,47 @@ const Course = () => {
   );
 };
 export default Course;
+
+const Review = ({
+  review,
+  moreThan3,
+}: {
+  review: Review;
+  moreThan3: boolean;
+}) => {
+  const reviewParagraph = useRef<HTMLParagraphElement>(null);
+  const [isOverflowing, setIsOverflowing] = useState(false);
+
+  useEffect(() => {
+    const scrollHeight = reviewParagraph.current?.scrollHeight as number;
+    const offsetHeight = reviewParagraph.current?.offsetHeight as number;
+
+    if (scrollHeight > offsetHeight) setIsOverflowing(true);
+  });
+
+  return (
+    <li
+      className={clsx(
+        'flex flex-col gap-4 p-4 sm:p-6 bg-coachify-teal-800/50 rounded-lg',
+        moreThan3 && 'last:hidden sm:last:flex 2xl:last:hidden'
+      )}
+    >
+      <div className="flex items-center gap-3">
+        <div className="w-8 h-8">
+          <Avatar user={review.author} />
+        </div>
+        <div className="flex-1">
+          <p className="font-semibold mb-1">{review.author.name}</p>
+          <div className="flex justify-between items-center text-xs">
+            <Stars rating={review.rating} />
+            <p className="text-white/75">{review.created_at}</p>
+          </div>
+        </div>
+      </div>
+      <p ref={reviewParagraph} className="text-sm line-clamp-8">
+        {review.copy}
+      </p>
+      {isOverflowing && <LinkWithChevron href="/" text="Read full review" />}
+    </li>
+  );
+};

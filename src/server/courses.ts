@@ -30,13 +30,13 @@ type CourseMetadata = {
   skill_tags: string[];
 };
 
-type Review = {
+export type Review = {
   id: string;
-  author: string;
-  profile_image: string;
-  reating: number;
+  author: User;
+  rating: number;
   created_at: string;
   updated_at?: string;
+  copy: string;
 };
 
 type CourseContent = {
@@ -177,6 +177,62 @@ const courses: Course[] = [
         },
       ],
     },
+    reviews: [
+      {
+        id: 'XfimpcH9MMMYNLyVh6',
+        author: {
+          id: 'dQwMmgZmkpH5sd7f2',
+          name: 'Ellie Williams',
+          avatar: '/avatar_woman.png',
+        },
+        rating: 5,
+        created_at: '02.01.2023',
+        copy: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati!',
+      },
+      {
+        id: 'byyCZFTzlhEW6Un83',
+        author: {
+          id: 'afQHiQErihjGBjYU',
+          name: 'Joel Miller',
+          avatar: '/avatar_man.jpeg',
+        },
+        rating: 3,
+        created_at: '23.12.2019',
+        copy: 'Lorem ipsum dolor sit amet.',
+      },
+      {
+        id: 'PbyyCZFTzlhE',
+        author: {
+          id: 'XEdQwMmgZmkpH',
+          name: 'Abby Anderson',
+        },
+        rating: 4,
+        created_at: '11.11.2011',
+        copy: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Culpa nihil possimus reiciendis. Dolores officia maxime eum amet est odit quam ducimus eaque nemo pariatur aperiam libero recusandae soluta aliquid praesentium, dolorum nobis culpa. Blanditiis, consequatur natus aspernatur id veniam voluptate maiores accusantium odit eius excepturi animi et alias sit ad praesentium beatae dolores ea provident iure impedit libero necessitatibus, non deleniti? Ut qui modi neque eius nemo. Aperiam quaerat magni perferendis voluptatibus sed nesciunt fuga et amet, rerum corrupti praesentium ut delectus reiciendis vero omnis iusto, soluta dolorum porro eligendi explicabo earum. Omnis optio libero nobis officia repudiandae sunt in.',
+      },
+      {
+        id: 'byyCZFTW6Un83',
+        author: {
+          id: 'afQHijGBjYU',
+          name: 'Neil Druckmann',
+          avatar: '/avatar_man.jpeg',
+        },
+        rating: 5,
+        created_at: '23.12.2019',
+        copy: 'Lorem ipsum dolor sit amet.',
+      },
+      {
+        id: 'byyW6Un83',
+        author: {
+          id: 'afQHGBjYU',
+          name: 'Neil Druckmann',
+          avatar: '/avatar_man.jpeg',
+        },
+        rating: 5,
+        created_at: '23.12.2019',
+        copy: 'Lorem ipsum dolor sit amet.',
+      },
+    ],
   },
   {
     id: 'dsiXfimpcH9MMMYNLyVh6',
@@ -409,6 +465,29 @@ const courses: Course[] = [
         },
       ],
     },
+    reviews: [
+      {
+        id: 'XfimpcH9MMMYNLyVh6',
+        author: {
+          id: 'dQwMmgZmkpH5sd7f2',
+          name: 'Ellie Williams',
+          avatar: '/avatar_woman.png',
+        },
+        rating: 5,
+        created_at: '02.01.2023',
+        copy: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati!',
+      },
+      {
+        id: 'PbyyCZFTzlhE',
+        author: {
+          id: 'XEdQwMmgZmkpH',
+          name: 'Abby Anderson',
+        },
+        rating: 4,
+        created_at: '11.11.2011',
+        copy: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Culpa nihil possimus reiciendis. Dolores officia maxime eum amet est odit quam ducimus eaque nemo pariatur aperiam libero recusandae soluta aliquid praesentium, dolorum nobis culpa. Blanditiis, consequatur natus aspernatur id veniam voluptate maiores accusantium odit eius excepturi animi et alias sit ad praesentium beatae dolores ea provident iure impedit libero necessitatibus, non deleniti? Ut qui modi neque eius nemo. Aperiam quaerat magni perferendis voluptatibus sed nesciunt fuga et amet, rerum corrupti praesentium ut delectus reiciendis vero omnis iusto, soluta dolorum porro eligendi explicabo earum. Omnis optio libero nobis officia repudiandae sunt in.',
+      },
+    ],
   },
   {
     id: 'PbyyCZFTzlhEW6Un83LcC',
