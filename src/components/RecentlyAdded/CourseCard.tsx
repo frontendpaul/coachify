@@ -6,7 +6,7 @@ const CourseCard = ({ course }: { course: Course }) => {
   return (
     <Link
       href={'/courses/' + course.id}
-      className="group flex flex-col rounded-xl bg-coachify-teal-800 relative isolate overflow-hidden"
+      className="group flex flex-col rounded-xl bg-coachify-teal-1100 relative isolate overflow-hidden"
     >
       <div className="relative overflow-hidden">
         <Image
@@ -16,7 +16,7 @@ const CourseCard = ({ course }: { course: Course }) => {
           alt=""
           className="transition-200-out-quart group-hover:scale-105"
         />
-        <div className="absolute z-10 bottom-0 w-full flex justify-between leading-none text-sm px-4 py-3 bg-coachify-teal-1000/50 backdrop-blur">
+        <div className="absolute z-10 bottom-0 w-full flex justify-between leading-none text-sm px-4 py-3 bg-coachify-teal-1300/50 backdrop-blur">
           <div className="flex items-center gap-2">
             <FiStar />
             {course.course_metadata.rating}

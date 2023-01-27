@@ -55,7 +55,7 @@ const Sidenav = () => {
     <>
       <div
         className={clsx(
-          'fixed z-20 invisible inset-0 bg-coachify-teal-1000/75 backdrop-brightness-[.5] opacity-0 transition-200-out-quart md:hidden',
+          'fixed z-20 invisible inset-0 bg-coachify-teal-1300/75 backdrop-brightness-[.5] opacity-0 transition-200-out-quart md:hidden',
           isSidenavExpanded && '!opacity-100 !visible',
           isSidenavTransitioning && '!visible'
         )}

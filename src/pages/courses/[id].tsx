@@ -183,7 +183,7 @@ const Course = () => {
 
           <section className="grid grid-cols-2 sm:grid-cols-4 gap-4 2xl:gap-6">
             <h2 className="sr-only">Additional Informations</h2>
-            <div className="grid justify-items-center gap-2 p-4 2xl:p-6 bg-coachify-teal-700 rounded-lg">
+            <div className="grid justify-items-center gap-2 p-4 2xl:p-6 bg-coachify-teal-1000 rounded-lg">
               {level === 0 && (
                 <Image
                   src="/icons/bars_blank.svg"
@@ -218,17 +218,17 @@ const Course = () => {
               )}
               <span>{course.course_metadata.level}</span>
             </div>
-            <div className="grid justify-items-center gap-2 p-4 2xl:p-6 bg-coachify-teal-700 rounded-lg">
+            <div className="grid justify-items-center gap-2 p-4 2xl:p-6 bg-coachify-teal-1000 rounded-lg">
               <FiGlobe className="w-8 h-8" />
               <span>{course.course_metadata.language}</span>
             </div>
-            <div className="grid justify-items-center gap-2 p-4 2xl:p-6 bg-coachify-teal-700 rounded-lg">
+            <div className="grid justify-items-center gap-2 p-4 2xl:p-6 bg-coachify-teal-1000 rounded-lg">
               <span className="text-2xl font-bold">
                 {course.course_metadata.participants}
               </span>
               <span>Students</span>
             </div>
-            <div className="grid justify-items-center gap-2 p-4 2xl:p-6 bg-coachify-teal-700 rounded-lg">
+            <div className="grid justify-items-center gap-2 p-4 2xl:p-6 bg-coachify-teal-1000 rounded-lg">
               <div className="flex items-center gap-2 text-2xl">
                 <span className="font-bold">
                   {course.course_metadata.rating}
@@ -265,7 +265,7 @@ const Course = () => {
                             className={clsx(
                               'flex items-center justify-between w-full',
                               'p-2 sm:p-3 rounded-lg transition-200-out-quart',
-                              'hover:bg-white/5 data-[state=open]:bg-coachify-teal-700'
+                              'hover:bg-white/5 data-[state=open]:bg-coachify-teal-1000'
                             )}
                           >
                             <div className="flex items-center gap-2 sm:gap-4">
@@ -289,7 +289,7 @@ const Course = () => {
                                   <li key={chapter.id} className="ml-6 sm:ml-8">
                                     <button
                                       className="px-2 sm:px-3 py-2 w-full flex text-sm text-left transition-200-out-quart 
-                                  hover:text-coachify-cyan-700 data-[active=true]:text-coachify-cyan-700"
+                                  hover:text-coachify-teal-500 data-[active=true]:text-coachify-teal-500"
                                       data-active={
                                         chapterIndex === activeChapter
                                       }
@@ -378,7 +378,7 @@ const Course = () => {
                               className={clsx(
                                 'flex items-center justify-between w-full',
                                 'p-2 sm:p-3 rounded-lg transition-200-out-quart',
-                                'hover:bg-coachify-teal-700/25 data-[state=open]:bg-coachify-teal-700'
+                                'hover:bg-coachify-teal-1000/25 data-[state=open]:bg-coachify-teal-1000'
                               )}
                             >
                               <div className="flex items-center gap-2 sm:gap-4">
@@ -444,7 +444,7 @@ const Course = () => {
                 {makeDescriptionCollapsible && (
                   <div
                     className={clsx(
-                      'absolute bottom-0 w-full h-24 bg-gradient-to-b from-transparent to-coachify-teal-900 transition-200-out-quart',
+                      'absolute bottom-0 w-full h-24 bg-gradient-to-b from-transparent to-coachify-teal-1200 transition-200-out-quart',
                       showFullDescription
                         ? 'opacity-0 invisible'
                         : 'opacity-100 visible'
@@ -555,6 +555,11 @@ const Review = ({
   const reviewParagraph = useRef<HTMLParagraphElement>(null);
   const [isOverflowing, setIsOverflowing] = useState(false);
 
+  /*
+  On initial render def is undefined.
+  No effect dependecies in order to get height on second (end every further) render.
+  */
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     const scrollHeight = reviewParagraph.current?.scrollHeight as number;
     const offsetHeight = reviewParagraph.current?.offsetHeight as number;
@@ -565,7 +570,7 @@ const Review = ({
   return (
     <li
       className={clsx(
-        'flex flex-col gap-4 p-4 sm:p-6 bg-coachify-teal-800/50 rounded-lg',
+        'flex flex-col gap-4 p-3 sm:p-4 bg-coachify-teal-1100 rounded-lg',
         moreThan3 && 'last:hidden sm:last:flex 2xl:last:hidden'
       )}
     >

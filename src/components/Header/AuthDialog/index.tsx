@@ -86,7 +86,7 @@ const AuthDialog = ({
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed inset-0 bg-coachify-teal-1000/75 backdrop-brightness-[.5]" />
+          <div className="fixed inset-0 bg-coachify-teal-1300/75 backdrop-brightness-[.5]" />
         </Transition.Child>
 
         <div className="fixed inset-0 z-10 overflow-y-auto">
@@ -100,7 +100,7 @@ const AuthDialog = ({
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <Dialog.Panel className="relative overflow-hidden rounded-lg bg-coachify-teal-800 shadow-xl text-white transition-200-out-quart sm:my-8 w-full max-w-sm p-4 sm:p-6">
+              <Dialog.Panel className="relative overflow-hidden rounded-lg bg-coachify-teal-1100 shadow-xl text-white transition-200-out-quart sm:my-8 w-full max-w-sm p-4 sm:p-6">
                 <Button
                   fill="ghost"
                   icon="icon-only"
@@ -156,7 +156,7 @@ const AuthDialog = ({
                         <p className="text-sm text-white/75">
                           Aleady have an account?{' '}
                           <button
-                            className="underline text-coachify-cyan-700 hover:text-coachify-cyan-500 transition-200-out-quart"
+                            className="underline text-coachify-teal-500 hover:text-coachify-teal-400 transition-200-out-quart"
                             onClick={() => setAuthIntent('login')}
                           >
                             Log In
@@ -166,7 +166,7 @@ const AuthDialog = ({
                           <p className="text-sm text-white/75">
                             Are you a teacher?{' '}
                             <button
-                              className="underline text-coachify-cyan-700 hover:text-coachify-cyan-500 transition-200-out-quart"
+                              className="underline text-coachify-teal-500 hover:text-coachify-teal-400 transition-200-out-quart"
                               onClick={() => setAuthIntent('creator-signup')}
                             >
                               Register a creator account
@@ -177,7 +177,7 @@ const AuthDialog = ({
                           <p className="text-sm text-white/75">
                             Are you a student?{' '}
                             <button
-                              className="underline text-coachify-cyan-700 hover:text-coachify-cyan-500 transition-200-out-quart"
+                              className="underline text-coachify-teal-500 hover:text-coachify-teal-400 transition-200-out-quart"
                               onClick={() => setAuthIntent('signup')}
                             >
                               Register a student account
@@ -191,7 +191,7 @@ const AuthDialog = ({
                       <p className="text-sm text-white/75">
                         Don&apos;t have an account yet?{' '}
                         <button
-                          className="underline text-coachify-cyan-700 hover:text-coachify-cyan-500 transition-200-out-quart"
+                          className="underline text-coachify-teal-500 hover:text-coachify-teal-400 transition-200-out-quart"
                           onClick={() => setAuthIntent('signup')}
                         >
                           Sign Up
@@ -317,7 +317,7 @@ const LogInForm = ({
         Log In
       </Button>
       <button
-        className="underline text-coachify-cyan-700 hover:text-coachify-cyan-500 transition-200-out-quart mr-auto text-sm"
+        className="underline text-coachify-teal-500 hover:text-coachify-teal-400 transition-200-out-quart mr-auto text-sm"
         onClick={() => {}}
       >
         Restore password

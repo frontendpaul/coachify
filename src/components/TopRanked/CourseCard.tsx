@@ -15,7 +15,7 @@ const CourseCard = ({
   return (
     <Link
       href={'/courses/' + course.id}
-      className="group flex flex-col justify-between aspect-[16/9] rounded-xl bg-coachify-teal-800 relative isolate overflow-hidden"
+      className="group flex flex-col justify-between aspect-[16/9] rounded-xl bg-coachify-teal-1100 relative isolate overflow-hidden"
     >
       <div className="absolute inset-0 -z-10">
         <Image
@@ -28,11 +28,11 @@ const CourseCard = ({
         />
       </div>
       <div className="flex justify-between p-4 pb-0">
-        <div className="flex items-center gap-2 py-2 px-3 leading-none text-sm rounded-full bg-coachify-teal-1000/50 backdrop-blur">
+        <div className="flex items-center gap-2 py-2 px-3 leading-none text-sm rounded-full bg-coachify-teal-1300/50 backdrop-blur">
           <AiOutlineTrophy />
           <span>Rank {index + 1}</span>
         </div>
-        <div className="py-2 px-3 leading-none text-sm rounded-full bg-coachify-teal-1000/50 backdrop-blur">
+        <div className="py-2 px-3 leading-none text-sm rounded-full bg-coachify-teal-1300/50 backdrop-blur">
           {course.old_price && (
             <s className="mr-2 text-xs text-white text-opacity-75 line-through leading-none">
               {course.old_price.toString().replace(/\./g, ',') + ' €'}

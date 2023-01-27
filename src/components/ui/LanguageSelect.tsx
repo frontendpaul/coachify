@@ -58,7 +58,7 @@ const LanguageSelect = ({
         >
           <Listbox.Options
             className={clsx(
-              'absolute z-10 right-0 lg:right-1/2 lg:translate-x-1/2 flex flex-col gap-1 mt-4 p-4 rounded-xl bg-coachify-teal-800 shadow-lg',
+              'absolute z-10 right-0 lg:right-1/2 lg:translate-x-1/2 flex flex-col gap-1 mt-4 p-4 rounded-xl bg-coachify-teal-1100 shadow-lg',
               footer ? 'w-full' : 'w-40'
             )}
           >

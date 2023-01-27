@@ -40,7 +40,7 @@ const ActiveLink = ({
       <div
         className={clsx(
           'p-[10px] text-xl rounded-lg',
-          isActive && 'bg-coachify-cyan-700 text-coachify-teal-1000'
+          isActive && 'bg-coachify-teal-500 text-coachify-teal-1300'
         )}
       >
         {icon}

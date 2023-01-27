@@ -39,10 +39,10 @@ const ButtonElement = (
         icon === 'icon-both' && 'px-4 py-3',
         intent === 'primary' &&
           !(fill === 'ghost') &&
-          'font-semibold bg-coachify-cyan-700 text-coachify-teal-1000 hover:bg-coachify-cyan-500',
+          'font-semibold bg-coachify-teal-500 text-coachify-teal-1300 hover:bg-coachify-teal-400',
         intent === 'secondary' &&
           !(fill === 'ghost') &&
-          'font-semibold bg-amber-400 text-coachify-teal-1000 hover:bg-yellow-400',
+          'font-semibold bg-amber-400 text-coachify-teal-1300 hover:bg-yellow-400',
         intent === 'primary' &&
           fill === 'ghost' &&
           'bg-transparent text-white hover:bg-white/5',

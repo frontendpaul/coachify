@@ -37,7 +37,7 @@ const Layout = ({ children }: Props): React.ReactElement => {
       <Sidenav />
       <div
         className={clsx(
-          'min-h-screen text-white relative isolate bg-coachify-teal-900 mt-[var(--header-height)]',
+          'min-h-screen text-white relative isolate bg-coachify-teal-1200 mt-[var(--header-height)]',
           openSans.className
         )}
       >

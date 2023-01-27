@@ -27,9 +27,9 @@ const InputWithLabel = ({
         name={name}
         placeholder={placeholder}
         {...props}
-        className="px-4 py-2 rounded-lg bg-coachify-teal-1000/50 text-white
+        className="px-4 py-2 rounded-lg bg-coachify-teal-1300/50 text-white
         border border-transparent transition-200-out-quart outline-none
-        focus-within:border-white/10 focus-within:bg-coachify-teal-1000/75 focus-visible:outline-none"
+        focus-within:border-white/10 focus-within:bg-coachify-teal-1300/75 focus-visible:outline-none"
       />
     </div>
   );
