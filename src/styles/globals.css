@@ -10,6 +10,8 @@
   --coachify-mint-500-hsl: 155deg 100% 55%;
   --coachify-teal-800: hsl(180deg 25% 10%);
   --coachify-teal-800-hsl: 180deg 25% 10%;
+  --coachify-teal-900: hsl(180, 25%, 5%);
+  --coachify-teal-900-hsl: 180 25% 5%;
   --coachify-teal-1000: hsl(180deg 5% 5%);
   --coachify-teal-1000-hsl: 180deg 5% 5%;
 
@@ -20,7 +22,7 @@
 html {
   overflow-x: hidden;
   scroll-behavior: smooth;
-  background: var(--coachify-teal-1000);
+  background: var(--coachify-teal-900);
 }
 
 @layer utilities {
@@ -32,8 +34,8 @@ html {
 @layer utilities {
   .bg-coachify-gradient {
     background: linear-gradient(to right,
-        hsla(var(--coachify-teal-1000-hsl) / 50%),
-        hsla(var(--coachify-teal-1000-hsl) / 50%)),
+        hsla(var(--coachify-teal-900-hsl) / 50%),
+        hsla(var(--coachify-teal-900-hsl) / 50%)),
       linear-gradient(to right,
         hsla(var(--coachify-blue-500-hsl) / 25%),
         hsla(var(--coachify-mint-500-hsl) / 25%)),

@@ -37,14 +37,14 @@ const Layout = ({ children }: Props): React.ReactElement => {
       <Sidenav />
       <div
         className={clsx(
-          'min-h-screen text-white relative isolate bg-coachify-teal-1000 mt-[var(--header-height)]',
+          'min-h-screen text-white relative isolate bg-coachify-teal-900 mt-[var(--header-height)]',
           openSans.className
         )}
       >
         <div className="absolute -z-10 w-full h-screen -translate-y-[var(--header-height)]">
           <Image
             className="object-cover"
-            src="/coachify-bg-3-min.webp"
+            src="/bg-quality-100.webp"
             fill
             alt=""
             unoptimized

@@ -10,8 +10,8 @@ module.exports = {
         'coachify-teal': {
           200: '#9EFAD9',
           700: '#193434',
-          800: '#132020',
-          900: '#122121',
+          800: '#122121',
+          900: '#0A1010',
           1000: '#0C0D0D',
         },
         'coachify-cyan': {
@@ -23,6 +23,12 @@ module.exports = {
       },
       transitionTimingFunction: {
         'out-quart': 'cubic-bezier(0.25, 1, 0.5, 1)',
+      },
+      lineClamp: {
+        7: '7',
+        8: '8',
+        9: '9',
+        10: '10',
       },
     },
     keyframes: {
@@ -48,5 +54,5 @@ module.exports = {
       slideUp: 'slideUp 200ms cubic-bezier(0.25, 1, 0.5, 1)',
     },
   },
-  plugins: [],
+  plugins: [require('@tailwindcss/line-clamp')],
 };
