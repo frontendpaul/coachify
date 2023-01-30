@@ -1,4 +1,4 @@
-import { useEffect, useCallback, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Logo from './Logo';
 import Search from './Search';
 import Button from '@ui/Button';
@@ -9,8 +9,8 @@ import LanguageSelect from '@ui/LanguageSelect';
 import UserPopover from './UserPopover';
 import clsx from 'clsx';
 import AuthDialog, { AuthIntent } from './AuthDialog';
-import debounce from 'utils/helpers';
-import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react';
+import { debounce } from 'utils/helpers';
+import { useUser } from '@supabase/auth-helpers-react';
 import SignedUserPopover from './SignedUserPopover';
 
 export const isSidenavExpandedAtom = atom<boolean>(false);
