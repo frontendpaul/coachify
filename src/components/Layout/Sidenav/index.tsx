@@ -52,27 +52,30 @@ const Sidenav = () => {
   };
 
   return (
-    <>
+    <aside>
       <div
         className={clsx(
-          'fixed z-20 invisible inset-0 bg-coachify-teal-1300/75 backdrop-brightness-[.5] opacity-0 transition-200-out-quart md:hidden',
+          'fixed z-20 invisible inset-0 bg-coachify-teal-1300/75 backdrop-brightness-[.5] opacity-0 transition-200-out-quart lg:hidden',
           isSidenavExpanded && '!opacity-100 !visible',
           isSidenavTransitioning && '!visible'
         )}
         onClick={() => toggleSidenav()}
-        aria-hidden="true"
+        aria-hidden
       ></div>
-      <aside
+      <div
         className={clsx(
-          'fixed z-30 top-0 md:top-[var(--header-height)]',
-          'h-screen md:h-[calc(100vh-var(--header-height))]',
-          'pb-6 pt-3 md:pt-6 pl-3 bg-coachify-gradient md:bg-none text-white',
-          '-translate-x-60 md:transform-none custom-scrollbar !overflow-x-hidden isolate',
+          'fixed z-40 top-0 lg:top-[var(--header-height)]',
+          'h-screen lg:h-[calc(100vh-var(--header-height))]',
+          'pb-6 pt-3 lg:pt-6 pl-3 bg-coachify-gradient lg:bg-none text-white',
+          '-translate-x-60 lg:transform-none custom-scrollbar !overflow-x-hidden isolate',
+          'invisible lg:!visible',
           isSidenavTransitioning && 'transition-x transition-200-out-quart',
-          isSidenavExpanded ? 'w-60 pr-6 !translate-x-0' : 'w-60 md:w-16 pr-3'
+          isSidenavExpanded
+            ? 'w-60 pr-6 !translate-x-0 !visible'
+            : 'w-60 lg:w-16 pr-3'
         )}
       >
-        <div className="md:hidden mb-9">
+        <div className="lg:hidden mb-9">
           <Button
             fill="ghost"
             icon="icon-only"
@@ -85,13 +88,14 @@ const Sidenav = () => {
           </Button>
         </div>
         <nav id="sidenav">
-          <ul className="flex flex-col gap-4">
+          <ul className="flex flex-col gap-2">
             {links.map((link, index) => (
               <li key={index}>
                 <ActiveLink
                   href={link.href}
                   text={link.text}
                   icon={link.icon}
+                  title={link.text}
                   onClick={() => {
                     isMobile && toggleSidenav();
                   }}
@@ -100,8 +104,32 @@ const Sidenav = () => {
             ))}
           </ul>
         </nav>
-      </aside>
-    </>
+      </div>
+      <nav
+        id="icons-for-tablet"
+        className={clsx(
+          'hidden md:block lg:hidden fixed z-30 top-[var(--header-height)] h-[calc(100vh-var(--header-height))]',
+          'text-white py-6 px-3  custom-scrollbar !overflow-x-hidden isolate w-16'
+        )}
+      >
+        <ul className="flex flex-col gap-2">
+          {links.map((link, index) => (
+            <li key={index}>
+              <ActiveLink
+                href={link.href}
+                text={link.text}
+                icon={link.icon}
+                title={link.text}
+                onClick={() => {
+                  isMobile && toggleSidenav();
+                }}
+              />
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </aside>
   );
 };
+
 export default Sidenav;

@@ -5,10 +5,12 @@ import clsx from 'clsx';
 
 type ActiveLinkProps = LinkProps & {
   text: string;
+  title: string;
   icon?: React.ReactNode; // React Icons OR SVG
 };
 const ActiveLink = ({
   text,
+  title,
   icon,
   ...props
 }: PropsWithChildren<ActiveLinkProps>) => {
@@ -35,6 +37,7 @@ const ActiveLink = ({
   return (
     <Link
       className="flex items-center gap-6 rounded-lg transition-200-out-quart hover:bg-white/5"
+      title={title}
       {...props}
     >
       <div
