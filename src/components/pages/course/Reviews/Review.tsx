@@ -16,7 +16,7 @@ const Review = ({
   const [isOverflowing, setIsOverflowing] = useState(false);
 
   /*
-  On initial render def is undefined.
+  On initial render ref is undefined.
   No effect dependecies in order to get height on second (end every further) render.
   */
   // eslint-disable-next-line react-hooks/exhaustive-deps

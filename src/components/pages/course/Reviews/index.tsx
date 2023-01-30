@@ -1,6 +1,5 @@
 import Button from '@components/ui/Button';
 import SectionTitle from '@components/ui/SectionTitle';
-import { useState, useEffect } from 'react';
 import { AiFillStar } from 'react-icons/ai';
 import Review from './Review';
 
@@ -11,11 +10,7 @@ const Reviews = ({
   reviews: Review[];
   rating: number;
 }) => {
-  const [hasMoreThan3Reviews, setHasMoreThan3Reviews] = useState(true);
-
-  useEffect(() => {
-    if (reviews) setHasMoreThan3Reviews((reviews.length as number) > 3);
-  }, [reviews, setHasMoreThan3Reviews]);
+  const moreThan3 = reviews?.length > 3;
 
   return (
     <section>
@@ -38,11 +33,7 @@ const Reviews = ({
             <ul className="grid grid-cols-1 sm:grid-cols-2 2xl:grid-cols-3 gap-4">
               {/* Display at most 4 reviews */}
               {reviews.slice(0, 4).map((review) => (
-                <Review
-                  key={review.id}
-                  review={review}
-                  moreThan3={hasMoreThan3Reviews}
-                />
+                <Review key={review.id} review={review} moreThan3={moreThan3} />
               ))}
             </ul>
             <Button fill="outline" className="place-self-start">

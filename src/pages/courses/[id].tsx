@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 import { getCourseById, getCoursesByCreator, Review } from 'server/courses';
 import { useRef } from 'react';
 import Head from 'next/head';
-import SectionTitle from '@components/ui/SectionTitle';
 import Overview from '@components/pages/course/Overview';
 import InfoCards from '@components/pages/course/InfoCards';
 import ContentOverview from '@components/pages/course/ContentOverview';
@@ -11,6 +10,7 @@ import Description from '@components/pages/course/Description';
 import TagList from '@components/pages/course/TagList';
 import Teacher from '@components/pages/course/Teacher';
 import Reviews from '@components/pages/course/Reviews';
+import OtherCourses from '@components/pages/course/OtherCourses';
 
 const Course = () => {
   const router = useRouter();
@@ -19,8 +19,10 @@ const Course = () => {
 
   const videoPlayer = useRef<HTMLVideoElement>(null);
 
-  const creatorCourses = getCoursesByCreator(course?.owner.id as string);
-  const filteredCreatorCourses = creatorCourses.filter(
+  const recentCreatorCourses = getCoursesByCreator(
+    course?.owner.id as string
+  ).slice(-4);
+  const filteredCreatorCourses = recentCreatorCourses.filter(
     (creatorCourse) => course?.id != creatorCourse.id
   );
 
@@ -54,12 +56,12 @@ const Course = () => {
           content={course.course_metadata.short_description}
         />
       </Head>
+
       <section
         className="max-w-2xl xl:max-w-7xl mx-auto px-4 md:px-6
       xl:grid xl:grid-cols-[1fr,min(35%,400px)] xl:gap-6"
       >
         <div className="block mb-6 xl:mb-0 xl:order-2 relative">
-          {/* TODO: Make the video player sticky to the top/nabar */}
           <video
             className="w-full aspect-video sticky top-[90px]"
             src={course.course_content.sections[0].chapters[0].video.src}
@@ -102,26 +104,10 @@ const Course = () => {
             rating={course.course_metadata.rating}
           />
 
-          <section>
-            <div className="grid gap-6">
-              <SectionTitle>
-                Other courses by{' '}
-                <Link href="/" className="underline">
-                  {course.owner.name}
-                </Link>
-              </SectionTitle>
-
-              {filteredCreatorCourses.length === 0 ? (
-                <p>This creator has no other courses yet.</p>
-              ) : (
-                <ul>
-                  {filteredCreatorCourses.map((course) => (
-                    <li key={course.id}>{course.title}</li>
-                  ))}
-                </ul>
-              )}
-            </div>
-          </section>
+          <OtherCourses
+            ownerName={course.owner.name}
+            courses={filteredCreatorCourses}
+          />
         </div>
       </section>
     </>
