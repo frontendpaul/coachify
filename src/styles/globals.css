@@ -22,6 +22,7 @@
 html {
   overflow-x: hidden;
   scroll-behavior: smooth;
+  scroll-padding-top: 80px;
   background: var(--coachify-teal-1200);
 }
 

@@ -1,9 +1,9 @@
 import Head from 'next/head';
-import TopRanked from '../components/TopRanked';
-import Statistics from '../components/Statistics';
-import RecentlyAdded from '@components/RecentlyAdded';
-import Categories from '@components/Categories';
-import Promo from '@components/Promo';
+import TopRanked from '../components/pages/home/TopRanked';
+import Statistics from '../components/pages/home/Statistics';
+import RecentlyAdded from '@components/pages/home/RecentlyAdded';
+import Categories from '@components/pages/home/Categories';
+import Promo from '@components/pages/home/Promo';
 
 export default function Home() {
   return (

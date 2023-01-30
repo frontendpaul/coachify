@@ -1,7 +1,7 @@
 import TitleWithLink from '@components/ui/TitleWithLink';
 import { useRef } from 'react';
 import { useDraggable } from 'react-use-draggable-scroll';
-import { getTopRankedCourses } from '../../server/courses';
+import { getTopRankedCourses } from 'server/courses';
 import CourseCard from './CourseCard';
 
 const TopRanked = () => {

@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import { atom, useAtom } from 'jotai';
 import Image from 'next/image';
 import { useEffect } from 'react';
-import useWindowWidth from '../hooks/useWindowWidth';
+import useWindowWidth from '../../hooks/useWindowWidth';
 import Footer from './Footer';
 import Header, { isSidenavExpandedAtom } from './Header';
 import Sidenav from './Sidenav';

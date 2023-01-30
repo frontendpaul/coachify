@@ -5,7 +5,7 @@ import { useAtom } from 'jotai';
 import { isSidenavExpandedAtom, isSidenavTransitioningAtom } from '../Header';
 import clsx from 'clsx';
 import Button from '@ui/Button';
-import { isMobileAtom } from '../Layout';
+import { isMobileAtom } from '..';
 
 const Sidenav = () => {
   type Link = {

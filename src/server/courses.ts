@@ -19,16 +19,37 @@ export type Course = {
   updated_at?: string;
 };
 
-type CourseMetadata = {
+export type CourseMetadata = {
   rating: number;
   participants: number;
   duration: string;
-  language: 'English' | 'German';
-  level: 'Beginner' | 'Intermediate' | 'Expert' | 'All levels';
+  language: Language;
+  level: Level;
   short_description: string;
   description: string; // ultimately reach text
   skill_tags: string[];
 };
+
+// type ObjectValues<T> = T[keyof T];
+
+// const LANGUAGE = {
+//   ENGLISH: 'English',
+//   GERMAN: 'German',
+// } as const;
+
+// export type Language = ObjectValues<typeof LANGUAGE>;
+
+// const LEVEL = {
+//   ALL_LEVELS: 'All levels',
+//   BEGINNER: 'Beginner',
+//   INTERMEDIATE: 'Intermediate',
+//   EXPERT: 'Expert',
+// } as const;
+
+// export type Level = ObjectValues<typeof LEVEL>;
+
+export type Level = 'All levels' | 'Beginner' | 'Intermediate' | 'Expert';
+export type Language = 'English' | 'German';
 
 export type Review = {
   id: string;
@@ -39,7 +60,7 @@ export type Review = {
   copy: string;
 };
 
-type CourseContent = {
+export type CourseContent = {
   sections: Section[];
 };
 
@@ -54,7 +75,7 @@ type Chapter = {
   title: string;
   description?: string;
   video: {
-    url: string;
+    src: string;
     duration: string;
     //TODO: to be addded later
     id?: string;
@@ -71,7 +92,7 @@ export type User = {
   contracts?: any[];
 };
 
-type Creator = User & {
+export type Creator = User & {
   courses_owned?: Course[];
   description?: string;
 };
@@ -137,7 +158,7 @@ const courses: Course[] = [
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
               video: {
-                url: 'https://www.w3schools.com/html/mov_bbb.mp4',
+                src: 'https://www.w3schools.com/html/mov_bbb.mp4',
                 duration: '0m31s',
               },
             },
@@ -145,7 +166,7 @@ const courses: Course[] = [
               id: '9MMMYNLyVh6',
               title: 'What you will learn',
               video: {
-                url: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+                src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
                 duration: '10m53s',
               },
             },
@@ -161,7 +182,7 @@ const courses: Course[] = [
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
               video: {
-                url: 'https://www.w3schools.com/html/mov_bbb.mp4',
+                src: 'https://www.w3schools.com/html/mov_bbb.mp4',
                 duration: '0m31s',
               },
             },
@@ -169,7 +190,7 @@ const courses: Course[] = [
               id: '9MMYNLyVh6',
               title: 'Basics',
               video: {
-                url: 'https://www.w3schools.com/html/mov_bbb.mp4',
+                src: 'https://www.w3schools.com/html/mov_bbb.mp4',
                 duration: '0m31s',
               },
             },
@@ -281,7 +302,7 @@ const courses: Course[] = [
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
               video: {
-                url: 'https://www.w3schools.com/html/mov_bbb.mp4',
+                src: 'https://www.w3schools.com/html/mov_bbb.mp4',
                 duration: '0m31s',
               },
             },
@@ -289,7 +310,7 @@ const courses: Course[] = [
               id: '9MMMYNLyVh6',
               title: 'Chapter title',
               video: {
-                url: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
+                src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
                 duration: '10m53s',
               },
             },
@@ -305,7 +326,7 @@ const courses: Course[] = [
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
               video: {
-                url: 'https://www.w3schools.com/html/mov_bbb.mp4',
+                src: 'https://www.w3schools.com/html/mov_bbb.mp4',
                 duration: '0m31s',
               },
             },
@@ -315,7 +336,7 @@ const courses: Course[] = [
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
               video: {
-                url: 'https://www.w3schools.com/html/mov_bbb.mp4',
+                src: 'https://www.w3schools.com/html/mov_bbb.mp4',
                 duration: '0m31s',
               },
             },
@@ -325,7 +346,7 @@ const courses: Course[] = [
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
               video: {
-                url: 'https://www.w3schools.com/html/mov_bbb.mp4',
+                src: 'https://www.w3schools.com/html/mov_bbb.mp4',
                 duration: '0m31s',
               },
             },
@@ -335,7 +356,7 @@ const courses: Course[] = [
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
               video: {
-                url: 'https://www.w3schools.com/html/mov_bbb.mp4',
+                src: 'https://www.w3schools.com/html/mov_bbb.mp4',
                 duration: '0m31s',
               },
             },
@@ -345,7 +366,7 @@ const courses: Course[] = [
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
               video: {
-                url: 'https://www.w3schools.com/html/mov_bbb.mp4',
+                src: 'https://www.w3schools.com/html/mov_bbb.mp4',
                 duration: '0m31s',
               },
             },
@@ -361,7 +382,7 @@ const courses: Course[] = [
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
               video: {
-                url: 'https://www.w3schools.com/html/mov_bbb.mp4',
+                src: 'https://www.w3schools.com/html/mov_bbb.mp4',
                 duration: '0m31s',
               },
             },
@@ -377,7 +398,7 @@ const courses: Course[] = [
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
               video: {
-                url: 'https://www.w3schools.com/html/mov_bbb.mp4',
+                src: 'https://www.w3schools.com/html/mov_bbb.mp4',
                 duration: '0m31s',
               },
             },
@@ -393,7 +414,7 @@ const courses: Course[] = [
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
               video: {
-                url: 'https://www.w3schools.com/html/mov_bbb.mp4',
+                src: 'https://www.w3schools.com/html/mov_bbb.mp4',
                 duration: '0m31s',
               },
             },
@@ -409,7 +430,7 @@ const courses: Course[] = [
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
               video: {
-                url: 'https://www.w3schools.com/html/mov_bbb.mp4',
+                src: 'https://www.w3schools.com/html/mov_bbb.mp4',
                 duration: '0m31s',
               },
             },
@@ -425,7 +446,7 @@ const courses: Course[] = [
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
               video: {
-                url: 'https://www.w3schools.com/html/mov_bbb.mp4',
+                src: 'https://www.w3schools.com/html/mov_bbb.mp4',
                 duration: '0m31s',
               },
             },
@@ -441,7 +462,7 @@ const courses: Course[] = [
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
               video: {
-                url: 'https://www.w3schools.com/html/mov_bbb.mp4',
+                src: 'https://www.w3schools.com/html/mov_bbb.mp4',
                 duration: '0m31s',
               },
             },
@@ -457,7 +478,7 @@ const courses: Course[] = [
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
               video: {
-                url: 'https://www.w3schools.com/html/mov_bbb.mp4',
+                src: 'https://www.w3schools.com/html/mov_bbb.mp4',
                 duration: '0m31s',
               },
             },
@@ -522,7 +543,7 @@ const courses: Course[] = [
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
               video: {
-                url: 'https://www.w3schools.com/html/mov_bbb.mp4',
+                src: 'https://www.w3schools.com/html/mov_bbb.mp4',
                 duration: '0m31s',
               },
             },
@@ -538,7 +559,7 @@ const courses: Course[] = [
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
               video: {
-                url: 'https://www.w3schools.com/html/mov_bbb.mp4',
+                src: 'https://www.w3schools.com/html/mov_bbb.mp4',
                 duration: '0m31s',
               },
             },
@@ -580,7 +601,7 @@ const courses: Course[] = [
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
               video: {
-                url: 'https://www.w3schools.com/html/mov_bbb.mp4',
+                src: 'https://www.w3schools.com/html/mov_bbb.mp4',
                 duration: '0m31s',
               },
             },
@@ -596,7 +617,7 @@ const courses: Course[] = [
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
               video: {
-                url: 'https://www.w3schools.com/html/mov_bbb.mp4',
+                src: 'https://www.w3schools.com/html/mov_bbb.mp4',
                 duration: '0m31s',
               },
             },
@@ -609,8 +630,22 @@ const courses: Course[] = [
     id: 'REuq4PB-2OU1NGKvfoSNI',
     title: 'Knitting',
     owner: {
-      id: 'PHr9n_flxqMwDaYUhK6Mj',
-      name: 'John Snow',
+      id: 'Tiglc-I33dZmoHGeK-9wB',
+      name: 'John Smith',
+      avatar: '/avatar_man.jpeg',
+      description: `
+        <p><strong>Turn your dreams of YouTube stardom into a reality with Marques
+              Brownlee, the self-taught creator who grew his love of tech into a
+              channel with 13M subscribers and counting!</strong></p>
+          <p>Today Marques, known on the internet as MKBHD, draws millions of
+            views with his tech review videos. But it wasn’t always that way: he
+            started out in his parent’s basement, creating videos on his
+            computer’s built-in camera, and slowly building a following on
+            YouTube. If you’re like Marques—you have an itch to share your
+            passion and opinions with the world—then this class will help you
+            translate that point of view into engaging, authentic, and wildly
+            watchable videos.</p>
+        `,
     },
     free: false,
     price: 69.99,
@@ -638,7 +673,7 @@ const courses: Course[] = [
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
               video: {
-                url: 'https://www.w3schools.com/html/mov_bbb.mp4',
+                src: 'https://www.w3schools.com/html/mov_bbb.mp4',
                 duration: '0m31s',
               },
             },
@@ -654,7 +689,7 @@ const courses: Course[] = [
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
               video: {
-                url: 'https://www.w3schools.com/html/mov_bbb.mp4',
+                src: 'https://www.w3schools.com/html/mov_bbb.mp4',
                 duration: '0m31s',
               },
             },
@@ -696,7 +731,7 @@ const courses: Course[] = [
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
               video: {
-                url: 'https://www.w3schools.com/html/mov_bbb.mp4',
+                src: 'https://www.w3schools.com/html/mov_bbb.mp4',
                 duration: '0m31s',
               },
             },
@@ -712,7 +747,7 @@ const courses: Course[] = [
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
               video: {
-                url: 'https://www.w3schools.com/html/mov_bbb.mp4',
+                src: 'https://www.w3schools.com/html/mov_bbb.mp4',
                 duration: '0m31s',
               },
             },
@@ -754,7 +789,7 @@ const courses: Course[] = [
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
               video: {
-                url: 'https://www.w3schools.com/html/mov_bbb.mp4',
+                src: 'https://www.w3schools.com/html/mov_bbb.mp4',
                 duration: '0m31s',
               },
             },
@@ -770,7 +805,7 @@ const courses: Course[] = [
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
               video: {
-                url: 'https://www.w3schools.com/html/mov_bbb.mp4',
+                src: 'https://www.w3schools.com/html/mov_bbb.mp4',
                 duration: '0m31s',
               },
             },
@@ -812,7 +847,7 @@ const courses: Course[] = [
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
               video: {
-                url: 'https://www.w3schools.com/html/mov_bbb.mp4',
+                src: 'https://www.w3schools.com/html/mov_bbb.mp4',
                 duration: '0m31s',
               },
             },
@@ -828,7 +863,7 @@ const courses: Course[] = [
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
               video: {
-                url: 'https://www.w3schools.com/html/mov_bbb.mp4',
+                src: 'https://www.w3schools.com/html/mov_bbb.mp4',
                 duration: '0m31s',
               },
             },
@@ -869,7 +904,7 @@ const courses: Course[] = [
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
               video: {
-                url: 'https://www.w3schools.com/html/mov_bbb.mp4',
+                src: 'https://www.w3schools.com/html/mov_bbb.mp4',
                 duration: '0m31s',
               },
             },
@@ -885,7 +920,7 @@ const courses: Course[] = [
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
               video: {
-                url: 'https://www.w3schools.com/html/mov_bbb.mp4',
+                src: 'https://www.w3schools.com/html/mov_bbb.mp4',
                 duration: '0m31s',
               },
             },
@@ -928,7 +963,7 @@ const courses: Course[] = [
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
               video: {
-                url: 'https://www.w3schools.com/html/mov_bbb.mp4',
+                src: 'https://www.w3schools.com/html/mov_bbb.mp4',
                 duration: '0m31s',
               },
             },
@@ -944,7 +979,7 @@ const courses: Course[] = [
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
               video: {
-                url: 'https://www.w3schools.com/html/mov_bbb.mp4',
+                src: 'https://www.w3schools.com/html/mov_bbb.mp4',
                 duration: '0m31s',
               },
             },
@@ -986,7 +1021,7 @@ const courses: Course[] = [
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
               video: {
-                url: 'https://www.w3schools.com/html/mov_bbb.mp4',
+                src: 'https://www.w3schools.com/html/mov_bbb.mp4',
                 duration: '0m31s',
               },
             },
@@ -1002,7 +1037,7 @@ const courses: Course[] = [
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
               video: {
-                url: 'https://www.w3schools.com/html/mov_bbb.mp4',
+                src: 'https://www.w3schools.com/html/mov_bbb.mp4',
                 duration: '0m31s',
               },
             },
@@ -1044,7 +1079,7 @@ const courses: Course[] = [
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
               video: {
-                url: 'https://www.w3schools.com/html/mov_bbb.mp4',
+                src: 'https://www.w3schools.com/html/mov_bbb.mp4',
                 duration: '0m31s',
               },
             },
@@ -1060,7 +1095,7 @@ const courses: Course[] = [
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
               video: {
-                url: 'https://www.w3schools.com/html/mov_bbb.mp4',
+                src: 'https://www.w3schools.com/html/mov_bbb.mp4',
                 duration: '0m31s',
               },
             },
@@ -1102,7 +1137,7 @@ const courses: Course[] = [
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
               video: {
-                url: 'https://www.w3schools.com/html/mov_bbb.mp4',
+                src: 'https://www.w3schools.com/html/mov_bbb.mp4',
                 duration: '0m31s',
               },
             },
@@ -1118,7 +1153,7 @@ const courses: Course[] = [
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
               video: {
-                url: 'https://www.w3schools.com/html/mov_bbb.mp4',
+                src: 'https://www.w3schools.com/html/mov_bbb.mp4',
                 duration: '0m31s',
               },
             },
@@ -1160,7 +1195,7 @@ const courses: Course[] = [
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
               video: {
-                url: 'https://www.w3schools.com/html/mov_bbb.mp4',
+                src: 'https://www.w3schools.com/html/mov_bbb.mp4',
                 duration: '0m31s',
               },
             },
@@ -1176,7 +1211,7 @@ const courses: Course[] = [
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
               video: {
-                url: 'https://www.w3schools.com/html/mov_bbb.mp4',
+                src: 'https://www.w3schools.com/html/mov_bbb.mp4',
                 duration: '0m31s',
               },
             },
@@ -1217,7 +1252,7 @@ const courses: Course[] = [
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
               video: {
-                url: 'https://www.w3schools.com/html/mov_bbb.mp4',
+                src: 'https://www.w3schools.com/html/mov_bbb.mp4',
                 duration: '0m31s',
               },
             },
@@ -1233,7 +1268,7 @@ const courses: Course[] = [
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
               video: {
-                url: 'https://www.w3schools.com/html/mov_bbb.mp4',
+                src: 'https://www.w3schools.com/html/mov_bbb.mp4',
                 duration: '0m31s',
               },
             },
@@ -1276,7 +1311,7 @@ const courses: Course[] = [
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
               video: {
-                url: 'https://www.w3schools.com/html/mov_bbb.mp4',
+                src: 'https://www.w3schools.com/html/mov_bbb.mp4',
                 duration: '0m31s',
               },
             },
@@ -1292,7 +1327,7 @@ const courses: Course[] = [
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
               video: {
-                url: 'https://www.w3schools.com/html/mov_bbb.mp4',
+                src: 'https://www.w3schools.com/html/mov_bbb.mp4',
                 duration: '0m31s',
               },
             },
@@ -1334,7 +1369,7 @@ const courses: Course[] = [
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
               video: {
-                url: 'https://www.w3schools.com/html/mov_bbb.mp4',
+                src: 'https://www.w3schools.com/html/mov_bbb.mp4',
                 duration: '0m31s',
               },
             },
@@ -1350,7 +1385,7 @@ const courses: Course[] = [
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
               video: {
-                url: 'https://www.w3schools.com/html/mov_bbb.mp4',
+                src: 'https://www.w3schools.com/html/mov_bbb.mp4',
                 duration: '0m31s',
               },
             },
@@ -1392,7 +1427,7 @@ const courses: Course[] = [
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
               video: {
-                url: 'https://www.w3schools.com/html/mov_bbb.mp4',
+                src: 'https://www.w3schools.com/html/mov_bbb.mp4',
                 duration: '0m31s',
               },
             },
@@ -1408,7 +1443,7 @@ const courses: Course[] = [
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
               video: {
-                url: 'https://www.w3schools.com/html/mov_bbb.mp4',
+                src: 'https://www.w3schools.com/html/mov_bbb.mp4',
                 duration: '0m31s',
               },
             },
@@ -1427,7 +1462,7 @@ export function getCourseById(id: string): Course | undefined {
   return courses.find((course) => course.id === id);
 }
 
-export function getTopRankedCourses() {
+export function getTopRankedCourses(): Course[] {
   const filteredCourses = courses.filter(
     (course) => course.course_metadata.rating > 4.5
   );
@@ -1437,4 +1472,12 @@ export function getTopRankedCourses() {
       a.course_metadata.rating * a.course_metadata.participants
   );
   return topRankedCourses;
+}
+
+export function getCoursesByCreator(creatorId: string): Course[] {
+  const creatorsCourses = courses.filter(
+    (course) => course.owner.id === creatorId
+  );
+
+  return creatorsCourses;
 }

@@ -1,10 +1,10 @@
-import { isSidenavExpandedAtom } from '@components/Header';
+import { isSidenavExpandedAtom } from '@components/Layout/Header';
 import Button from '@components/ui/Button';
 import LinkWithChevron from '@components/ui/LinkWithChevron';
 import clsx from 'clsx';
 import { useAtom } from 'jotai';
 import Image from 'next/image';
-import rocketImage from '../../../public/rocket.png';
+import rocketImage from '/public/rocket.png';
 
 const Promo = () => {
   const [isSidenavExpanded] = useAtom(isSidenavExpandedAtom);

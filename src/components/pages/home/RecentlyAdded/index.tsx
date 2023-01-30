@@ -1,5 +1,5 @@
 import TitleWithLink from '@components/ui/TitleWithLink';
-import { getCourses } from '../../server/courses';
+import { getCourses } from 'server/courses';
 import CourseCard from './CourseCard';
 
 const RecentlyAdded = () => {
