@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { FiClock, FiStar, FiUser } from 'react-icons/fi';
-import { Course } from '../../../server/courses';
+import { Course } from 'server/courses';
 const CourseCard = ({ course }: { course: Course }) => {
   return (
     <Link
