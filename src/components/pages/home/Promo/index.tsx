@@ -7,9 +7,8 @@ import Image from 'next/image';
 import rocketImage from '/public/rocket.png';
 
 const Promo = () => {
-  const [isSidenavExpanded] = useAtom(isSidenavExpandedAtom);
   return (
-    <section className="px-4 md:px-6 w-full max-w-7xl mx-auto">
+    <section className="px-4 md:px-6 w-full max-w-md md:max-w-7xl mx-auto">
       <div
         className="relative px-4 pb-6 text-coachify-teal-1300 bg-gradient-to-tr from-sky-200 to-emerald-200 rounded-xl
         md:p-8 lg:p-10 xl:p-16"
@@ -19,13 +18,12 @@ const Promo = () => {
           alt=""
           quality={100}
           className={clsx(
-            'w-[min(80%,320px)] mx-auto -translate-y-8',
+            'pointer-events-none -translate-y-8',
             'md:absolute md:bottom-0 md:left-[52vw] md:translate-y-0 md:w-auto md:h-[120%]',
-            'lg:left-[53%] xl:h-[150%] xl:bottom-[-30%] xl:[clip-path:polygon(0_0,100%_0,100%_80%,0_80%)]',
-            isSidenavExpanded && 'md:hidden lg:block'
+            'lg:left-[53%] xl:h-[150%] xl:bottom-[-30%] xl:[clip-path:polygon(0_0,100%_0,100%_80%,0_80%)]'
           )}
         />
-        <div className="grid gap-6 2xl:gap-12 w-[min(100%,330px)] mx-auto md:w-auto md:mx-0">
+        <div className="grid gap-6 2xl:gap-12">
           <h2 className="text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-bold">
             Are you a creator?
             <br /> Reach new heights with us!

@@ -14,7 +14,7 @@ const CourseCard = ({
 }) => {
   return (
     <Link
-      href={'/courses/' + course.id}
+      href={'/course/' + course.id}
       className="group flex flex-col justify-between aspect-[16/9] rounded-xl bg-coachify-teal-1100 relative isolate overflow-hidden"
     >
       <div className="absolute inset-0 -z-10">

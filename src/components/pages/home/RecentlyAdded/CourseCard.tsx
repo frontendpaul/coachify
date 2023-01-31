@@ -5,7 +5,7 @@ import { Course } from 'server/courses';
 const CourseCard = ({ course }: { course: Course }) => {
   return (
     <Link
-      href={'/courses/' + course.id}
+      href={'/course/' + course.id}
       className="group flex flex-col rounded-xl bg-coachify-teal-1100 relative isolate overflow-hidden"
     >
       <div className="relative overflow-hidden">

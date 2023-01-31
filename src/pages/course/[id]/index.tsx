@@ -58,12 +58,12 @@ const Course = () => {
       </Head>
 
       <section
-        className="max-w-2xl xl:max-w-7xl mx-auto px-4 md:px-6
+        className="max-w-3xl xl:max-w-7xl mx-auto py-6 px-4 md:px-6
       xl:grid xl:grid-cols-[1fr,min(35%,400px)] xl:gap-6"
       >
         <div className="block mb-6 xl:mb-0 xl:order-2 relative">
           <video
-            className="w-full aspect-video sticky top-[90px]"
+            className="w-full sticky top-[90px]"
             src={course.course_content.sections[0].chapters[0].video.src}
             controls
             ref={videoPlayer}
@@ -72,6 +72,7 @@ const Course = () => {
 
         <div className="grid gap-16">
           <Overview
+            id={id}
             title={course.title}
             short_description={course.course_metadata.short_description}
             owner={course.owner}

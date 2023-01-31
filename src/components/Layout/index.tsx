@@ -2,10 +2,12 @@ import { Open_Sans } from '@next/font/google';
 import clsx from 'clsx';
 import { atom, useAtom } from 'jotai';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import useWindowWidth from '../../hooks/useWindowWidth';
 import Footer from './Footer';
 import Header, { isSidenavExpandedAtom } from './Header';
+import OverlaySidenav from './OverlaySidenav';
 import Sidenav from './Sidenav';
 
 const openSans = Open_Sans({ subsets: ['latin'] });
@@ -15,26 +17,44 @@ type Props = {
 };
 
 export const isMobileAtom = atom<boolean>(true);
+export const isMediumScreenAtom = atom<boolean>(true);
+export const isLearnPageAtom = atom<boolean>(false);
 
 const Layout = ({ children }: Props): React.ReactElement => {
   const [isSidenavExpanded, setIsSidenavExpanded] = useAtom(
     isSidenavExpandedAtom
   );
   const [, setIsMobile] = useAtom(isMobileAtom);
+  const [, setIsMediumScreen] = useAtom(isMediumScreenAtom);
 
   const windowWidth = useWindowWidth();
+  const router = useRouter();
 
+  const [isLearnPage, setIsLearnPage] = useAtom(isLearnPageAtom);
   useEffect(() => {
     const isMediumScreen = windowWidth < 1024;
     const isMobile = windowWidth < 768;
     setIsMobile(isMobile);
-    setIsSidenavExpanded(!isMediumScreen);
-  }, [windowWidth, setIsMobile, setIsSidenavExpanded]);
+    setIsMediumScreen(isMediumScreen);
+    !isLearnPage && setIsSidenavExpanded(!isMediumScreen);
+  }, [
+    windowWidth,
+    setIsMobile,
+    setIsMediumScreen,
+    setIsSidenavExpanded,
+    isLearnPage,
+  ]);
+
+  useEffect(() => {
+    const isLearnPage = router.pathname.includes('/course/[id]/learn');
+    setIsLearnPage(isLearnPage);
+    // isLearnPage && setIsSidenavExpanded(false);
+  });
 
   return (
     <div className="isolate">
       <Header />
-      <Sidenav />
+      {isLearnPage ? <OverlaySidenav /> : <Sidenav />}
       <div
         className={clsx(
           'min-h-screen text-white relative isolate bg-coachify-teal-1200 mt-[var(--header-height)]',
@@ -54,10 +74,11 @@ const Layout = ({ children }: Props): React.ReactElement => {
         <div
           className={clsx(
             'flex flex-col min-h-[calc(100vh-var(--header-height))] md:ml-16',
-            isSidenavExpanded ? 'lg:ml-60' : 'lg:ml-16'
+            isSidenavExpanded ? 'lg:ml-60' : 'lg:ml-16',
+            isLearnPage && '!ml-0'
           )}
         >
-          <main className="py-6 flex-1">{children}</main>
+          <main className="flex-1">{children}</main>
           <Footer />
         </div>
       </div>

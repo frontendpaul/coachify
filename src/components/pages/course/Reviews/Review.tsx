@@ -30,7 +30,7 @@ const Review = ({
   return (
     <li
       className={clsx(
-        'flex flex-col gap-4 p-3 sm:p-4 bg-coachify-teal-1100/75 rounded-lg',
+        'flex flex-col gap-4 p-3 sm:p-4 bg-coachify-teal-1100 rounded-lg',
         moreThan3 && 'last:hidden sm:last:flex 2xl:last:hidden'
       )}
     >

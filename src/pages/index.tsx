@@ -12,7 +12,7 @@ export default function Home() {
         <title>Coachify</title>
         <meta name="description" content="Coachify app" />
       </Head>
-      <div className="grid gap-16 md:gap-32">
+      <div className="grid gap-16 md:gap-32 py-6">
         <h1 className="sr-only">
           Discover hundreds of courses from world-class teachers - welcome to
           the Coachify Marketplace!

@@ -70,7 +70,7 @@ type Section = {
   chapters: Chapter[];
 };
 
-type Chapter = {
+export type Chapter = {
   id: string;
   title: string;
   description?: string;
@@ -149,11 +149,11 @@ const courses: Course[] = [
     course_content: {
       sections: [
         {
-          id: 'UJV8zBbfNsS',
+          id: 'UJV8BbfNsS',
           title: 'Introduction',
           chapters: [
             {
-              id: 'SYscnIK7fJ',
+              id: 'SYsnIK7fJ',
               title: 'Welcome to the course!',
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
@@ -163,7 +163,7 @@ const courses: Course[] = [
               },
             },
             {
-              id: '9MMMYNLyVh6',
+              id: '9MMYNyVh6',
               title: 'What you will learn',
               video: {
                 src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
@@ -173,11 +173,11 @@ const courses: Course[] = [
           ],
         },
         {
-          id: 'dsiXfimpcH9M',
+          id: 'dsXfimpcH9M',
           title: 'What is ReactJS?',
           chapters: [
             {
-              id: 'SYsnIK7fJ',
+              id: 'SYsnIK7f',
               title: 'A little bit of history',
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
@@ -187,7 +187,7 @@ const courses: Course[] = [
               },
             },
             {
-              id: '9MMYNLyVh6',
+              id: '9MMYNLyVh',
               title: 'Basics',
               video: {
                 src: 'https://www.w3schools.com/html/mov_bbb.mp4',
@@ -293,11 +293,11 @@ const courses: Course[] = [
     course_content: {
       sections: [
         {
-          id: 'UJV8zBbfNsS',
+          id: 'UJV8zBbNsS',
           title: 'Section title',
           chapters: [
             {
-              id: 'SYscnIK7fJ',
+              id: 'SYscnK7fJ',
               title: 'Chapter title',
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
@@ -307,7 +307,7 @@ const courses: Course[] = [
               },
             },
             {
-              id: '9MMMYNLyVh6',
+              id: '9MMMYNLVh6',
               title: 'Chapter title',
               video: {
                 src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
@@ -317,7 +317,7 @@ const courses: Course[] = [
           ],
         },
         {
-          id: 'dsiXfimpcH9M',
+          id: 'dsifimpcH9M',
           title: 'Section title',
           chapters: [
             {
@@ -331,7 +331,7 @@ const courses: Course[] = [
               },
             },
             {
-              id: 'SYscnI',
+              id: 'dsiXfimpcH9MMYNLyVh6',
               title: 'Chapter title',
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
@@ -351,7 +351,7 @@ const courses: Course[] = [
               },
             },
             {
-              id: 'cnIK7fJ',
+              id: 'dsiXfimpcMMMYNLyVh6',
               title: 'Chapter title',
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
@@ -373,11 +373,11 @@ const courses: Course[] = [
           ],
         },
         {
-          id: 'yCZFTzlhEW6U',
+          id: 'yCZFTzhEW6U',
           title: 'Section title',
           chapters: [
             {
-              id: 'Un83LcC',
+              id: 'Un8LcC',
               title: 'Chapter title',
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
@@ -389,11 +389,11 @@ const courses: Course[] = [
           ],
         },
         {
-          id: 'yCZFTzlhEW6',
+          id: 'yCZFzlhEW6',
           title: 'Section title',
           chapters: [
             {
-              id: 'Un83LcC',
+              id: 'dsiXfimpMMYNLyVh6',
               title: 'Chapter title',
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
@@ -405,11 +405,11 @@ const courses: Course[] = [
           ],
         },
         {
-          id: 'yCZFTzlhEW',
+          id: 'yCFTzhEW',
           title: 'Section title',
           chapters: [
             {
-              id: 'Un83LcC',
+              id: 'dsiXH9MMMYNLyVh6',
               title: 'Chapter title',
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
@@ -421,11 +421,11 @@ const courses: Course[] = [
           ],
         },
         {
-          id: 'yCZFTzlhE',
+          id: 'yCZFTzlhdsiXfimpcH9MMMYNLyVh6E',
           title: 'Section title',
           chapters: [
             {
-              id: 'Un83LcC',
+              id: 'dsiH9MMMYNLyVh6',
               title: 'Chapter title',
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
@@ -437,11 +437,11 @@ const courses: Course[] = [
           ],
         },
         {
-          id: 'yCZFTzl',
+          id: 'dsiXfimpcH9MMMYVh6',
           title: 'Section title',
           chapters: [
             {
-              id: 'Un83LcC',
+              id: 'dXfimpcH9MMMYNLyVh6',
               title: 'Chapter title',
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
@@ -453,11 +453,11 @@ const courses: Course[] = [
           ],
         },
         {
-          id: 'yCZFTz',
+          id: 'dsiXfimpcH9MMMYNLy6',
           title: 'Section title',
           chapters: [
             {
-              id: 'Un83LcC',
+              id: 'dsiXfyVh6',
               title: 'Chapter title',
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
@@ -469,11 +469,11 @@ const courses: Course[] = [
           ],
         },
         {
-          id: 'CZFTzlhEW6U',
+          id: 'dsiXfimpcH9MYNLyVh6',
           title: 'Section title',
           chapters: [
             {
-              id: 'Un83LcC',
+              id: 'dsiXfimpcH9MMyVh6',
               title: 'Chapter title',
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
@@ -534,11 +534,11 @@ const courses: Course[] = [
     course_content: {
       sections: [
         {
-          id: 'UJV8zBbfNsS',
+          id: 'PbyyCZFTzlhEWn83LcC',
           title: 'Section title',
           chapters: [
             {
-              id: 'SYscnIK7fJ',
+              id: 'PbyyCTzlhEW6Un83LcC',
               title: 'Chapter title',
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
@@ -550,11 +550,11 @@ const courses: Course[] = [
           ],
         },
         {
-          id: 'dsiXfimpcH9M',
+          id: 'PbCZFTzlhEW6Un83LcC',
           title: 'Section title',
           chapters: [
             {
-              id: 'SYscnIK7fJ',
+              id: 'PbyyCZFTzlhEW6Un83C',
               title: 'Chapter title',
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
@@ -592,11 +592,11 @@ const courses: Course[] = [
     course_content: {
       sections: [
         {
-          id: 'UJV8zBbfNsS',
+          id: 'F3SzYuhZ4jS',
           title: 'Section title',
           chapters: [
             {
-              id: 'SYscnIK7fJ',
+              id: 'F3SYuhyZ4jS',
               title: 'Chapter title',
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
@@ -608,11 +608,11 @@ const courses: Course[] = [
           ],
         },
         {
-          id: 'dsiXfimpcH9M',
+          id: 'F3SzhyZ4jS',
           title: 'Section title',
           chapters: [
             {
-              id: 'SYscnIK7fJ',
+              id: 'F3SzYuhyjS',
               title: 'Chapter title',
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
@@ -664,11 +664,11 @@ const courses: Course[] = [
     course_content: {
       sections: [
         {
-          id: 'UJV8zBbfNsS',
+          id: '2OU1NKvfoSNI',
           title: 'Section title',
           chapters: [
             {
-              id: 'SYscnIK7fJ',
+              id: '2OU1NGKvfoNI',
               title: 'Chapter title',
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
@@ -680,11 +680,11 @@ const courses: Course[] = [
           ],
         },
         {
-          id: 'dsiXfimpcH9M',
+          id: '2O1NGKvfoSNI',
           title: 'Section title',
           chapters: [
             {
-              id: 'SYscnIK7fJ',
+              id: '2OU1NGvfoSNI',
               title: 'Chapter title',
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
@@ -726,7 +726,7 @@ const courses: Course[] = [
           title: 'Section title',
           chapters: [
             {
-              id: 'SYscnIK7fJ',
+              id: 'cKSDVkbIsGoZcKqrr',
               title: 'Chapter title',
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
@@ -742,7 +742,7 @@ const courses: Course[] = [
           title: 'Section title',
           chapters: [
             {
-              id: 'SYscnIK7fJ',
+              id: 'cKSDVDId2kbIsGoqrr',
               title: 'Chapter title',
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
@@ -784,7 +784,7 @@ const courses: Course[] = [
           title: 'Section title',
           chapters: [
             {
-              id: 'SYscnIK7fJ',
+              id: 'cKSDVId2kbIsGoZcKqrr',
               title: 'Chapter title',
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
@@ -800,7 +800,7 @@ const courses: Course[] = [
           title: 'Section title',
           chapters: [
             {
-              id: 'SYscnIK7fJ',
+              id: 'cKSDVDId2kbIsGoZKqrr',
               title: 'Chapter title',
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
@@ -842,7 +842,7 @@ const courses: Course[] = [
           title: 'Section title',
           chapters: [
             {
-              id: 'SYscnIK7fJ',
+              id: 'cKSDVDd2kbIsGoZcKqrr',
               title: 'Chapter title',
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
@@ -899,7 +899,7 @@ const courses: Course[] = [
           title: 'Section title',
           chapters: [
             {
-              id: 'SYscnIK7fJ',
+              id: 'cKVDId2kbIsGoZcKqrr',
               title: 'Chapter title',
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
@@ -958,7 +958,7 @@ const courses: Course[] = [
           title: 'Section title',
           chapters: [
             {
-              id: 'SYscnIK7fJ',
+              id: 'cKSDVDId2kbIsKqrr',
               title: 'Chapter title',
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
@@ -1016,7 +1016,7 @@ const courses: Course[] = [
           title: 'Section title',
           chapters: [
             {
-              id: 'SYscnIK7fJ',
+              id: 'cKSId2kbIsGoZcKqrr',
               title: 'Chapter title',
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
@@ -1074,7 +1074,7 @@ const courses: Course[] = [
           title: 'Section title',
           chapters: [
             {
-              id: 'SYscnIK7fJ',
+              id: 'cKSDVDIdZcKqrr',
               title: 'Chapter title',
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
@@ -1132,7 +1132,7 @@ const courses: Course[] = [
           title: 'Section title',
           chapters: [
             {
-              id: 'SYscnIK7fJ',
+              id: 'cKSDVqrr',
               title: 'Chapter title',
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
@@ -1190,7 +1190,7 @@ const courses: Course[] = [
           title: 'Section title',
           chapters: [
             {
-              id: 'SYscnIK7fJ',
+              id: 'cKkbIsGoZcKqrr',
               title: 'Chapter title',
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
@@ -1247,7 +1247,7 @@ const courses: Course[] = [
           title: 'Section title',
           chapters: [
             {
-              id: 'SYscnIK7fJ',
+              id: 'cKSDVDId2kbIsGKqrr',
               title: 'Chapter title',
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
@@ -1306,7 +1306,7 @@ const courses: Course[] = [
           title: 'Section title',
           chapters: [
             {
-              id: 'SYscnIK7fJ',
+              id: 'cKSDVDd2kbIsGoZcKqrr',
               title: 'Chapter title',
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
@@ -1364,7 +1364,7 @@ const courses: Course[] = [
           title: 'Section title',
           chapters: [
             {
-              id: 'SYscnIK7fJ',
+              id: 'cKSDVDId2kbIsGsdfKqrr',
               title: 'Chapter title',
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',
@@ -1422,7 +1422,7 @@ const courses: Course[] = [
           title: 'Section title',
           chapters: [
             {
-              id: 'SYscnIK7fJ',
+              id: 'DId2kbIsGoZcKqrr',
               title: 'Chapter title',
               description:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut dolor quasi magnam sunt labore debitis nam officia esse quae obcaecati?',

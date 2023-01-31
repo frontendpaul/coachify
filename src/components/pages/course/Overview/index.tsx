@@ -4,6 +4,7 @@ import { FiHeart, FiShare2 } from 'react-icons/fi';
 import { User } from 'server/courses';
 
 type Props = {
+  id: string;
   title: string;
   short_description: string;
   owner: User;
@@ -13,6 +14,7 @@ type Props = {
 };
 
 const Overview = ({
+  id,
   title,
   short_description,
   owner,
@@ -41,7 +43,7 @@ const Overview = ({
         )}
       </p>
       <div className="grid grid-cols-2 justify-items-start gap-4 sm:flex w-full">
-        <Button className="w-full sm:w-44">
+        <Button href={id + '/learn'} className="w-full sm:w-44">
           {free ? 'Enroll now' : 'Buy now'}
         </Button>
         <Button fill="outline" icon="icon-left" className="w-full sm:w-auto">
