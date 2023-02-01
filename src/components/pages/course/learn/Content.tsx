@@ -40,20 +40,17 @@ const Content = ({
       collapsible
     >
       {/** Initially render only first @param sectionsOnInit sections */}
-      <ol>
+      <ol className="grid gap-1">
         {content.sections.map((section, sectionIndex) => (
           <li key={section.id}>
             <Accordion.Item value={section.id} className="group">
               <Accordion.Header>
                 <Accordion.Trigger
-                  className={clsx(
-                    'flex items-center justify-between w-full',
-                    'p-2 sm:p-3 rounded-lg transition-200-out-quart',
-                    'hover:bg-white/5 data-[state=open]:bg-coachify-teal-900',
-                    'text-sm xl:text-base'
-                  )}
+                  className="transition-200-out-quart flex w-full items-center justify-between 
+                rounded-lg bg-coachify-teal-1100/50 p-3 text-sm hover:bg-coachify-teal-900 
+                data-[state=open]:bg-coachify-teal-900 data-[state=open]:hover:bg-coachify-teal-900 lg:bg-transparent lg:hover:bg-white/5 xl:p-3 xl:text-base"
                 >
-                  <div className="flex items-center gap-2 sm:gap-4">
+                  <div className="flex items-center gap-2 xl:gap-3">
                     {currentSectionId === section.id ? (
                       <FiPlay />
                     ) : (
@@ -63,20 +60,16 @@ const Content = ({
                       {sectionIndex + 1}. {section.title}
                     </span>
                   </div>
-                  <FiChevronDown
-                    className={clsx(
-                      'transition-200-out-quart group-[[data-state=open]]:rotate-180'
-                    )}
-                  />
+                  <FiChevronDown className="transition-200-out-quart group-[[data-state=open]]:rotate-180" />
                 </Accordion.Trigger>
               </Accordion.Header>
               <Accordion.Content className="overflow-hidden group-[[data-state=open]]:animate-slideDown group-[[data-state=closed]]:animate-slideUp">
                 <ol>
                   {section.chapters.map((chapter, chapterIndex) => (
-                    <li key={chapter.id} className="ml-6 sm:ml-8">
+                    <li key={chapter.id} className="ml-6 xl:ml-7">
                       <button
-                        className="px-2 sm:px-3 py-2 w-full flex text-sm text-left transition-200-out-quart 
-                          hover:text-coachify-teal-500 data-[active=true]:text-coachify-teal-500"
+                        className="transition-200-out-quart flex w-full px-2 py-2 text-left text-sm hover:text-coachify-teal-500 
+                          data-[active=true]:text-coachify-teal-500 xl:px-3"
                         data-active={chapter.id === currentChapter.id}
                         onClick={(e) => {
                           const videoSrc =
@@ -101,7 +94,7 @@ const Content = ({
                         <span>
                           {sectionIndex + 1}.{chapterIndex + 1}.
                         </span>
-                        <div className="ml-1 flex-1 sm:flex sm:justify-between">
+                        <div className="ml-1 flex-1 gap-2 xl:flex xl:justify-between">
                           <p>{chapter.title}</p>
                           <p className="">{chapter.video.duration}</p>
                         </div>

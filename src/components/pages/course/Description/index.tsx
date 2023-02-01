@@ -45,13 +45,13 @@ const Description = ({ description }: { description: string }) => {
           data-state={showFullDescription ? 'open' : 'closed'}
           id="collapsible-description"
           className={clsx(
-            'relative transition-200-out-quart overflow-hidden',
+            'transition-200-out-quart relative overflow-hidden',
             makeDescriptionCollapsible &&
               'data-[state=open]:max-h-[var(--radix-collapsible-content-height)] data-[state=closed]:max-h-[448px]'
           )}
         >
           <div
-            className="grid gap-4 [&_a]:underline [&_li]:list-inside [&_ul]:list-disc [&_ol]:list-decimal"
+            className="grid gap-4 text-coachify-gray-300 [&_a]:underline [&_li]:list-inside [&_ul]:list-disc [&_ol]:list-decimal"
             dangerouslySetInnerHTML={{
               __html: sanitizedCourseDescription,
             }}
@@ -59,10 +59,10 @@ const Description = ({ description }: { description: string }) => {
           {makeDescriptionCollapsible && (
             <div
               className={clsx(
-                'absolute bottom-0 w-full h-24 bg-gradient-to-b from-transparent to-coachify-teal-1200 transition-200-out-quart',
+                'transition-200-out-quart absolute bottom-0 h-24 w-full bg-gradient-to-b from-transparent to-coachify-teal-1200',
                 showFullDescription
-                  ? 'opacity-0 invisible'
-                  : 'opacity-100 visible'
+                  ? 'invisible opacity-0'
+                  : 'visible opacity-100'
               )}
             ></div>
           )}

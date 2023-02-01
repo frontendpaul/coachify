@@ -3,13 +3,16 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
 import { Chapter, getCourseById } from 'server/courses';
-import Content from './Content';
+import Content from '@components/pages/course/learn/Content';
 import * as Tabs from '@radix-ui/react-tabs';
 import SectionTitle from '@components/ui/SectionTitle';
 import { useDraggable } from 'react-use-draggable-scroll';
-import TabTrigger from './TabTrigger';
+import TabTrigger from '@components/pages/course/learn/TabTrigger';
 import { isMediumScreenAtom } from '@components/Layout';
 import { useAtom } from 'jotai';
+import About from '@components/pages/course/learn/About';
+import Reviews from '@components/pages/course/learn/Reviews';
+import Resources from '@components/pages/course/learn/Resources';
 
 const Learn = () => {
   const router = useRouter();
@@ -54,8 +57,8 @@ const Learn = () => {
             content="No such course found. Please search again or return to homepage."
           />
         </Head>
-        <div className="grid place-items-center mt-20">
-          <h1 className="text-xl text-semibold">No such course found.</h1>
+        <div className="mt-20 grid place-items-center">
+          <h1 className="text-semibold text-xl">No such course found.</h1>
           <Link href="/" className="underline">
             Go back to Homepage
           </Link>
@@ -78,17 +81,17 @@ const Learn = () => {
         />
       </Head>
 
-      <section className="flex flex-col min-h-screen py-6">
+      <section className="flex min-h-screen flex-col py-6">
         <h1 className="sr-only">{course.title}</h1>
-        <div className="lg:grid lg:grid-cols-[1fr,min(30%,550px)] border-white/10">
+        <div className="border-white/10 lg:grid lg:grid-cols-[1fr,min(30%,550px)]">
           <h2 className="sr-only">Video for {currentChapter?.title}</h2>
           <video
-            className="w-full max-h-[50vh] lg:max-h-[70vh] bg-coachify-teal-1200"
+            className="max-h-[50vh] w-full bg-coachify-teal-1200 lg:max-h-[70vh]"
             src={course.course_content.sections[0].chapters[0].video.src}
             controls
             ref={videoPlayer}
           ></video>
-          <div className="px-2 lg:px-4 hidden lg:block h-0 min-h-full overflow-auto custom-scrollbar">
+          <div className="custom-scrollbar hidden h-0 min-h-full overflow-auto px-2 lg:block lg:px-4">
             <SectionTitle className="mb-4">Course content</SectionTitle>
             <Content
               content={course.course_content}
@@ -100,18 +103,26 @@ const Learn = () => {
           </div>
         </div>
         <div className="flex-1 bg-coachify-teal-1200 px-4 pb-4 md:px-6 md:pb-6">
-          <Tabs.Root value={value} onValueChange={setValue}>
-            <Tabs.List className="flex gap-2 md:gap-4 py-2 md:py-4 overflow-auto [&>*]:whitespace-nowrap border-b border-white/10">
+          <Tabs.Root
+            value={value}
+            onValueChange={setValue}
+            className="mx-auto max-w-3xl"
+          >
+            <Tabs.List className="flex gap-2 overflow-auto border-b border-white/10 py-2 md:gap-4 md:py-4 [&>*]:whitespace-nowrap">
               {/* TODO: add scroll on mouse drag */}
               {isMediumScreen && <TabTrigger value="content" text="Content" />}
               <TabTrigger value="about" text="About" />
               <TabTrigger value="resources" text="Resources" />
               <TabTrigger value="discussion" text="Discussion" />
+              <TabTrigger value="announcements" text="Announcements" />
               <TabTrigger value="reviews" text="Reviews" />
             </Tabs.List>
 
             {isMediumScreen && (
-              <Tabs.Content value="content" className="py-4 md:py-6">
+              <Tabs.Content
+                value="content"
+                className="py-4 md:max-w-xl md:py-6"
+              >
                 <Content
                   content={course.course_content}
                   currentSectionId={currentSection}
@@ -122,25 +133,35 @@ const Learn = () => {
               </Tabs.Content>
             )}
 
-            <Tabs.Content value="about">
-              <div className="my-4">
-                <SectionTitle>About title</SectionTitle>
-              </div>
+            <Tabs.Content value="about" className="py-4 md:py-6">
+              {currentChapter.description ? (
+                <About description={currentChapter.description} />
+              ) : (
+                <h2>
+                  A description for this chapter has not yet been added by the
+                  author.
+                </h2>
+              )}
             </Tabs.Content>
-            <Tabs.Content value="resources">
-              <div className="my-4">
-                <SectionTitle>Resources</SectionTitle>
-              </div>
+            <Tabs.Content value="resources" className="py-4 md:py-6">
+              {currentChapter.resources ? (
+                <Resources resources={currentChapter.resources} />
+              ) : (
+                <h2>No resources attached to this chapter.</h2>
+              )}
             </Tabs.Content>
-            <Tabs.Content value="discussion">
+            <Tabs.Content value="discussion" className="py-4 md:py-6">
               <div className="my-4">
                 <SectionTitle>Comments</SectionTitle>
               </div>
             </Tabs.Content>
-            <Tabs.Content value="reviews">
+            <Tabs.Content value="announcements" className="py-4 md:py-6">
               <div className="my-4">
-                <SectionTitle>Reviews</SectionTitle>
+                <SectionTitle>Announcements</SectionTitle>
               </div>
+            </Tabs.Content>
+            <Tabs.Content value="reviews" className="py-4 md:py-6">
+              <Reviews />
             </Tabs.Content>
           </Tabs.Root>
         </div>

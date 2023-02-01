@@ -11,13 +11,13 @@ const Teacher = ({ owner }: { owner: Creator }) => {
       <div className="grid gap-6">
         <SectionTitle>Meet your teacher</SectionTitle>
         <div className="flex items-center gap-4">
-          <div className="w-10 h-10">
+          <div className="h-10 w-10">
             <Avatar user={owner} />
           </div>
           <p className="leading-none">{owner.name}</p>
         </div>
         <div
-          className="grid gap-4 [&_a]:underline [&_li]:list-inside [&_ul]:list-disc [&_ol]:list-decimal"
+          className="grid gap-4 text-coachify-gray-300 [&_a]:underline [&_li]:list-inside [&_ul]:list-disc [&_ol]:list-decimal"
           dangerouslySetInnerHTML={{
             __html: sanitizedCreatorDescription,
           }}

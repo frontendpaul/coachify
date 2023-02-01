@@ -30,7 +30,7 @@ const Reviews = ({
               </p>
             </div>
 
-            <ul className="grid grid-cols-1 sm:grid-cols-2 2xl:grid-cols-3 gap-4">
+            <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 2xl:grid-cols-3">
               {/* Display at most 4 reviews */}
               {reviews.slice(0, 4).map((review) => (
                 <Review key={review.id} review={review} moreThan3={moreThan3} />

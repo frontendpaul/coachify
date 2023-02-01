@@ -10,7 +10,7 @@ const Review = ({
   moreThan3,
 }: {
   review: Review;
-  moreThan3: boolean;
+  moreThan3?: boolean;
 }) => {
   const reviewParagraph = useRef<HTMLParagraphElement>(null);
   const [isOverflowing, setIsOverflowing] = useState(false);
@@ -30,23 +30,26 @@ const Review = ({
   return (
     <li
       className={clsx(
-        'flex flex-col gap-4 p-3 sm:p-4 bg-coachify-teal-1100 rounded-lg',
+        'flex flex-col gap-4 rounded-lg bg-coachify-teal-1100 p-3 sm:p-4',
         moreThan3 && 'last:hidden sm:last:flex 2xl:last:hidden'
       )}
     >
       <div className="flex items-center gap-3">
-        <div className="w-8 h-8">
+        <div className="h-8 w-8">
           <Avatar user={review.author} />
         </div>
         <div className="flex-1">
-          <p className="font-semibold mb-1">{review.author.name}</p>
-          <div className="flex justify-between items-center text-xs">
+          <p className="mb-1 font-semibold">{review.author.name}</p>
+          <div className="flex items-center justify-between text-xs">
             <Stars rating={review.rating} />
             <p className="text-white/75">{review.created_at}</p>
           </div>
         </div>
       </div>
-      <p ref={reviewParagraph} className="text-sm line-clamp-8">
+      <p
+        ref={reviewParagraph}
+        className="text-sm text-coachify-gray-200 line-clamp-8"
+      >
         {review.copy}
       </p>
       {isOverflowing && <LinkWithChevron href="/" text="Read full review" />}

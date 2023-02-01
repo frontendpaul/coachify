@@ -23,6 +23,12 @@ module.exports = {
           1200: '#0A1010',
           1300: '#0C0D0D',
         },
+        'coachify-gray': {
+          50: '#F5F6F6',
+          100: '#E4E9E9',
+          200: '#CCD5D5',
+          300: '#A8B8B8',
+        },
       },
       transitionTimingFunction: {
         'out-quart': 'cubic-bezier(0.25, 1, 0.5, 1)',
