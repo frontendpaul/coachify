@@ -29,13 +29,13 @@ const InfoCards = ({ level, language, participants, rating }: Props) => {
   return (
     <section>
       <h2 className="sr-only">Additional Informations</h2>
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 2xl:gap-6">
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
         <Card>
           <Image src={barIconSrc} alt="" width={32} height={32} aria-hidden />
           <span>{level}</span>
         </Card>
         <Card>
-          <FiGlobe className="w-8 h-8" aria-hidden />
+          <FiGlobe className="h-8 w-8" aria-hidden />
           <span>{language}</span>
         </Card>
         <Card>

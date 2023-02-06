@@ -45,6 +45,21 @@ html {
         var(--coachify-teal-1100));
   }
 
+  .bg-coachify-gradient-2 {
+    background: linear-gradient(to bottom,
+        hsla(var(--coachify-teal-1200-hsl) / 0%),
+        hsla(var(--coachify-teal-1200-hsl) / 100%)),
+      linear-gradient(to right,
+        hsla(var(--coachify-teal-1200-hsl) / 50%),
+        hsla(var(--coachify-teal-1200-hsl) / 50%)),
+      linear-gradient(to right,
+        hsla(var(--coachify-blue-500-hsl) / 25%),
+        hsla(var(--coachify-mint-500-hsl) / 25%)),
+      linear-gradient(to right,
+        var(--coachify-teal-1100),
+        var(--coachify-teal-1100));
+  }
+
   .transition-x {
     transition-property: transform;
   }

@@ -57,23 +57,23 @@ const Layout = ({ children }: Props): React.ReactElement => {
       {isLearnPage ? <OverlaySidenav /> : <Sidenav />}
       <div
         className={clsx(
-          'min-h-screen text-white relative isolate bg-coachify-teal-1200 mt-[var(--header-height)]',
+          'relative isolate mt-[var(--header-height)] min-h-screen bg-coachify-teal-1200 text-white',
           openSans.className
         )}
       >
-        <div className="absolute -z-10 w-full h-screen -translate-y-[var(--header-height)]">
-          <Image
+        <div className="bg-coachify-gradient-2 absolute -z-10 h-screen w-full -translate-y-[var(--header-height)]">
+          {/* <Image
             className="object-cover"
             src="/bg-quality-100.webp"
             fill
             alt=""
             unoptimized
             priority
-          />
+          /> */}
         </div>
         <div
           className={clsx(
-            'flex flex-col min-h-[calc(100vh-var(--header-height))] md:ml-16',
+            'flex min-h-[calc(100vh-var(--header-height))] flex-col md:ml-16',
             isSidenavExpanded ? 'lg:ml-60' : 'lg:ml-16',
             isLearnPage && '!ml-0'
           )}

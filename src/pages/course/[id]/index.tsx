@@ -36,8 +36,8 @@ const Course = () => {
             content="No such course found. Please search again or return to homepage."
           />
         </Head>
-        <div className="grid place-items-center mt-20">
-          <h1 className="text-xl text-semibold">No such course found.</h1>
+        <div className="mt-20 grid place-items-center">
+          <h1 className="text-semibold text-xl">No such course found.</h1>
           <Link href="/" className="underline">
             Go back to Homepage
           </Link>
@@ -58,12 +58,12 @@ const Course = () => {
       </Head>
 
       <section
-        className="max-w-3xl xl:max-w-7xl mx-auto py-6 px-4 md:px-6
-      xl:grid xl:grid-cols-[1fr,min(35%,400px)] xl:gap-6"
+        className="mx-auto max-w-3xl py-6 px-4 md:px-6 xl:grid
+      xl:max-w-7xl xl:grid-cols-[1fr,min(35%,400px)] xl:gap-6"
       >
-        <div className="block mb-6 xl:mb-0 xl:order-2 relative">
+        <div className="relative mb-6 block xl:order-2 xl:mb-0">
           <video
-            className="w-full sticky top-[90px]"
+            className="sticky top-[90px] w-full"
             src={course.course_content.sections[0].chapters[0].video.src}
             controls
             ref={videoPlayer}

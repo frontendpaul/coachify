@@ -29,7 +29,7 @@ const Content = ({
   const [value, setValue] = useState(currentSectionId);
 
   if (!content || !currentChapter) {
-    return <h1>null</h1>;
+    return <div>Loading...</div>;
   }
 
   return (
@@ -47,7 +47,7 @@ const Content = ({
               <Accordion.Header>
                 <Accordion.Trigger
                   className="transition-200-out-quart flex w-full items-center justify-between 
-                rounded-lg bg-coachify-teal-1100/50 p-3 text-sm hover:bg-coachify-teal-900 
+                rounded-lg bg-coachify-teal-1100/75 p-3 text-sm hover:bg-coachify-teal-900 
                 data-[state=open]:bg-coachify-teal-900 data-[state=open]:hover:bg-coachify-teal-900 lg:bg-transparent lg:hover:bg-white/5 xl:p-3 xl:text-base"
                 >
                   <div className="flex items-center gap-2 xl:gap-3">

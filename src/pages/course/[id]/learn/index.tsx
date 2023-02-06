@@ -13,6 +13,8 @@ import { useAtom } from 'jotai';
 import About from '@components/pages/course/learn/About';
 import Reviews from '@components/pages/course/learn/Reviews';
 import Resources from '@components/pages/course/learn/Resources';
+import Button from '@components/ui/Button';
+import { FiHeart, FiShare2 } from 'react-icons/fi';
 
 const Learn = () => {
   const router = useRouter();
@@ -81,7 +83,7 @@ const Learn = () => {
         />
       </Head>
 
-      <section className="flex min-h-screen flex-col py-6">
+      <section className="flex min-h-screen flex-col">
         <h1 className="sr-only">{course.title}</h1>
         <div className="border-white/10 lg:grid lg:grid-cols-[1fr,min(30%,550px)]">
           <h2 className="sr-only">Video for {currentChapter?.title}</h2>
@@ -103,66 +105,75 @@ const Learn = () => {
           </div>
         </div>
         <div className="flex-1 bg-coachify-teal-1200 px-4 pb-4 md:px-6 md:pb-6">
-          <Tabs.Root
-            value={value}
-            onValueChange={setValue}
-            className="mx-auto max-w-3xl"
-          >
-            <Tabs.List className="flex gap-2 overflow-auto border-b border-white/10 py-2 md:gap-4 md:py-4 [&>*]:whitespace-nowrap">
-              {/* TODO: add scroll on mouse drag */}
-              {isMediumScreen && <TabTrigger value="content" text="Content" />}
-              <TabTrigger value="about" text="About" />
-              <TabTrigger value="resources" text="Resources" />
-              <TabTrigger value="discussion" text="Discussion" />
-              <TabTrigger value="announcements" text="Announcements" />
-              <TabTrigger value="reviews" text="Reviews" />
+          <Tabs.Root value={value} onValueChange={setValue}>
+            {/* TODO: add scroll on mouse drag */}
+            <Tabs.List className="flex justify-between gap-2 overflow-auto border-b border-white/10 py-2 md:gap-4 md:py-4 [&>*]:whitespace-nowrap">
+              <div>
+                {isMediumScreen && (
+                  <TabTrigger value="content" text="Content" />
+                )}
+                <TabTrigger value="about" text="About" />
+                <TabTrigger value="resources" text="Resources" />
+                <TabTrigger value="discussion" text="Discussion" />
+                <TabTrigger value="announcements" text="Announcements" />
+                <TabTrigger value="reviews" text="Reviews" />
+              </div>
+              <div className="flex gap-2 md:gap-4">
+                <Button fill="outline" icon="icon-left">
+                  <FiHeart />
+                  Save
+                </Button>
+                <Button fill="outline" icon="icon-left">
+                  <FiShare2 />
+                  Share
+                </Button>
+              </div>
             </Tabs.List>
 
-            {isMediumScreen && (
-              <Tabs.Content
-                value="content"
-                className="py-4 md:max-w-xl md:py-6"
-              >
-                <Content
-                  content={course.course_content}
-                  currentSectionId={currentSection}
-                  currentChapter={currentChapter}
-                  setCurrentChapter={setCurrentChapter}
-                  videoPlayer={videoPlayer}
-                />
-              </Tabs.Content>
-            )}
+            <div className="mx-auto py-4 md:max-w-2xl md:py-6">
+              {isMediumScreen && (
+                <Tabs.Content value="content">
+                  <Content
+                    content={course.course_content}
+                    currentSectionId={currentSection}
+                    currentChapter={currentChapter}
+                    setCurrentChapter={setCurrentChapter}
+                    videoPlayer={videoPlayer}
+                  />
+                </Tabs.Content>
+              )}
 
-            <Tabs.Content value="about" className="py-4 md:py-6">
-              {currentChapter.description ? (
-                <About description={currentChapter.description} />
-              ) : (
-                <h2>
-                  A description for this chapter has not yet been added by the
-                  author.
-                </h2>
-              )}
-            </Tabs.Content>
-            <Tabs.Content value="resources" className="py-4 md:py-6">
-              {currentChapter.resources ? (
-                <Resources resources={currentChapter.resources} />
-              ) : (
-                <h2>No resources attached to this chapter.</h2>
-              )}
-            </Tabs.Content>
-            <Tabs.Content value="discussion" className="py-4 md:py-6">
-              <div className="my-4">
-                <SectionTitle>Comments</SectionTitle>
-              </div>
-            </Tabs.Content>
-            <Tabs.Content value="announcements" className="py-4 md:py-6">
-              <div className="my-4">
-                <SectionTitle>Announcements</SectionTitle>
-              </div>
-            </Tabs.Content>
-            <Tabs.Content value="reviews" className="py-4 md:py-6">
-              <Reviews />
-            </Tabs.Content>
+              <Tabs.Content value="about">
+                {currentChapter.description ? (
+                  <About description={currentChapter.description} />
+                ) : (
+                  <h2>
+                    A description for this chapter has not yet been added by the
+                    author.
+                  </h2>
+                )}
+              </Tabs.Content>
+              <Tabs.Content value="resources">
+                {currentChapter.resources ? (
+                  <Resources resources={currentChapter.resources} />
+                ) : (
+                  <h2>No resources attached to this chapter.</h2>
+                )}
+              </Tabs.Content>
+              <Tabs.Content value="discussion">
+                <div className="mx-auto lg:max-w-3xl">
+                  <SectionTitle>Comments</SectionTitle>
+                </div>
+              </Tabs.Content>
+              <Tabs.Content value="announcements">
+                <div className="mx-auto lg:max-w-3xl">
+                  <SectionTitle>Announcements</SectionTitle>
+                </div>
+              </Tabs.Content>
+              <Tabs.Content value="reviews">
+                <Reviews reviews={course.reviews} />
+              </Tabs.Content>
+            </div>
           </Tabs.Root>
         </div>
       </section>

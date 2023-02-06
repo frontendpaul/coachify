@@ -42,11 +42,15 @@ const Overview = ({
           </s>
         )}
       </p>
-      <div className="grid w-full grid-cols-2 justify-items-start gap-4 sm:flex">
-        <Button href={id + '/learn'} className="w-full sm:w-44">
+      <div className="grid w-full grid-cols-2 justify-items-start gap-4 sm:flex md:grid md:grid-cols-4">
+        <Button href={id + '/learn'} className="w-full sm:w-44 md:w-full">
           {free ? 'Enroll now' : 'Buy now'}
         </Button>
-        <Button fill="outline" icon="icon-left" className="w-full sm:w-auto">
+        <Button
+          fill="outline"
+          icon="icon-left"
+          className="w-full sm:w-auto md:w-full md:px-0"
+        >
           <FiHeart />
           <span>
             Save <span className="hidden sm:inline">for later</span>
