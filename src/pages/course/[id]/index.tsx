@@ -105,10 +105,10 @@ const Course = () => {
             rating={course.course_metadata.rating}
           />
 
-          <OtherCourses
+          {/* <OtherCourses
             ownerName={course.owner.name}
             courses={filteredCreatorCourses}
-          />
+          /> */}
         </div>
       </section>
     </>

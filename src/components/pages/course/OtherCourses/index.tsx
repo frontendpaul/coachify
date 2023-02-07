@@ -3,11 +3,11 @@ import Button from '@components/ui/Button';
 import SectionTitle from '@components/ui/SectionTitle';
 import clsx from 'clsx';
 import Link from 'next/link';
-import { Course } from 'server/courses';
+import { Product } from 'types/supabase';
 
 type Props = {
   ownerName: string;
-  courses: Course[];
+  courses: Product[];
 };
 
 const OtherCourses = ({ ownerName, courses }: Props) => {
@@ -26,7 +26,7 @@ const OtherCourses = ({ ownerName, courses }: Props) => {
           <p>This creator has no other courses yet.</p>
         ) : (
           <>
-            <ul className="grid grid-cols-1 sm:grid-cols-2 2xl:grid-cols-3 gap-4">
+            <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 2xl:grid-cols-3">
               {courses.map((course) => (
                 <li
                   key={course.id}
