@@ -1,13 +1,13 @@
 import TitleWithLink from '@components/ui/TitleWithLink';
 import { useSupabaseClient } from '@supabase/auth-helpers-react';
 import { useEffect, useState } from 'react';
-import { getCourses } from 'server/courses';
+import { Product } from 'types/supabase';
 import CourseCard from './CourseCard';
 import Loader from './Loader';
 
 const RecentlyAdded = () => {
-  const coursess = getCourses().slice(0, 16);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  // TODO: improve typing
   const [courses, setCourses] = useState<any>(null);
 
   const supabase = useSupabaseClient();
