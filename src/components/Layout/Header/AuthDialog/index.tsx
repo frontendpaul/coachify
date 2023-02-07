@@ -33,7 +33,7 @@ const AuthDialog = ({
     email: string,
     password: string,
     name: string,
-    isCreator: boolean
+    role: 'student' | 'creator'
   ) => {
     try {
       setIsLoading(true);
@@ -44,7 +44,7 @@ const AuthDialog = ({
         options: {
           data: {
             name: name,
-            isCreator: isCreator,
+            role: role,
           },
         },
       });
@@ -64,6 +64,22 @@ const AuthDialog = ({
       const { data, error } = await supabaseClient.auth.signInWithPassword({
         email: email,
         password: password,
+      });
+
+      if (error) throw error;
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const signInWithGoogle = async () => {
+    try {
+      setIsLoading(true);
+
+      const { data, error } = await supabaseClient.auth.signInWithOAuth({
+        provider: 'google',
       });
 
       if (error) throw error;
@@ -100,7 +116,7 @@ const AuthDialog = ({
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <Dialog.Panel className="relative overflow-hidden rounded-lg bg-coachify-teal-1100 shadow-xl text-white transition-200-out-quart sm:my-8 w-full max-w-sm p-4 sm:p-6">
+              <Dialog.Panel className="transition-200-out-quart relative w-full max-w-sm overflow-hidden rounded-lg bg-coachify-teal-1100 p-4 text-white shadow-xl sm:my-8 sm:p-6">
                 <Button
                   fill="ghost"
                   icon="icon-only"
@@ -156,7 +172,7 @@ const AuthDialog = ({
                         <p className="text-sm text-white/75">
                           Aleady have an account?{' '}
                           <button
-                            className="underline text-coachify-teal-500 hover:text-coachify-teal-400 transition-200-out-quart"
+                            className="transition-200-out-quart text-coachify-teal-500 underline hover:text-coachify-teal-400"
                             onClick={() => setAuthIntent('login')}
                           >
                             Log In
@@ -166,7 +182,7 @@ const AuthDialog = ({
                           <p className="text-sm text-white/75">
                             Are you a teacher?{' '}
                             <button
-                              className="underline text-coachify-teal-500 hover:text-coachify-teal-400 transition-200-out-quart"
+                              className="transition-200-out-quart text-coachify-teal-500 underline hover:text-coachify-teal-400"
                               onClick={() => setAuthIntent('creator-signup')}
                             >
                               Register a creator account
@@ -177,7 +193,7 @@ const AuthDialog = ({
                           <p className="text-sm text-white/75">
                             Are you a student?{' '}
                             <button
-                              className="underline text-coachify-teal-500 hover:text-coachify-teal-400 transition-200-out-quart"
+                              className="transition-200-out-quart text-coachify-teal-500 underline hover:text-coachify-teal-400"
                               onClick={() => setAuthIntent('signup')}
                             >
                               Register a student account
@@ -191,7 +207,7 @@ const AuthDialog = ({
                       <p className="text-sm text-white/75">
                         Don&apos;t have an account yet?{' '}
                         <button
-                          className="underline text-coachify-teal-500 hover:text-coachify-teal-400 transition-200-out-quart"
+                          className="transition-200-out-quart text-coachify-teal-500 underline hover:text-coachify-teal-400"
                           onClick={() => setAuthIntent('signup')}
                         >
                           Sign Up
@@ -239,6 +255,7 @@ const SignUpForm = ({
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const role = isCreator ? 'creator' : 'student';
 
   return (
     <form id="signup" className="grid gap-3">
@@ -269,7 +286,7 @@ const SignUpForm = ({
         className="mt-1"
         onClick={(e) => {
           e.preventDefault();
-          signUpWithEmail(email, password, name, isCreator);
+          signUpWithEmail(email, password, name, role);
         }}
         disabled={isLoading}
       >
@@ -317,7 +334,7 @@ const LogInForm = ({
         Log In
       </Button>
       <button
-        className="underline text-coachify-teal-500 hover:text-coachify-teal-400 transition-200-out-quart mr-auto text-sm"
+        className="transition-200-out-quart mr-auto text-sm text-coachify-teal-500 underline hover:text-coachify-teal-400"
         onClick={() => {}}
       >
         Restore password

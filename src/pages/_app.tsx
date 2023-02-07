@@ -22,7 +22,7 @@ export default function App({
         .select(`
         id,
         owner:user(
-          full_name,
+          name,
           avatar_url,
           description
         ),
@@ -31,18 +31,21 @@ export default function App({
         price,
         old_price,
         category(name),
-        sections:section(
-          *,
-          chapters:chapter(
+        metadata:product_metadata(*),
+        content:product_content(
+          sections:section(
             *,
-            video:video(*),
-            resources:resource(*)
+            chapters:chapter(
+              *,
+              video:video(*),
+              resources:resource(*)
+            )
           )
         ),
         reviews:review(
           id,
           owner:user(
-            full_name,
+            name,
             avatar_url
           ),
           body,
@@ -62,7 +65,7 @@ export default function App({
   };
 
   useEffect(() => {
-    getProducts();
+    // getProducts();
   }, []);
 
   return (

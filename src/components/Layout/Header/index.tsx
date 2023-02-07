@@ -67,16 +67,16 @@ const Header = () => {
   return (
     <header
       className={clsx(
-        'fixed top-0 z-10 flex justify-between items-center gap-4 md:gap-8',
-        'w-full pl-3 pr-4 md:pr-6 py-3 isolate text-white',
-        'before:absolute before:-z-10 before:inset-0 before:bg-coachify-gradient before:pointer-events-none',
+        'fixed top-0 z-10 flex items-center justify-between gap-4 md:gap-8',
+        'isolate w-full py-3 pl-3 pr-4 text-white md:pr-6',
+        'before:bg-coachify-gradient before:pointer-events-none before:absolute before:inset-0 before:-z-10',
         'before:border-b before:border-white before:border-opacity-10',
-        'before:opacity-0 before:transition-200-out-quart',
+        'before:transition-200-out-quart before:opacity-0',
         isWindowScrolled && 'before:opacity-100',
         isAuthDialogOpen && '!pr-10'
       )}
     >
-      <div className="flex items-center gap-4 md:gap-8 flex-shrink-0">
+      <div className="flex flex-shrink-0 items-center gap-4 md:gap-8">
         <Button
           fill="ghost"
           icon="icon-only"
@@ -94,7 +94,7 @@ const Header = () => {
 
       <Search className="hidden md:flex" />
 
-      <div className="flex items-center gap-4 flex-shrink-0">
+      <div className="flex flex-shrink-0 items-center gap-4">
         <Button
           className="md:hidden"
           fill="ghost"
@@ -112,7 +112,7 @@ const Header = () => {
               className="lg:hidden"
               openAuthDialog={openAuthDialog}
             />
-            <div className="hidden lg:flex gap-4">
+            <div className="hidden gap-4 lg:flex">
               <Button
                 fill="ghost"
                 icon="icon-left"

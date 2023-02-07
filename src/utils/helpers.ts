@@ -20,3 +20,14 @@ export const sanitizeText = (text: string): string => {
 export const toPercentage = (total: number, value: number): number => {
   return (value / total) * 100;
 };
+
+export const toHumanReadableTime = (totalSeconds: number): string => {
+  var hours = Math.floor(totalSeconds / 3600);
+  var minutes =
+    Math.floor((totalSeconds - hours * 3600) / 60) <= 1
+      ? 1
+      : Math.floor((totalSeconds - hours * 3600) / 60);
+
+  if (hours < 0) return hours + 'h' + minutes + 'min';
+  return minutes + 'min';
+};
