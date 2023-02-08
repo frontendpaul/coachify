@@ -14,7 +14,7 @@ const CourseCard = ({
   isPriority?: boolean;
 }) => {
   return (
-    <li>
+    <li className="overflow-hidden">
       <Link
         href={'/course/' + course.id}
         className="group relative isolate flex aspect-video flex-col justify-between overflow-hidden rounded-xl bg-coachify-teal-1100"

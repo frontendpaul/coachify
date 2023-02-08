@@ -51,7 +51,7 @@ const RecentlyAdded = () => {
     fetchCourses();
   }, []);
 
-  if (!courses || courses.length === 0) {
+  if (!isLoading && (!courses || courses.length === 0)) {
     return (
       <section className="px-4 md:px-6">
         <TitleWithLink
