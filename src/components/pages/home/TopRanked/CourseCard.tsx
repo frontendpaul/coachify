@@ -39,7 +39,6 @@ const CourseCard = ({
           <div className="flex items-center gap-2 rounded-full bg-coachify-teal-1300/50 py-2 px-3 text-sm leading-none backdrop-blur">
             <AiOutlineTrophy />
             <span>Rank {index + 1}</span>
-            {course.rank_score}
           </div>
           <div className="rounded-full bg-coachify-teal-1300/50 py-2 px-3 text-sm leading-none backdrop-blur">
             {course.old_price && (
