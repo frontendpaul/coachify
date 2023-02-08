@@ -6,15 +6,12 @@ import { Chapter, getCourseById } from 'server/courses';
 import Content from '@components/pages/course/learn/Content';
 import * as Tabs from '@radix-ui/react-tabs';
 import SectionTitle from '@components/ui/SectionTitle';
-import { useDraggable } from 'react-use-draggable-scroll';
-import TabTrigger from '@components/pages/course/learn/TabTrigger';
 import { isMediumScreenAtom } from '@components/Layout';
 import { useAtom } from 'jotai';
 import About from '@components/pages/course/learn/About';
 import Reviews from '@components/pages/course/learn/Reviews';
 import Resources from '@components/pages/course/learn/Resources';
-import Button from '@components/ui/Button';
-import { FiHeart, FiShare2 } from 'react-icons/fi';
+import TabTriggerList from '@components/pages/course/learn/TabTriggerList';
 
 const Learn = () => {
   const router = useRouter();
@@ -107,28 +104,7 @@ const Learn = () => {
         <div className="flex-1 bg-coachify-teal-1200 px-4 pb-4 md:px-6 md:pb-6">
           <Tabs.Root value={value} onValueChange={setValue}>
             {/* TODO: add scroll on mouse drag */}
-            <Tabs.List className="flex justify-between gap-2 overflow-auto border-b border-white/10 py-2 md:gap-4 md:py-4 [&>*]:whitespace-nowrap">
-              <div>
-                {isMediumScreen && (
-                  <TabTrigger value="content" text="Content" />
-                )}
-                <TabTrigger value="about" text="About" />
-                <TabTrigger value="resources" text="Resources" />
-                <TabTrigger value="discussion" text="Discussion" />
-                <TabTrigger value="announcements" text="Announcements" />
-                <TabTrigger value="reviews" text="Reviews" />
-              </div>
-              <div className="flex gap-2 md:gap-4">
-                <Button fill="outline" icon="icon-left">
-                  <FiHeart />
-                  Save
-                </Button>
-                <Button fill="outline" icon="icon-left">
-                  <FiShare2 />
-                  Share
-                </Button>
-              </div>
-            </Tabs.List>
+            <TabTriggerList />
 
             <div className="mx-auto py-4 md:max-w-2xl md:py-6">
               {isMediumScreen && (
