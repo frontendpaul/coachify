@@ -23,7 +23,7 @@ const Reviews = ({
             <div>
               <div className="flex items-center gap-2 text-xl">
                 <AiFillStar />
-                <p>{rating}</p>
+                <p>{rating || '-'}</p>
               </div>
               <p className="text-sm text-white/75">
                 {reviews.length} {reviews.length === 1 ? 'review' : 'reviews'}

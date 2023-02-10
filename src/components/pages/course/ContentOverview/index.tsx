@@ -17,21 +17,21 @@ const ContentOverview = ({ content, videoPlayer }: Props) => {
   const [activeChapter, setActiveChapter] = useState<string>('');
   const [showAllSections, setShowAllSections] = useState<boolean>(false);
 
-  const numberOfSections = (content.sections.length as number) || 0;
-  const numberOfVideos = content.sections.reduce(
+  const numberOfSections = (content?.sections?.length as number) || 0;
+  const numberOfVideos = content?.sections?.reduce(
     (accumulator, current) => accumulator + current.chapters.length,
     0
   );
 
-  const totalDuration = content.sections.reduce((allTotal, section) => {
-    const sectionTotal = section.chapters.reduce((total, chapter) => {
-      return total + chapter.video.duration;
+  const totalDuration = content?.sections?.reduce((allTotal, section) => {
+    const sectionTotal = section.chapters?.reduce((total, chapter) => {
+      return total + chapter.video?.duration;
     }, 0);
     return allTotal + sectionTotal;
   }, 0);
 
   useEffect(() => {
-    content.sections[0]?.chapters.length &&
+    content?.sections[0]?.chapters.length &&
       setActiveChapter(content.sections[0].chapters[0].id as string);
   }, [content]);
 
@@ -42,7 +42,7 @@ const ContentOverview = ({ content, videoPlayer }: Props) => {
   */
   const sectionsOnInit = 5;
 
-  if (!content.sections || !content.sections.length) {
+  if (!content || !content.sections || !content.sections.length) {
     return (
       <section>
         <SectionTitle>Content of this course</SectionTitle>
@@ -57,7 +57,7 @@ const ContentOverview = ({ content, videoPlayer }: Props) => {
         <SectionTitle>Content of this course</SectionTitle>
         <p className="text-sm text-white/75 xl:text-base">
           {numberOfSections} Sections • {numberOfVideos} Videos •{' '}
-          {toHumanReadableTime(totalDuration)}
+          {toHumanReadableTime(totalDuration || 0)}
         </p>
       </div>
 
@@ -85,7 +85,7 @@ const ContentOverview = ({ content, videoPlayer }: Props) => {
                       <div className="flex items-center gap-2 sm:gap-4">
                         {sectionIndex === 0 ? <FiPlay /> : <FiLock />}
                         <span>
-                          {sectionIndex + 1}. {section.title}
+                          {sectionIndex + 1}. {section.title || '-'}
                         </span>
                       </div>
                       <FiChevronDown
@@ -126,15 +126,17 @@ const ContentOverview = ({ content, videoPlayer }: Props) => {
                               <input
                                 id="video_src"
                                 type="hidden"
-                                value={chapter.video.src}
+                                value={chapter.video?.src || ''}
                               />
                               <span>
                                 {sectionIndex + 1}.{chapterIndex + 1}.
                               </span>
                               <div className="ml-1 flex-1 sm:flex sm:justify-between">
-                                <p>{chapter.title}</p>
+                                <p>{chapter.title || '-'}</p>
                                 <p className="">
-                                  {toHumanReadableTime(chapter.video.duration)}
+                                  {toHumanReadableTime(
+                                    chapter.video?.duration || 0
+                                  )}
                                 </p>
                               </div>
                             </button>
@@ -144,9 +146,11 @@ const ContentOverview = ({ content, videoPlayer }: Props) => {
                                 {sectionIndex + 1}.{chapterIndex + 1}.
                               </span>
                               <div className="ml-1 flex-1 sm:flex sm:justify-between">
-                                <p>{chapter.title}</p>
+                                <p>{chapter.title || ''}</p>
                                 <p className="">
-                                  {toHumanReadableTime(chapter.video.duration)}
+                                  {toHumanReadableTime(
+                                    chapter.video.duration || 0
+                                  )}
                                 </p>
                               </div>
                             </div>
@@ -194,7 +198,8 @@ const ContentOverview = ({ content, videoPlayer }: Props) => {
                         <div className="flex items-center gap-2 sm:gap-4">
                           <FiLock />
                           <span>
-                            {sectionIndex + sectionsOnInit + 1}. {section.title}
+                            {sectionIndex + sectionsOnInit + 1}.{' '}
+                            {section.title || ''}
                           </span>
                         </div>
                         <FiChevronDown
@@ -216,9 +221,11 @@ const ContentOverview = ({ content, videoPlayer }: Props) => {
                               {chapterIndex + 1}.
                             </span>
                             <div className="ml-1 flex-1 sm:flex sm:justify-between">
-                              <p>{chapter.title}</p>
+                              <p>{chapter.title || ''}</p>
                               <p className="">
-                                {toHumanReadableTime(chapter.video.duration)}
+                                {toHumanReadableTime(
+                                  chapter.video.duration || 0
+                                )}
                               </p>
                             </div>
                           </li>

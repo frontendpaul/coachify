@@ -13,7 +13,7 @@ type Props = {
 
 const InfoCards = ({ level, language, participants, rating }: Props) => {
   let barIconSrc = '';
-  if (level == 'all levels') {
+  if (level == 'all levels' || !level) {
     barIconSrc = '/icons/bars_blank.svg';
   }
   if (level === 'beginner') {
@@ -32,19 +32,23 @@ const InfoCards = ({ level, language, participants, rating }: Props) => {
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
         <Card>
           <Image src={barIconSrc} alt="" width={32} height={32} aria-hidden />
-          <span className="block first-letter:capitalize">{level}</span>
+          <span className="block first-letter:capitalize">
+            {level ? level : '-'}
+          </span>
         </Card>
         <Card>
           <FiGlobe className="h-8 w-8" aria-hidden />
-          <span>{language}</span>
+          <span>{language ? language : '-'}</span>
         </Card>
         <Card>
-          <span className="text-2xl font-bold">{participants}</span>
+          <span className="text-2xl font-bold">
+            {participants ? participants : '-'}
+          </span>
           <span>Students</span>
         </Card>
         <Card>
           <div className="flex items-center gap-2 text-2xl">
-            <span className="font-bold">{rating}</span>
+            <span className="font-bold">{rating ? rating : '-'}</span>
             <AiFillStar aria-hidden />
           </div>
           <span>Avg. Rating</span>

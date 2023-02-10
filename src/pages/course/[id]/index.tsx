@@ -186,8 +186,8 @@ const Course = () => {
   return (
     <>
       <Head>
-        <title>{course.metadata.title}</title>
-        <meta name="description" content={course.metadata.short_description} />
+        <title>{course.metadata?.title}</title>
+        <meta name="description" content={course.metadata?.short_description} />
       </Head>
 
       <section
@@ -197,7 +197,7 @@ const Course = () => {
         <div className="relative mb-6 block xl:order-2 xl:mb-0">
           <video
             className="sticky top-[90px] w-full"
-            src={course.content.sections[0].chapters[0].video.src}
+            src={course.content?.sections[0]?.chapters[0]?.video?.src || ''}
             controls
             ref={videoPlayer}
           ></video>
@@ -206,8 +206,8 @@ const Course = () => {
         <div className="grid gap-16">
           <Overview
             id={id}
-            title={course.metadata.title}
-            short_description={course.metadata.short_description}
+            title={course.metadata?.title}
+            short_description={course.metadata?.short_description}
             owner={course.owner}
             free={course.free}
             price={course.price}
@@ -215,28 +215,23 @@ const Course = () => {
           />
 
           <InfoCards
-            level={course.metadata.level}
-            language={course.metadata.language}
-            participants={course.metadata.participants}
-            rating={course.metadata.rating}
+            level={course.metadata?.level}
+            language={course.metadata?.language}
+            participants={course.metadata?.participants}
+            rating={course.metadata?.rating}
           />
 
-          {course.content && (
-            <ContentOverview
-              content={course.content}
-              videoPlayer={videoPlayer}
-            />
-          )}
+          <ContentOverview content={course.content} videoPlayer={videoPlayer} />
 
-          <Description description={course.metadata.description} />
+          <Description description={course.metadata?.description} />
 
-          <TagList tags={course.metadata.tags} />
+          <TagList tags={course.metadata?.tags} />
 
           <Teacher owner={course.owner} />
 
           <Reviews
             reviews={course.reviews as Review[]}
-            rating={course.metadata.rating}
+            rating={course.metadata?.rating}
           />
 
           <OtherCourses ownerName={course.owner.name} courses={moreCourses} />
