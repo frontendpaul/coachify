@@ -46,8 +46,12 @@ const Overview = ({
   return (
     <div className="grid gap-6">
       <div>
-        <h1 className="mb-3 text-2xl font-semibold xl:text-3xl">{title}</h1>
-        <p className="text-coachify-gray-300 xl:text-lg">{short_description}</p>
+        <h1 className="mb-3 text-2xl font-semibold xl:text-3xl">
+          {title ? title : '-'}
+        </h1>
+        <p className="text-coachify-gray-300 xl:text-lg">
+          {short_description ? short_description : '-'}
+        </p>
       </div>
       <div className="flex items-center gap-4">
         <div className="h-10 w-10">
@@ -56,7 +60,8 @@ const Overview = ({
         <p className="leading-none">{owner.name}</p>
       </div>
       <p className="text-2xl font-semibold">
-        {price ? price.toString().replace(/\./g, ',') + ' €' : 'Free'}
+        {free && 'Free'}
+        {price && price.toString().replace(/\./g, ',') + ' €'}
         {old_price && (
           <s className="ml-4 text-base text-white/75 line-through">
             {old_price.toString().replace(/\./g, ',') + ' €'}
