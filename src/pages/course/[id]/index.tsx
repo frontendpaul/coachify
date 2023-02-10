@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { Review } from 'server/courses';
+import { Review } from 'types/supabase';
 import { useEffect, useRef, useState } from 'react';
 import Head from 'next/head';
 import Overview from '@components/pages/course/Overview';
@@ -13,6 +13,7 @@ import Reviews from '@components/pages/course/Reviews';
 import OtherCourses from '@components/pages/course/OtherCourses';
 import { useSupabaseClient } from '@supabase/auth-helpers-react';
 import Card from '@components/pages/course/InfoCards/Card';
+import Loader from './Loader';
 
 const Course = () => {
   const router = useRouter();
@@ -136,72 +137,7 @@ const Course = () => {
   }, [course]);
 
   if (isLoading) {
-    return (
-      <div
-        className="mx-auto max-w-3xl animate-pulse py-6 px-4 md:px-6
-      xl:grid xl:max-w-7xl xl:grid-cols-[1fr,min(35%,400px)] xl:gap-6"
-      >
-        {/* Video */}
-        <div className="relative mb-6 block xl:order-2 xl:mb-0">
-          <div className="aspect-video rounded-2xl bg-white/5"></div>
-        </div>
-
-        {/* Overview */}
-        <div className="grid gap-16">
-          <div className="grid gap-6">
-            <div>
-              <div className="mb-4 h-6 rounded-full bg-white/5 xl:mb-5 xl:h-8"></div>
-              <div className="mb-2 h-4 rounded-full bg-white/5 xl:h-5"></div>
-              <div className="mb-1 h-4 w-1/2 rounded-full bg-white/5 xl:h-5"></div>
-            </div>
-            <div className="flex items-center gap-4">
-              <div className="h-10 w-10 rounded-full bg-white/5"></div>
-              <div className="h-4 w-32 rounded-full bg-white/5"></div>
-            </div>
-            <div className="my-1 h-6 w-20 rounded-full bg-white/5"></div>
-            <div className="grid w-full grid-cols-2 justify-items-start gap-4 sm:flex md:grid md:grid-cols-4">
-              <div className="h-12 w-full rounded-lg bg-white/5"></div>
-              <div className="h-12 w-full rounded-lg bg-white/5"></div>
-              <div className="h-12 w-10 shrink-0 rounded-lg bg-white/5"></div>
-            </div>
-          </div>
-
-          {/* InfoCards */}
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-            <Card>
-              <div className="h-8 w-8 rounded-lg bg-white/5"></div>
-              <div className="my-1 h-4 w-20 rounded-full bg-white/5"></div>
-            </Card>
-            <Card>
-              <div className="h-8 w-8 rounded-lg bg-white/5"></div>
-              <div className="my-1 h-4 w-20 rounded-full bg-white/5"></div>
-            </Card>
-            <Card>
-              <div className="h-8 w-14 rounded-full bg-white/5"></div>
-              <div className="my-1 h-4 w-20 rounded-full bg-white/5"></div>
-            </Card>
-            <Card>
-              <div className="h-8 w-14 rounded-full bg-white/5"></div>
-              <div className="my-1 h-4 w-20 rounded-full bg-white/5"></div>
-            </Card>
-          </div>
-
-          <div>
-            <div className="mb-7 flex flex-col items-start gap-2 sm:flex-row sm:items-center sm:justify-between">
-              <div className="h-5 w-64 rounded-full bg-white/5 xl:h-6"></div>
-              <div className="h-4 w-40 rounded-full bg-white/5"></div>
-            </div>
-            <div className="grid gap-0.5">
-              <div className="h-10 rounded-lg bg-white/5"></div>
-              <div className="h-10 rounded-lg bg-white/5"></div>
-              <div className="h-10 rounded-lg bg-white/5"></div>
-              <div className="h-10 rounded-lg bg-white/5"></div>
-              <div className="h-10 rounded-lg bg-white/5"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
+    return <Loader />;
   }
 
   if (!course) {
