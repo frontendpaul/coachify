@@ -2,9 +2,11 @@ import { userContractsAtom } from '@components/Layout';
 import { isAuthDialogOpenAtom } from '@components/Layout/Header';
 import Avatar from '@components/ui/Avatar';
 import Button from '@components/ui/Button';
-import { useUser } from '@supabase/auth-helpers-react';
+import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react';
 import { useAtom } from 'jotai';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { BiLoaderAlt } from 'react-icons/bi';
 import { FiHeart, FiInfo, FiShare2 } from 'react-icons/fi';
 import { User } from 'server/courses';
 import { isCourseOwnedByUser } from 'utils/helpers';
@@ -43,9 +45,56 @@ const Overview = ({
       setIsAuthDialogOpen(true);
       return;
     }
+    if (!isOwned) {
+      createContract(user.id, owner.id, id);
+    }
   };
 
-  const [userContracts] = useAtom(userContractsAtom);
+  const supabase = useSupabaseClient();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const router = useRouter();
+
+  const createContract = async (
+    buyerId: string,
+    sellerId: string,
+    productId: string
+  ) => {
+    setIsLoading(true);
+
+    const { error } = await supabase.from('contract').insert({
+      buyer_id: buyerId,
+      seller_id: sellerId,
+      product_id: productId,
+    });
+
+    if (error) console.log(error);
+    setIsLoading(false);
+    getUserContracts(buyerId);
+  };
+
+  const getUserContracts = async (userId: string) => {
+    try {
+      let { data: contracts, error } = await supabase
+        .from('contract')
+        .select(
+          `
+        id,
+        buyer_id,
+        seller_id,
+        product_id,
+        created_at,
+        updated_at
+        `
+        )
+        .eq('buyer_id', userId);
+
+      contracts && setUserContracts(contracts);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const [userContracts, setUserContracts] = useAtom(userContractsAtom);
   const [isOwned, setIsOwned] = useState<boolean>(false);
 
   useEffect(() => {
@@ -96,9 +145,13 @@ const Overview = ({
           <Button
             className="w-full sm:w-44 md:w-full"
             onClick={(e) => handelBuy(e)}
-            disabled={isOwner}
+            disabled={isOwner || isLoading}
           >
-            {free ? 'Enroll now' : 'Buy now'}
+            {isLoading ? (
+              <BiLoaderAlt className="-m-1 h-6 w-6 animate-spin" />
+            ) : (
+              <>{free ? 'Enroll now' : 'Buy now'}</>
+            )}
           </Button>
         )}
         {/* Owner can't like his own product -> disabled */}

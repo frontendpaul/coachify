@@ -1,13 +1,11 @@
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import Button from '@components/ui/Button';
-import { FiMail, FiX } from 'react-icons/fi';
-import { BsApple, BsGoogle } from 'react-icons/bs';
+import { FiX } from 'react-icons/fi';
 import Link from 'next/link';
-import clsx from 'clsx';
 import InputWithLabel from '@components/ui/InputWithLabel';
-import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react';
-import { useRouter } from 'next/router';
+import { useSupabaseClient } from '@supabase/auth-helpers-react';
+import { BiLoaderAlt } from 'react-icons/bi';
 
 type AuthDialogProps = {
   open: boolean;
@@ -290,7 +288,11 @@ const SignUpForm = ({
         }}
         disabled={isLoading}
       >
-        Create an account
+        {isLoading ? (
+          <BiLoaderAlt className="-m-1 h-6 w-6 animate-spin" />
+        ) : (
+          'Create an account'
+        )}
       </Button>
     </form>
   );
@@ -331,7 +333,11 @@ const LogInForm = ({
         }}
         disabled={isLoading}
       >
-        Log In
+        {isLoading ? (
+          <BiLoaderAlt className="-m-1 h-6 w-6 animate-spin" />
+        ) : (
+          'Log In'
+        )}
       </Button>
       <button
         className="transition-200-out-quart mr-auto text-sm text-coachify-teal-500 underline hover:text-coachify-teal-400"

@@ -58,7 +58,7 @@ const Layout = ({ children }: Props): React.ReactElement => {
   const user = useUser();
   const [_, setUserContracts] = useAtom(userContractsAtom);
 
-  const getPublicUser = async (userId: string) => {
+  const getUserContracts = async (userId: string) => {
     try {
       let { data: contracts, error } = await supabase
         .from('contract')
@@ -74,6 +74,8 @@ const Layout = ({ children }: Props): React.ReactElement => {
         )
         .eq('buyer_id', userId);
 
+      if (error) throw error;
+
       contracts && setUserContracts(contracts);
       console.log(contracts);
     } catch (error) {
@@ -83,7 +85,7 @@ const Layout = ({ children }: Props): React.ReactElement => {
 
   useEffect(() => {
     if (user) {
-      getPublicUser(user.id);
+      getUserContracts(user.id);
     }
   }, [user]);
 

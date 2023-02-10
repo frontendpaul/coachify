@@ -12,6 +12,8 @@ import About from '@components/pages/course/learn/About';
 import Reviews from '@components/pages/course/learn/Reviews';
 import Resources from '@components/pages/course/learn/Resources';
 import TabTriggerList from '@components/pages/course/learn/TabTriggerList';
+import { isCourseOwnedByUser } from 'utils/helpers';
+import { useUser } from '@supabase/auth-helpers-react';
 
 const Learn = () => {
   const router = useRouter();
@@ -41,10 +43,41 @@ const Learn = () => {
   const [isMediumScreen] = useAtom(isMediumScreenAtom);
 
   const [value, setValue] = useState('about');
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     !isMediumScreen && value === 'content' && setValue('about');
   }, [isMediumScreen, value, setValue]);
+
+  const user = useUser();
+
+  const getContracts = async (userId: string) => {
+    const response = await fetch('/api/getUserContracts', {
+      method: 'POST',
+      body: JSON.stringify({ id: userId }),
+    });
+
+    return response.json();
+  };
+
+  useEffect(() => {
+    if (id && user) {
+      getContracts(user.id).then(({ data }) => {
+        const isOwned = isCourseOwnedByUser(data, id);
+        if (!isOwned) {
+          router.push('/course/' + id);
+        }
+      });
+    }
+  }, [id, user]);
+
+  if (isLoading) {
+    return (
+      <div className="mt-20 grid place-items-center">
+        <h1 className="text-semibold text-xl">Loading...</h1>
+      </div>
+    );
+  }
 
   if (!course) {
     return (
