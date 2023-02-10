@@ -14,9 +14,9 @@ import { useUser } from '@supabase/auth-helpers-react';
 import SignedUserPopover from './SignedUserPopover';
 
 export const isSidenavExpandedAtom = atom<boolean>(false);
-
-isSidenavExpandedAtom.debugLabel = 'isSidenavExpandedAtom';
 export const isSidenavTransitioningAtom = atom<boolean>(false);
+export const isAuthDialogOpenAtom = atom<boolean>(false);
+export const authIntentAtom = atom<AuthIntent>('signup');
 
 const Header = () => {
   const [isSidenavExpanded, setIsSidenavExpanded] = useAtom(
@@ -48,8 +48,8 @@ const Header = () => {
     };
   }, [onScroll]);
 
-  const [isAuthDialogOpen, setIsAuthDialogOpen] = useState(false);
-  const [authIntent, setAuthIntent] = useState<AuthIntent>('signup');
+  const [isAuthDialogOpen, setIsAuthDialogOpen] = useAtom(isAuthDialogOpenAtom);
+  const [authIntent, setAuthIntent] = useAtom(authIntentAtom);
 
   const openAuthDialog = (intent: AuthIntent) => {
     setAuthIntent(intent);

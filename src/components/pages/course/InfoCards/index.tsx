@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { AiFillStar } from 'react-icons/ai';
 import { FiGlobe } from 'react-icons/fi';
-import { Language, Level } from 'server/courses';
+import { Language, Level } from 'types/supabase';
 import Card from './Card';
 
 type Props = {
@@ -13,16 +13,16 @@ type Props = {
 
 const InfoCards = ({ level, language, participants, rating }: Props) => {
   let barIconSrc = '';
-  if (level == 'All levels') {
+  if (level == 'all levels') {
     barIconSrc = '/icons/bars_blank.svg';
   }
-  if (level === 'Beginner') {
+  if (level === 'beginner') {
     barIconSrc = '/icons/bars_beginner.svg';
   }
-  if (level === 'Intermediate') {
+  if (level === 'intermediate') {
     barIconSrc = '/icons/bars_intermediate.svg';
   }
-  if (level === 'Expert') {
+  if (level === 'expert') {
     barIconSrc = '/icons/bars_expert.svg';
   }
 
@@ -32,7 +32,7 @@ const InfoCards = ({ level, language, participants, rating }: Props) => {
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
         <Card>
           <Image src={barIconSrc} alt="" width={32} height={32} aria-hidden />
-          <span>{level}</span>
+          <span className="block first-letter:capitalize">{level}</span>
         </Card>
         <Card>
           <FiGlobe className="h-8 w-8" aria-hidden />

@@ -11,7 +11,8 @@ type Props = {
 };
 
 const OtherCourses = ({ ownerName, courses }: Props) => {
-  const moreThan3 = courses.length > 3;
+  const moreThan3 = courses?.length > 3;
+
   return (
     <section>
       <div className="grid gap-6">
@@ -22,21 +23,20 @@ const OtherCourses = ({ ownerName, courses }: Props) => {
           </Link>
         </SectionTitle>
 
-        {courses.length === 0 ? (
+        {courses?.length === 0 ? (
           <p>This creator has no other courses yet.</p>
         ) : (
           <>
             <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 2xl:grid-cols-3">
-              {courses.map((course) => (
-                <li
+              {courses?.map((course) => (
+                <CourseCard
                   key={course.id}
+                  course={course}
                   className={clsx(
                     'flex',
                     moreThan3 && 'last:hidden sm:last:flex 2xl:last:hidden'
                   )}
-                >
-                  <CourseCard course={course} />
-                </li>
+                />
               ))}
             </ul>
             {moreThan3 && (

@@ -1,5 +1,9 @@
+import { isAuthDialogOpenAtom } from '@components/Layout/Header';
 import Avatar from '@components/ui/Avatar';
 import Button from '@components/ui/Button';
+import { useUser } from '@supabase/auth-helpers-react';
+import { useAtom } from 'jotai';
+import { useEffect, useState } from 'react';
 import { FiHeart, FiShare2 } from 'react-icons/fi';
 import { User } from 'server/courses';
 
@@ -22,6 +26,23 @@ const Overview = ({
   price,
   old_price,
 }: Props) => {
+  const [isAuthDialogOpen, setIsAuthDialogOpen] = useAtom(isAuthDialogOpenAtom);
+  const user = useUser();
+
+  const [isOwner, setIsOwner] = useState<boolean>(true);
+
+  useEffect(() => {
+    setIsOwner(user?.id === owner.id);
+  }, [user, owner]);
+
+  const handelBuy = (e: any) => {
+    if (!user) {
+      e.preventDefault();
+      setIsAuthDialogOpen(true);
+      return;
+    }
+  };
+
   return (
     <div className="grid gap-6">
       <div>
@@ -43,13 +64,21 @@ const Overview = ({
         )}
       </p>
       <div className="grid w-full grid-cols-2 justify-items-start gap-4 sm:flex md:grid md:grid-cols-4">
-        <Button href={id + '/learn'} className="w-full sm:w-44 md:w-full">
+        {/* Owner can't buy his own product -> disabled */}
+        <Button
+          href={id + '/learn'}
+          className="w-full sm:w-44 md:w-full"
+          onClick={(e) => handelBuy(e)}
+          disabled={isOwner}
+        >
           {free ? 'Enroll now' : 'Buy now'}
         </Button>
+        {/* Owner can't like his own product -> disabled */}
         <Button
           fill="outline"
           icon="icon-left"
           className="w-full sm:w-auto md:w-full md:px-0"
+          disabled={isOwner}
         >
           <FiHeart />
           <span>

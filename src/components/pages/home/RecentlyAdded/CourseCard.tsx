@@ -1,11 +1,18 @@
+import clsx from 'clsx';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FiClock, FiImage, FiStar, FiUser } from 'react-icons/fi';
 import { Product } from 'types/supabase';
 import { toHumanReadableTime } from 'utils/helpers';
-const CourseCard = ({ course }: { course: Product }) => {
+const CourseCard = ({
+  course,
+  className,
+}: {
+  course: Product;
+  className?: string;
+}) => {
   return (
-    <li className="flex">
+    <li className={clsx('flex', className)}>
       <Link
         href={'/course/' + course.id}
         className="group relative isolate flex flex-1 flex-col overflow-hidden rounded-xl bg-coachify-teal-1100"

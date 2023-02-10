@@ -58,7 +58,6 @@ export default function App({
         `);
 
       product && setProducts(product);
-      console.log(product);
     } catch (error) {
       console.log(error);
     }

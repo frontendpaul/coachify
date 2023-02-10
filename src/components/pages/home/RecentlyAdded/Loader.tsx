@@ -10,7 +10,7 @@ const Loader = () => {
 
 const LoaderCard = () => {
   return (
-    <li className="overflow-hidden rounded-xl bg-coachify-teal-1100 p-4">
+    <li className="overflow-hidden rounded-xl bg-coachify-teal-1000 p-4">
       <div className="animate-pulse">
         <div className="aspect-video rounded-lg bg-white/5"></div>
         <div className="flex flex-1 flex-col pt-3">

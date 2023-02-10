@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { getCourseById, getCoursesByCreator, Review } from 'server/courses';
-import { useRef } from 'react';
+import { Review } from 'server/courses';
+import { useEffect, useRef, useState } from 'react';
 import Head from 'next/head';
 import Overview from '@components/pages/course/Overview';
 import InfoCards from '@components/pages/course/InfoCards';
@@ -11,20 +11,198 @@ import TagList from '@components/pages/course/TagList';
 import Teacher from '@components/pages/course/Teacher';
 import Reviews from '@components/pages/course/Reviews';
 import OtherCourses from '@components/pages/course/OtherCourses';
+import { useSupabaseClient } from '@supabase/auth-helpers-react';
+import Card from '@components/pages/course/InfoCards/Card';
 
 const Course = () => {
   const router = useRouter();
   const id = router.query.id as string;
-  const course = getCourseById(id);
+
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  // TODO: improve typing
+  const [course, setCourse] = useState<any>(null);
+
+  const supabase = useSupabaseClient();
+
+  const fetchCourse = async () => {
+    setIsLoading(true);
+
+    const { data: product, error } = await supabase
+      .from('product')
+      .select(
+        `
+        id,
+        owner:user(
+          id,
+          name,
+          avatar_url,
+          description
+        ),
+        state,
+        free,
+        price,
+        old_price,
+        category(name),
+        metadata:product_metadata(*),
+        content:product_content(
+          sections:section(
+            *,
+            chapters:chapter(
+              *,
+              video:video(*),
+              resources:resource(*)
+            )
+          )
+        ),
+        reviews:review(
+          id,
+          owner:user(
+            name,
+            avatar_url
+          ),
+          body,
+          rating,
+          created_at,
+          updated_at
+        ),
+        created_at,
+        updated_at
+      `
+      )
+      .eq('id', id)
+      .single();
+
+    if (error) console.log(error);
+
+    setCourse(product);
+    setIsLoading(false);
+  };
+
+  useEffect(() => {
+    if (id) {
+      fetchCourse();
+    }
+  }, [id]);
 
   const videoPlayer = useRef<HTMLVideoElement>(null);
 
-  const recentCreatorCourses = getCoursesByCreator(
-    course?.owner.id as string
-  ).slice(-4);
-  const filteredCreatorCourses = recentCreatorCourses.filter(
-    (creatorCourse) => course?.id != creatorCourse.id
-  );
+  const [moreCourses, setMoreCourses] = useState<any>(null);
+  const [isLoadingMoreCourses, setIsLoadingMoreCourses] =
+    useState<boolean>(true);
+
+  const fetchCoursesByCreator = async (
+    ownerId: string,
+    currentCourseId: string
+  ) => {
+    setIsLoadingMoreCourses(true);
+
+    const { data: products, error } = await supabase
+      .from('product')
+      .select(
+        `
+        id,
+        owner:user!inner(
+          id,
+          name
+        ),
+        state,
+        price,
+        old_price,
+        metadata:product_metadata(
+          title,
+          cover_img,
+          rating,
+          participants,
+          duration
+        ),
+        created_at
+        `
+      )
+      .eq('owner.id', ownerId)
+      .neq('id', currentCourseId)
+      .order('created_at', { ascending: false })
+      .limit(4);
+
+    if (error) console.log(error);
+
+    setMoreCourses(products);
+    setIsLoadingMoreCourses(false);
+  };
+
+  useEffect(() => {
+    if (course?.owner?.id) {
+      fetchCoursesByCreator(course.owner.id, course.id);
+    }
+  }, [course]);
+
+  if (isLoading) {
+    return (
+      <div
+        className="mx-auto max-w-3xl animate-pulse py-6 px-4 md:px-6
+      xl:grid xl:max-w-7xl xl:grid-cols-[1fr,min(35%,400px)] xl:gap-6"
+      >
+        {/* Video */}
+        <div className="relative mb-6 block xl:order-2 xl:mb-0">
+          <div className="aspect-video rounded-2xl bg-white/5"></div>
+        </div>
+
+        {/* Overview */}
+        <div className="grid gap-16">
+          <div className="grid gap-6">
+            <div>
+              <div className="mb-4 h-6 rounded-full bg-white/5 xl:mb-5 xl:h-8"></div>
+              <div className="mb-2 h-4 rounded-full bg-white/5 xl:h-5"></div>
+              <div className="mb-1 h-4 w-1/2 rounded-full bg-white/5 xl:h-5"></div>
+            </div>
+            <div className="flex items-center gap-4">
+              <div className="h-10 w-10 rounded-full bg-white/5"></div>
+              <div className="h-4 w-32 rounded-full bg-white/5"></div>
+            </div>
+            <div className="my-1 h-6 w-20 rounded-full bg-white/5"></div>
+            <div className="grid w-full grid-cols-2 justify-items-start gap-4 sm:flex md:grid md:grid-cols-4">
+              <div className="h-12 w-full rounded-lg bg-white/5"></div>
+              <div className="h-12 w-full rounded-lg bg-white/5"></div>
+              <div className="h-12 w-10 shrink-0 rounded-lg bg-white/5"></div>
+            </div>
+          </div>
+
+          {/* InfoCards */}
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+            <Card>
+              <div className="h-8 w-8 rounded-lg bg-white/5"></div>
+              <div className="my-1 h-4 w-20 rounded-full bg-white/5"></div>
+            </Card>
+            <Card>
+              <div className="h-8 w-8 rounded-lg bg-white/5"></div>
+              <div className="my-1 h-4 w-20 rounded-full bg-white/5"></div>
+            </Card>
+            <Card>
+              <div className="h-8 w-14 rounded-full bg-white/5"></div>
+              <div className="my-1 h-4 w-20 rounded-full bg-white/5"></div>
+            </Card>
+            <Card>
+              <div className="h-8 w-14 rounded-full bg-white/5"></div>
+              <div className="my-1 h-4 w-20 rounded-full bg-white/5"></div>
+            </Card>
+          </div>
+
+          <div>
+            <div className="mb-7 flex flex-col items-start gap-2 sm:flex-row sm:items-center sm:justify-between">
+              <div className="h-5 w-64 rounded-full bg-white/5 xl:h-6"></div>
+              <div className="h-4 w-40 rounded-full bg-white/5"></div>
+            </div>
+            <div className="grid gap-0.5">
+              <div className="h-10 rounded-lg bg-white/5"></div>
+              <div className="h-10 rounded-lg bg-white/5"></div>
+              <div className="h-10 rounded-lg bg-white/5"></div>
+              <div className="h-10 rounded-lg bg-white/5"></div>
+              <div className="h-10 rounded-lg bg-white/5"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   if (!course) {
     return (
@@ -46,15 +224,34 @@ const Course = () => {
     );
   }
 
+  if (course.state !== 'published') {
+    return (
+      <>
+        <Head>
+          <title>This course has not been published yet.</title>
+          <meta
+            name="description"
+            content="This course has not been published yet. Please come back later."
+          />
+        </Head>
+        <div className="mt-20 grid place-items-center">
+          <h1 className="text-semibold text-xl">
+            This course has not been published yet.
+          </h1>
+          <Link href="/" className="underline">
+            Go back to Homepage
+          </Link>
+        </div>
+      </>
+    );
+  }
+
   // TODO: Split into Components
   return (
     <>
       <Head>
-        <title>{course.title}</title>
-        <meta
-          name="description"
-          content={course.course_metadata.short_description}
-        />
+        <title>{course.metadata.title}</title>
+        <meta name="description" content={course.metadata.short_description} />
       </Head>
 
       <section
@@ -64,7 +261,7 @@ const Course = () => {
         <div className="relative mb-6 block xl:order-2 xl:mb-0">
           <video
             className="sticky top-[90px] w-full"
-            src={course.course_content.sections[0].chapters[0].video.src}
+            src={course.content.sections[0].chapters[0].video.src}
             controls
             ref={videoPlayer}
           ></video>
@@ -73,8 +270,8 @@ const Course = () => {
         <div className="grid gap-16">
           <Overview
             id={id}
-            title={course.title}
-            short_description={course.course_metadata.short_description}
+            title={course.metadata.title}
+            short_description={course.metadata.short_description}
             owner={course.owner}
             free={course.free}
             price={course.price}
@@ -82,33 +279,31 @@ const Course = () => {
           />
 
           <InfoCards
-            level={course.course_metadata.level}
-            language={course.course_metadata.language}
-            participants={course.course_metadata.participants}
-            rating={course.course_metadata.rating}
+            level={course.metadata.level}
+            language={course.metadata.language}
+            participants={course.metadata.participants}
+            rating={course.metadata.rating}
           />
 
-          <ContentOverview
-            content={course.course_content}
-            duration={course.course_metadata.duration}
-            videoPlayer={videoPlayer}
-          />
+          {course.content && (
+            <ContentOverview
+              content={course.content}
+              videoPlayer={videoPlayer}
+            />
+          )}
 
-          <Description description={course.course_metadata.description} />
+          <Description description={course.metadata.description} />
 
-          <TagList tags={course.course_metadata.skill_tags} />
+          <TagList tags={course.metadata.tags} />
 
           <Teacher owner={course.owner} />
 
           <Reviews
             reviews={course.reviews as Review[]}
-            rating={course.course_metadata.rating}
+            rating={course.metadata.rating}
           />
 
-          {/* <OtherCourses
-            ownerName={course.owner.name}
-            courses={filteredCreatorCourses}
-          /> */}
+          <OtherCourses ownerName={course.owner.name} courses={moreCourses} />
         </div>
       </section>
     </>

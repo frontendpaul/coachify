@@ -29,6 +29,17 @@ module.exports = {
           200: '#CCD5D5',
           300: '#A8B8B8',
         },
+        teal: {
+          100: '#cdf6f6',
+          200: '#9beeee',
+          300: '#6ae5e5',
+          400: '#38dddd',
+          500: '#06d4d4',
+          600: '#05aaaa',
+          700: '#047f7f',
+          800: '#025555',
+          900: '#012a2a',
+        },
       },
       transitionTimingFunction: {
         'out-quart': 'cubic-bezier(0.25, 1, 0.5, 1)',
@@ -56,10 +67,10 @@ module.exports = {
             height: '0',
           },
         },
-        animation: {
-          slideDown: 'slideDown 200ms cubic-bezier(0.25, 1, 0.5, 1)',
-          slideUp: 'slideUp 200ms cubic-bezier(0.25, 1, 0.5, 1)',
-        },
+      },
+      animation: {
+        slideDown: 'slideDown 200ms cubic-bezier(0.25, 1, 0.5, 1)',
+        slideUp: 'slideUp 200ms cubic-bezier(0.25, 1, 0.5, 1)',
       },
     },
   },
