@@ -22,6 +22,7 @@ const TopRanked = () => {
           name
         ),
         state,
+        free,
         price,
         old_price,
         rank_score,

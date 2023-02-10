@@ -1,11 +1,13 @@
+import { userContractsAtom } from '@components/Layout';
 import { isAuthDialogOpenAtom } from '@components/Layout/Header';
 import Avatar from '@components/ui/Avatar';
 import Button from '@components/ui/Button';
 import { useUser } from '@supabase/auth-helpers-react';
 import { useAtom } from 'jotai';
 import { useEffect, useState } from 'react';
-import { FiHeart, FiShare2 } from 'react-icons/fi';
+import { FiHeart, FiInfo, FiShare2 } from 'react-icons/fi';
 import { User } from 'server/courses';
+import { isCourseOwnedByUser } from 'utils/helpers';
 
 type Props = {
   id: string;
@@ -43,6 +45,13 @@ const Overview = ({
     }
   };
 
+  const [userContracts] = useAtom(userContractsAtom);
+  const [isOwned, setIsOwned] = useState<boolean>(false);
+
+  useEffect(() => {
+    setIsOwned(isCourseOwnedByUser(userContracts, id));
+  }, [userContracts, id, setIsOwned]);
+
   return (
     <div className="grid gap-6">
       <div>
@@ -60,24 +69,38 @@ const Overview = ({
         <p className="leading-none">{owner.name}</p>
       </div>
       <p className="text-2xl font-semibold">
-        {free && 'Free'}
-        {price && price.toString().replace(/\./g, ',') + ' €'}
-        {old_price && (
-          <s className="ml-4 text-base text-white/75 line-through">
-            {old_price.toString().replace(/\./g, ',') + ' €'}
-          </s>
+        {isOwned ? (
+          <span className="flex items-center gap-3">
+            <FiInfo />
+            <span className="text-lg">You already own this course</span>
+          </span>
+        ) : (
+          <>
+            {free && 'Free'}
+            {price && price.toString().replace(/\./g, ',') + ' €'}
+            {old_price && (
+              <s className="ml-4 text-base text-white/75 line-through">
+                {old_price.toString().replace(/\./g, ',') + ' €'}
+              </s>
+            )}
+          </>
         )}
       </p>
       <div className="grid w-full grid-cols-2 justify-items-start gap-4 sm:flex md:grid md:grid-cols-4">
         {/* Owner can't buy his own product -> disabled */}
-        <Button
-          href={id + '/learn'}
-          className="w-full sm:w-44 md:w-full"
-          onClick={(e) => handelBuy(e)}
-          disabled={isOwner}
-        >
-          {free ? 'Enroll now' : 'Buy now'}
-        </Button>
+        {isOwned ? (
+          <Button href={id + '/learn'} className="w-full sm:w-44 md:w-full">
+            Go to course
+          </Button>
+        ) : (
+          <Button
+            className="w-full sm:w-44 md:w-full"
+            onClick={(e) => handelBuy(e)}
+            disabled={isOwner}
+          >
+            {free ? 'Enroll now' : 'Buy now'}
+          </Button>
+        )}
         {/* Owner can't like his own product -> disabled */}
         <Button
           fill="outline"

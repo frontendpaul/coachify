@@ -1,9 +1,12 @@
+import { userContractsAtom } from '@components/Layout';
+import { useAtom } from 'jotai';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 import { AiOutlineTrophy } from 'react-icons/ai';
 import { FiClock, FiImage, FiStar, FiUser } from 'react-icons/fi';
 import { Product } from 'types/supabase';
-import { toHumanReadableTime } from 'utils/helpers';
+import { isCourseOwnedByUser, toHumanReadableTime } from 'utils/helpers';
 const CourseCard = ({
   course,
   index,
@@ -13,6 +16,13 @@ const CourseCard = ({
   index: number;
   isPriority?: boolean;
 }) => {
+  const [userContracts] = useAtom(userContractsAtom);
+  const [isOwned, setIsOwned] = useState<boolean>(false);
+
+  useEffect(() => {
+    setIsOwned(isCourseOwnedByUser(userContracts, course.id as string));
+  }, [userContracts, course.id, setIsOwned]);
+
   return (
     <li className="overflow-hidden">
       <Link
@@ -41,14 +51,20 @@ const CourseCard = ({
             <span>Rank {index + 1}</span>
           </div>
           <div className="rounded-full bg-coachify-teal-1300/50 py-2 px-3 text-sm leading-none backdrop-blur">
-            {course.old_price && (
-              <s className="mr-2 text-xs leading-none text-white text-opacity-75 line-through">
-                {course.old_price.toString().replace(/\./g, ',') + ' €'}
-              </s>
+            {isOwned ? (
+              <span className="text-green-600">Owned</span>
+            ) : (
+              <>
+                {course.old_price && (
+                  <span className="mr-2 text-xs leading-none text-white text-opacity-75 line-through">
+                    {course.old_price.toString().replace(/\./g, ',') + ' €'}
+                  </span>
+                )}
+                {course.free && 'Free'}
+                {course.price &&
+                  course.price.toString().replace(/\./g, ',') + ' €'}
+              </>
             )}
-            {course.price
-              ? course.price.toString().replace(/\./g, ',') + ' €'
-              : 'Free'}
           </div>
         </div>
         <div className="p-4">

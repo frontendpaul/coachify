@@ -24,6 +24,7 @@ const RecentlyAdded = () => {
           name
         ),
         state,
+        free,
         price,
         old_price,
         metadata:product_metadata(

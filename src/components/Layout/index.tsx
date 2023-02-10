@@ -1,9 +1,11 @@
 import { Open_Sans } from '@next/font/google';
+import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react';
 import clsx from 'clsx';
 import { atom, useAtom } from 'jotai';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+import { Contract } from 'types/supabase';
 import useWindowWidth from '../../hooks/useWindowWidth';
 import Footer from './Footer';
 import Header, { isSidenavExpandedAtom } from './Header';
@@ -19,6 +21,7 @@ type Props = {
 export const isMobileAtom = atom<boolean>(true);
 export const isMediumScreenAtom = atom<boolean>(true);
 export const isLearnPageAtom = atom<boolean>(false);
+export const userContractsAtom = atom<Contract[] | null>(null);
 
 const Layout = ({ children }: Props): React.ReactElement => {
   const [isSidenavExpanded, setIsSidenavExpanded] = useAtom(
@@ -50,6 +53,39 @@ const Layout = ({ children }: Props): React.ReactElement => {
     setIsLearnPage(isLearnPage);
     // isLearnPage && setIsSidenavExpanded(false);
   });
+
+  const supabase = useSupabaseClient();
+  const user = useUser();
+  const [_, setUserContracts] = useAtom(userContractsAtom);
+
+  const getPublicUser = async (userId: string) => {
+    try {
+      let { data: contracts, error } = await supabase
+        .from('contract')
+        .select(
+          `
+        id,
+        buyer_id,
+        seller_id,
+        product_id,
+        created_at,
+        updated_at
+        `
+        )
+        .eq('buyer_id', userId);
+
+      contracts && setUserContracts(contracts);
+      console.log(contracts);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    if (user) {
+      getPublicUser(user.id);
+    }
+  }, [user]);
 
   return (
     <div className="isolate">

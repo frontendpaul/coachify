@@ -1,9 +1,12 @@
+import { userContractsAtom } from '@components/Layout';
 import clsx from 'clsx';
+import { useAtom } from 'jotai';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useState, useEffect } from 'react';
 import { FiClock, FiImage, FiStar, FiUser } from 'react-icons/fi';
 import { Product } from 'types/supabase';
-import { toHumanReadableTime } from 'utils/helpers';
+import { isCourseOwnedByUser, toHumanReadableTime } from 'utils/helpers';
 const CourseCard = ({
   course,
   className,
@@ -11,6 +14,13 @@ const CourseCard = ({
   course: Product;
   className?: string;
 }) => {
+  const [userContracts] = useAtom(userContractsAtom);
+  const [isOwned, setIsOwned] = useState<boolean>(false);
+
+  useEffect(() => {
+    setIsOwned(isCourseOwnedByUser(userContracts, course.id as string));
+  }, [userContracts, course.id, setIsOwned]);
+
   return (
     <li className={clsx('flex', className)}>
       <Link
@@ -56,13 +66,19 @@ const CourseCard = ({
             by {course.owner?.name}
           </p>
           <p className="mt-auto">
-            {course.price
-              ? course.price.toString().replace(/\./g, ',') + ' €'
-              : 'Free'}
-            {course.old_price && (
-              <s className="ml-2 text-sm text-white text-opacity-75 line-through">
-                {course.old_price.toString().replace(/\./g, ',') + ' €'}
-              </s>
+            {isOwned ? (
+              <span className="text-green-600">Owned</span>
+            ) : (
+              <>
+                {course.free && 'Free'}
+                {course.price &&
+                  course.price.toString().replace(/\./g, ',') + ' €'}
+                {course.old_price && (
+                  <s className="ml-2 text-sm text-white text-opacity-75 line-through">
+                    {course.old_price.toString().replace(/\./g, ',') + ' €'}
+                  </s>
+                )}
+              </>
             )}
           </p>
         </div>

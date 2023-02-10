@@ -1,4 +1,5 @@
 import DOMPurify from 'isomorphic-dompurify';
+import { Contract } from 'types/supabase';
 
 export const debounce = (func: Function, timeout = 300) => {
   let timer: ReturnType<typeof setTimeout>;
@@ -28,4 +29,12 @@ export const toHumanReadableTime = (totalSeconds: number): string => {
   if (hours > 0) return hours + 'h ' + minutes + 'min';
   if (hours === 0 && minutes === 0) return '< 1min';
   return minutes + 'min';
+};
+
+export const isCourseOwnedByUser = (
+  contracts: Contract[] | null,
+  courseId: string
+) => {
+  if (!contracts) return false;
+  return contracts.some((contract) => contract.product_id === courseId);
 };
