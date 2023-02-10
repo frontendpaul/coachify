@@ -95,10 +95,7 @@ const ContentOverview = ({ content, videoPlayer }: Props) => {
                       />
                     </Accordion.Trigger>
                   </Accordion.Header>
-                  <Accordion.Content
-                    asChild
-                    className="overflow-hidden group-[[data-state=open]]:animate-slideDown group-[[data-state=closed]]:animate-slideUp"
-                  >
+                  <Accordion.Content className="overflow-hidden group-[[data-state=open]]:animate-slideDown group-[[data-state=closed]]:animate-slideUp">
                     <ol>
                       {section.chapters.map((chapter, chapterIndex) => (
                         // TODO: remove Fragment and use li instead
