@@ -2,6 +2,7 @@ import { isAuthDialogOpenAtom } from '@components/Layout/Header';
 import Avatar from '@components/ui/Avatar';
 import Button from '@components/ui/Button';
 import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react';
+import useFavoriteProducts from 'hooks/useFavoriteProducts';
 import useUserContracts from 'hooks/useUserContracts';
 import { useAtom } from 'jotai';
 import { useRouter } from 'next/router';
@@ -10,7 +11,7 @@ import { BiLoaderAlt } from 'react-icons/bi';
 import { FiHeart, FiInfo, FiShare2 } from 'react-icons/fi';
 import { User } from 'server/courses';
 import { mutate } from 'swr';
-import { isCourseOwnedByUser } from 'utils/helpers';
+import { isCourseOwnedByUser, isProductInUserFavorites } from 'utils/helpers';
 
 type Props = {
   id: string;
@@ -79,6 +80,53 @@ const Overview = ({
     setIsOwned(isCourseOwnedByUser(contracts, id));
   }, [contracts, id, setIsOwned]);
 
+  const { favorites } = useFavoriteProducts();
+  const [isFavorite, setIsFavorite] = useState<boolean>(false);
+  const [isFavoriteLoading, setIsFavoriteLoading] = useState(false);
+
+  useEffect(() => {
+    setIsFavorite(isProductInUserFavorites(favorites, id));
+  }, [favorites, id, setIsFavorite, isFavorite]);
+
+  const handleFavorite = () => {
+    if (!user) {
+      setIsAuthDialogOpen(true);
+      return;
+    }
+
+    if (!isFavorite) {
+      createFavorite(user.id, id);
+    } else {
+      deleteFavorite(user.id, id);
+    }
+  };
+
+  const createFavorite = async (userId: string, productId: string) => {
+    setIsFavoriteLoading(true);
+
+    const { error } = await supabase.from('favorite_product').insert({
+      user_id: userId,
+      product_id: productId,
+    });
+
+    if (error) console.log(error);
+    setIsFavoriteLoading(false);
+    mutate('/api/users/products/favorites');
+  };
+
+  const deleteFavorite = async (userId: string, productId: string) => {
+    setIsFavoriteLoading(true);
+
+    const { error } = await supabase
+      .from('favorite_product')
+      .delete()
+      .match({ user_id: userId, product_id: productId });
+
+    if (error) console.log(error);
+    setIsFavoriteLoading(false);
+    mutate('/api/users/products/favorites');
+  };
+
   return (
     <div className="grid gap-6">
       <div>
@@ -137,11 +185,18 @@ const Overview = ({
           fill="outline"
           icon="icon-left"
           className="w-full sm:w-auto md:w-full md:px-0"
-          disabled={isOwner}
+          disabled={isOwner || isFavoriteLoading}
+          onClick={() => handleFavorite()}
         >
-          <FiHeart />
+          <FiHeart style={{ fill: isFavorite ? 'currentcolor' : 'none' }} />
           <span>
-            Save <span className="hidden sm:inline">for later</span>
+            {isFavorite ? (
+              'Saved'
+            ) : (
+              <span>
+                Save <span className="hidden sm:inline">for later</span>
+              </span>
+            )}
           </span>
         </Button>
         <Button fill="outline" icon="icon-only">

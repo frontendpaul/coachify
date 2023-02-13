@@ -38,3 +38,8 @@ export const isCourseOwnedByUser = (
   if (!contracts) return false;
   return contracts.some((contract) => contract.product_id === courseId);
 };
+
+export const isProductInUserFavorites = (favorites: any, courseId: string) => {
+  if (!favorites) return false;
+  return favorites.some((favorite: any) => favorite.product_id === courseId);
+};
