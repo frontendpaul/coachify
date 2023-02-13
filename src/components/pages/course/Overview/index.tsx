@@ -8,10 +8,11 @@ import { useAtom } from 'jotai';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { BiLoaderAlt } from 'react-icons/bi';
-import { FiHeart, FiInfo, FiShare2 } from 'react-icons/fi';
+import { FiHeart, FiInfo } from 'react-icons/fi';
 import { User } from 'server/courses';
 import { mutate } from 'swr';
 import { isCourseOwnedByUser, isProductInUserFavorites } from 'utils/helpers';
+import Share from './Share';
 
 type Props = {
   id: string;
@@ -110,8 +111,8 @@ const Overview = ({
     });
 
     if (error) console.log(error);
-    setIsFavoriteLoading(false);
     mutate('/api/users/products/favorites');
+    setIsFavoriteLoading(false);
   };
 
   const deleteFavorite = async (userId: string, productId: string) => {
@@ -123,8 +124,8 @@ const Overview = ({
       .match({ user_id: userId, product_id: productId });
 
     if (error) console.log(error);
-    setIsFavoriteLoading(false);
     mutate('/api/users/products/favorites');
+    setIsFavoriteLoading(false);
   };
 
   return (
@@ -199,10 +200,7 @@ const Overview = ({
             )}
           </span>
         </Button>
-        <Button fill="outline" icon="icon-only">
-          <FiShare2 />
-          <span className="sr-only">Share</span>
-        </Button>
+        <Share />
       </div>
     </div>
   );

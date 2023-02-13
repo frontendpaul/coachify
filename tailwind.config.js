@@ -67,10 +67,50 @@ module.exports = {
             height: '0',
           },
         },
+        fadeIn: {
+          from: {
+            opacity: '0',
+          },
+          to: {
+            opacity: '1',
+          },
+        },
+        fadeOut: {
+          from: {
+            opacity: '1',
+          },
+          to: {
+            opacity: '0',
+          },
+        },
+        enter: {
+          from: {
+            opacity: '0',
+            transform: 'translate(-50%, -49%) scale(0.95)',
+          },
+          to: {
+            opacity: '1',
+            transform: 'translate(-50%, -50%) scale(1)',
+          },
+        },
+        leave: {
+          from: {
+            opacity: '1',
+            transform: 'translate(-50%, -50) scale(1)',
+          },
+          to: {
+            opacity: '0',
+            transform: 'translate(-50%, -49%) scale(0.95)',
+          },
+        },
       },
       animation: {
         slideDown: 'slideDown 200ms cubic-bezier(0.25, 1, 0.5, 1)',
         slideUp: 'slideUp 200ms cubic-bezier(0.25, 1, 0.5, 1)',
+        enter: 'enter 200ms cubic-bezier(0.25, 1, 0.5, 1)',
+        leave: 'leave 200ms cubic-bezier(0.25, 1, 0.5, 1)',
+        fadeIn: 'fadeIn 200ms cubic-bezier(0.25, 1, 0.5, 1)',
+        fadeOut: 'fadeOut 200ms cubic-bezier(0.25, 1, 0.5, 1)',
       },
     },
   },
