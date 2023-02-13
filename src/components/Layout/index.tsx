@@ -21,7 +21,6 @@ type Props = {
 export const isMobileAtom = atom<boolean>(true);
 export const isMediumScreenAtom = atom<boolean>(true);
 export const isLearnPageAtom = atom<boolean>(false);
-export const userContractsAtom = atom<Contract[] | null>(null);
 
 const Layout = ({ children }: Props): React.ReactElement => {
   const [isSidenavExpanded, setIsSidenavExpanded] = useAtom(
@@ -56,38 +55,6 @@ const Layout = ({ children }: Props): React.ReactElement => {
 
   const supabase = useSupabaseClient();
   const user = useUser();
-  const [_, setUserContracts] = useAtom(userContractsAtom);
-
-  const getUserContracts = async (userId: string) => {
-    try {
-      let { data: contracts, error } = await supabase
-        .from('contract')
-        .select(
-          `
-        id,
-        buyer_id,
-        seller_id,
-        product_id,
-        created_at,
-        updated_at
-        `
-        )
-        .eq('buyer_id', userId);
-
-      if (error) throw error;
-
-      contracts && setUserContracts(contracts);
-      console.log(contracts);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    if (user) {
-      getUserContracts(user.id);
-    }
-  }, [user]);
 
   return (
     <div className="isolate">

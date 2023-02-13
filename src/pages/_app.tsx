@@ -6,6 +6,7 @@ import { Provider } from 'jotai';
 import { createBrowserSupabaseClient } from '@supabase/auth-helpers-nextjs';
 import { SessionContextProvider, Session } from '@supabase/auth-helpers-react';
 import { useState } from 'react';
+import { SWRConfig } from 'swr';
 
 export default function App({
   Component,
@@ -16,22 +17,32 @@ export default function App({
   const [supabaseClient] = useState(() => createBrowserSupabaseClient());
 
   return (
-    <SessionContextProvider
-      supabaseClient={supabaseClient}
-      initialSession={pageProps.initialSession}
+    <SWRConfig
+      value={{
+        fetcher: (resource, init) =>
+          fetch(resource, init).then((res) => res.json()),
+      }}
     >
-      <Provider>
-        <Head>
-          <meta name="viewport" content="width=device-width, initial-scale=1" />
-          <link rel="icon" href="/favicon.ico" sizes="any" />
-          <link rel="icon" href="/coachify-logo.svg" type="image/svg+xml" />
-          <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-          <link rel="manifest" href="/site.webmanifest" />
-        </Head>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </Provider>
-    </SessionContextProvider>
+      <SessionContextProvider
+        supabaseClient={supabaseClient}
+        initialSession={pageProps.initialSession}
+      >
+        <Provider>
+          <Head>
+            <meta
+              name="viewport"
+              content="width=device-width, initial-scale=1"
+            />
+            <link rel="icon" href="/favicon.ico" sizes="any" />
+            <link rel="icon" href="/coachify-logo.svg" type="image/svg+xml" />
+            <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+            <link rel="manifest" href="/site.webmanifest" />
+          </Head>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </Provider>
+      </SessionContextProvider>
+    </SWRConfig>
   );
 }

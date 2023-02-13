@@ -1,25 +1,25 @@
-import { userContractsAtom } from '@components/Layout';
 import clsx from 'clsx';
-import { useAtom } from 'jotai';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { FiClock, FiImage, FiStar, FiUser } from 'react-icons/fi';
-import { Product } from 'types/supabase';
+import { Contract, Product } from 'types/supabase';
 import { isCourseOwnedByUser, toHumanReadableTime } from 'utils/helpers';
+
 const CourseCard = ({
   course,
   className,
+  contracts,
 }: {
   course: Product;
   className?: string;
+  contracts: Contract[];
 }) => {
-  const [userContracts] = useAtom(userContractsAtom);
   const [isOwned, setIsOwned] = useState<boolean>(false);
 
   useEffect(() => {
-    setIsOwned(isCourseOwnedByUser(userContracts, course.id as string));
-  }, [userContracts, course.id, setIsOwned]);
+    setIsOwned(isCourseOwnedByUser(contracts, course.id as string));
+  }, [contracts, course.id, setIsOwned]);
 
   return (
     <li className={clsx('flex', className)}>

@@ -1,8 +1,9 @@
-import { Product } from 'types/supabase';
+import { Contract, Product } from 'types/supabase';
 import CourseCard from './CourseCard';
 import Loader from './Loader';
 import { useDraggable } from 'react-use-draggable-scroll';
 import { useRef } from 'react';
+import useUserContracts from 'hooks/useUserContracts';
 
 const CoursesList = ({
   isLoading,
@@ -16,6 +17,8 @@ const CoursesList = ({
   ) as React.MutableRefObject<HTMLOListElement>;
 
   const { events } = useDraggable(sliderRef);
+
+  const { contracts } = useUserContracts();
 
   return (
     <ol
@@ -34,9 +37,15 @@ const CoursesList = ({
               index={index}
               key={course.id}
               isPriority={true}
+              contracts={contracts as Contract[]}
             />
           ) : (
-            <CourseCard course={course} index={index} key={course.id} />
+            <CourseCard
+              course={course}
+              index={index}
+              key={course.id}
+              contracts={contracts as Contract[]}
+            />
           )
         )
       )}

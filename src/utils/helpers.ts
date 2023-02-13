@@ -32,7 +32,7 @@ export const toHumanReadableTime = (totalSeconds: number): string => {
 };
 
 export const isCourseOwnedByUser = (
-  contracts: Contract[] | null,
+  contracts: Contract[] | undefined,
   courseId: string
 ) => {
   if (!contracts) return false;

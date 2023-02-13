@@ -2,8 +2,9 @@ import CourseCard from '@components/pages/home/RecentlyAdded/CourseCard';
 import Button from '@components/ui/Button';
 import SectionTitle from '@components/ui/SectionTitle';
 import clsx from 'clsx';
+import useUserContracts from 'hooks/useUserContracts';
 import Link from 'next/link';
-import { Product } from 'types/supabase';
+import { Contract, Product } from 'types/supabase';
 
 type Props = {
   ownerName: string;
@@ -12,6 +13,8 @@ type Props = {
 
 const OtherCourses = ({ ownerName, courses }: Props) => {
   const moreThan3 = courses?.length > 3;
+
+  const { contracts } = useUserContracts();
 
   return (
     <section>
@@ -32,6 +35,7 @@ const OtherCourses = ({ ownerName, courses }: Props) => {
                 <CourseCard
                   key={course.id}
                   course={course}
+                  contracts={contracts as Contract[]}
                   className={clsx(
                     'flex',
                     moreThan3 && 'last:hidden sm:last:flex 2xl:last:hidden'

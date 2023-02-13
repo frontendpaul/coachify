@@ -1,14 +1,15 @@
-import { userContractsAtom } from '@components/Layout';
 import { isAuthDialogOpenAtom } from '@components/Layout/Header';
 import Avatar from '@components/ui/Avatar';
 import Button from '@components/ui/Button';
 import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react';
+import useUserContracts from 'hooks/useUserContracts';
 import { useAtom } from 'jotai';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { BiLoaderAlt } from 'react-icons/bi';
 import { FiHeart, FiInfo, FiShare2 } from 'react-icons/fi';
 import { User } from 'server/courses';
+import { mutate } from 'swr';
 import { isCourseOwnedByUser } from 'utils/helpers';
 
 type Props = {
@@ -69,37 +70,14 @@ const Overview = ({
 
     if (error) console.log(error);
     setIsLoading(false);
-    getUserContracts(buyerId);
+    mutate('/api/users/contracts');
   };
-
-  const getUserContracts = async (userId: string) => {
-    try {
-      let { data: contracts, error } = await supabase
-        .from('contract')
-        .select(
-          `
-        id,
-        buyer_id,
-        seller_id,
-        product_id,
-        created_at,
-        updated_at
-        `
-        )
-        .eq('buyer_id', userId);
-
-      contracts && setUserContracts(contracts);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const [userContracts, setUserContracts] = useAtom(userContractsAtom);
+  const { contracts } = useUserContracts();
   const [isOwned, setIsOwned] = useState<boolean>(false);
 
   useEffect(() => {
-    setIsOwned(isCourseOwnedByUser(userContracts, id));
-  }, [userContracts, id, setIsOwned]);
+    setIsOwned(isCourseOwnedByUser(contracts, id));
+  }, [contracts, id, setIsOwned]);
 
   return (
     <div className="grid gap-6">

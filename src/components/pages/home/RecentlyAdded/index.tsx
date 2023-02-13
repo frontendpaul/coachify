@@ -1,7 +1,8 @@
 import TitleWithLink from '@components/ui/TitleWithLink';
 import { useSupabaseClient } from '@supabase/auth-helpers-react';
+import useUserContracts from 'hooks/useUserContracts';
 import { useEffect, useState } from 'react';
-import { Product } from 'types/supabase';
+import { Contract, Product } from 'types/supabase';
 import CourseCard from './CourseCard';
 import Loader from './Loader';
 
@@ -52,6 +53,8 @@ const RecentlyAdded = () => {
     fetchCourses();
   }, []);
 
+  const { contracts } = useUserContracts();
+
   return (
     <section className="px-4 md:px-6">
       <TitleWithLink
@@ -73,7 +76,11 @@ const RecentlyAdded = () => {
             </>
           ) : (
             courses.map((course: any) => (
-              <CourseCard course={course} key={course.id} />
+              <CourseCard
+                course={course}
+                key={course.id}
+                contracts={contracts as Contract[]}
+              />
             ))
           )}
         </ul>

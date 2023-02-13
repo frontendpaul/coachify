@@ -4,7 +4,7 @@ import React from 'react';
 import { FiUser } from 'react-icons/fi';
 import Button from '@ui/Button';
 import { useSupabaseClient } from '@supabase/auth-helpers-react';
-import Image from 'next/image';
+import { mutate } from 'swr';
 
 const SignedUserPopover = ({
   className,
@@ -15,13 +15,17 @@ const SignedUserPopover = ({
 }) => {
   const supabaseClient = useSupabaseClient();
 
+  const handleSignOut = () => {
+    supabaseClient.auth.signOut();
+  };
+
   return (
     <Popover className={clsx(className, 'relative')}>
       <Popover.Button as={React.Fragment}>
         <Button
           icon="icon-only"
           aria-label="user-menu-button"
-          className="lg:text-base lg:pl-4 lg:pr-6 lg:py-3"
+          className="lg:py-3 lg:pl-4 lg:pr-6 lg:text-base"
         >
           <FiUser />
           <span className="hidden lg:block">{user?.user_metadata?.name}</span>
@@ -35,8 +39,8 @@ const SignedUserPopover = ({
         leaveFrom="transform scale-100 opacity-100"
         leaveTo="transform scale-95 opacity-0"
       >
-        <Popover.Panel className="absolute z-10 right-0 mt-4 w-40 flex flex-col gap-1 p-4 rounded-xl bg-coachify-teal-1100 shadow-lg">
-          <Button fill="ghost" onClick={() => supabaseClient.auth.signOut()}>
+        <Popover.Panel className="absolute right-0 z-10 mt-4 flex w-40 flex-col gap-1 rounded-xl bg-coachify-teal-1100 p-4 shadow-lg">
+          <Button fill="ghost" onClick={() => handleSignOut()}>
             Sign Out
           </Button>
         </Popover.Panel>
