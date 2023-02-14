@@ -3,14 +3,14 @@ import clsx from 'clsx';
 import React from 'react';
 import { FiUser } from 'react-icons/fi';
 import Button from '@ui/Button';
+import { useAtom } from 'jotai';
+import { isLoginDialogOpenAtom } from './AuthDialog/Login';
+import { isSignupDialogOpenAtom } from './AuthDialog/Signup';
 
-const UserPopover = ({
-  className,
-  openAuthDialog,
-}: {
-  className?: string;
-  openAuthDialog: any;
-}) => {
+const UserPopover = ({ className }: { className?: string }) => {
+  const [, setIsLoginDialogOpen] = useAtom(isLoginDialogOpenAtom);
+  const [, setIsSignupDialogOpen] = useAtom(isSignupDialogOpenAtom);
+
   return (
     <Popover className={clsx(className, 'relative')}>
       <Popover.Button as={React.Fragment}>
@@ -26,11 +26,11 @@ const UserPopover = ({
         leaveFrom="transform scale-100 opacity-100"
         leaveTo="transform scale-95 opacity-0"
       >
-        <Popover.Panel className="absolute z-10 right-0 mt-4 w-40 flex flex-col gap-1 p-4 rounded-xl bg-coachify-teal-1100 shadow-lg">
-          <Button fill="ghost" onClick={() => openAuthDialog('login')}>
+        <Popover.Panel className="absolute right-0 z-10 mt-4 flex w-40 flex-col gap-1 rounded-xl bg-coachify-teal-1100 p-4 shadow-lg">
+          <Button fill="ghost" onClick={() => setIsLoginDialogOpen(true)}>
             Log In
           </Button>
-          <Button onClick={() => openAuthDialog('signup')}>Sign Up</Button>
+          <Button onClick={() => setIsSignupDialogOpen(true)}>Sign Up</Button>
         </Popover.Panel>
       </Transition>
     </Popover>

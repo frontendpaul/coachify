@@ -1,4 +1,5 @@
 import Button from '@components/ui/Button';
+import DialogContent from '@components/ui/Dialog/DialogContent';
 import InputWithLabel from '@components/ui/InputWithLabel';
 import LinkWithChevron from '@components/ui/LinkWithChevron';
 import * as Dialog from '@radix-ui/react-dialog';
@@ -11,26 +12,20 @@ const Share = () => {
   return (
     <Dialog.Root open={isgOpen} onOpenChange={setIsOpen}>
       <Dialog.Trigger asChild>
-        <Button
-          fill="outline"
-          icon="icon-only"
-          onClick={() => setIsOpen(true)}
-          title="Share"
-        >
+        <Button fill="outline" icon="icon-only" title="Share">
           <FiShare2 />
           <span className="sr-only">Share</span>
         </Button>
       </Dialog.Trigger>
       <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 bg-coachify-teal-1300/75 backdrop-brightness-[.5] data-[state=open]:animate-fadeIn data-[state=closed]:animate-fadeOut" />
-        <Dialog.Content className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 data-[state=open]:animate-enter data-[state=closed]:animate-leave">
+        <DialogContent>
           <div className="transition-200-out-quart relative w-[min(90vw,32rem)] overflow-hidden rounded-lg bg-coachify-teal-1100 p-4 text-white shadow-xl sm:my-8 sm:p-6">
             <Dialog.Close asChild>
               <Button
                 fill="ghost"
                 icon="icon-only"
                 className="absolute top-2 right-2 sm:top-4 sm:right-4"
-                aria-label="close-dialog-button"
+                aria-label="Close"
               >
                 <FiX />
               </Button>
@@ -62,7 +57,7 @@ const Share = () => {
               </div>
             </div>
           </div>
-        </Dialog.Content>
+        </DialogContent>
       </Dialog.Portal>
     </Dialog.Root>
   );

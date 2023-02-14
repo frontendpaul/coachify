@@ -86,21 +86,21 @@ module.exports = {
         enter: {
           from: {
             opacity: '0',
-            transform: 'translate(-50%, -49%) scale(0.95)',
+            transform: 'translateY(1rem) scale(0.95)',
           },
           to: {
             opacity: '1',
-            transform: 'translate(-50%, -50%) scale(1)',
+            transform: 'translateY(0) scale(1)',
           },
         },
         leave: {
           from: {
             opacity: '1',
-            transform: 'translate(-50%, -50) scale(1)',
+            transform: 'translateY(0) scale(1)',
           },
           to: {
             opacity: '0',
-            transform: 'translate(-50%, -49%) scale(0.95)',
+            transform: 'translateY(1rem) scale(0.95)',
           },
         },
       },

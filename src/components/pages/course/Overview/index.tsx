@@ -1,4 +1,4 @@
-import { isAuthDialogOpenAtom } from '@components/Layout/Header';
+import { isLoginDialogOpenAtom } from '@components/Layout/Header/AuthDialog/Login';
 import Avatar from '@components/ui/Avatar';
 import Button from '@components/ui/Button';
 import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react';
@@ -33,7 +33,7 @@ const Overview = ({
   price,
   old_price,
 }: Props) => {
-  const [isAuthDialogOpen, setIsAuthDialogOpen] = useAtom(isAuthDialogOpenAtom);
+  const [_, setIsLoginDialogOpen] = useAtom(isLoginDialogOpenAtom);
   const user = useUser();
 
   const [isOwner, setIsOwner] = useState<boolean>(true);
@@ -45,7 +45,7 @@ const Overview = ({
   const handelBuy = (e: any) => {
     if (!user) {
       e.preventDefault();
-      setIsAuthDialogOpen(true);
+      setIsLoginDialogOpen(true);
       return;
     }
     if (!isOwned) {
@@ -91,7 +91,7 @@ const Overview = ({
 
   const handleFavorite = () => {
     if (!user) {
-      setIsAuthDialogOpen(true);
+      setIsLoginDialogOpen(true);
       return;
     }
 
@@ -171,7 +171,7 @@ const Overview = ({
         ) : (
           <Button
             className="w-full sm:w-44 md:w-full"
-            onClick={(e) => handelBuy(e)}
+            onClick={(e: React.MouseEvent) => handelBuy(e)}
             disabled={isOwner || isLoading}
           >
             {isLoading ? (
