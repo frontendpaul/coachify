@@ -11,7 +11,12 @@ const Share = () => {
   return (
     <Dialog.Root open={isgOpen} onOpenChange={setIsOpen}>
       <Dialog.Trigger asChild>
-        <Button fill="outline" icon="icon-only" onClick={() => setIsOpen(true)}>
+        <Button
+          fill="outline"
+          icon="icon-only"
+          onClick={() => setIsOpen(true)}
+          title="Share"
+        >
           <FiShare2 />
           <span className="sr-only">Share</span>
         </Button>

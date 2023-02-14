@@ -13,6 +13,7 @@ type Props = {
   disabled?: boolean;
   className?: string;
   onClick?: ReactEventHandler;
+  [x: string]: any; // additional props
 };
 
 const ButtonElement = (
@@ -35,26 +36,26 @@ const ButtonElement = (
       <Link
         href={href}
         className={clsx(
-          'flex justify-center gap-4 leading-none [&>*]:leading-none rounded-lg border border-transparent transition-200-out-quart',
+          'transition-200-out-quart flex justify-center gap-4 rounded-lg border border-transparent leading-none [&>*]:leading-none',
           fullWidth && 'w-full',
           !icon && 'px-6 py-3',
           icon === 'icon-only' && 'p-[10px] text-xl',
-          icon === 'icon-left' && 'pl-4 pr-6 py-3',
-          icon === 'icon-right' && 'pl-6 pr-4 py-3',
+          icon === 'icon-left' && 'py-3 pl-4 pr-6',
+          icon === 'icon-right' && 'py-3 pl-6 pr-4',
           icon === 'icon-both' && 'px-4 py-3',
           intent === 'primary' &&
             !(fill === 'ghost') &&
-            'font-semibold bg-coachify-teal-500 text-coachify-teal-1300 hover:bg-coachify-teal-400',
+            'bg-coachify-teal-500 font-semibold text-coachify-teal-1300 hover:bg-coachify-teal-400',
           intent === 'secondary' &&
             !(fill === 'ghost') &&
-            'font-semibold bg-amber-400 text-coachify-teal-1300 hover:bg-yellow-400',
+            'bg-amber-400 font-semibold text-coachify-teal-1300 hover:bg-yellow-400',
           intent === 'primary' &&
             fill === 'ghost' &&
             'bg-transparent text-white hover:bg-white/5',
           intent === 'primary' &&
             fill === 'outline' &&
-            '!bg-transparent font-normal !text-white hover:!bg-white/5 !border-white',
-          disabled && '!opacity-50 pointer-events-none',
+            '!border-white !bg-transparent font-normal !text-white hover:!bg-white/5',
+          disabled && 'pointer-events-none !opacity-50',
           className
         )}
         {...props}
@@ -67,26 +68,26 @@ const ButtonElement = (
     <button
       ref={ref}
       className={clsx(
-        'flex justify-center gap-4 leading-none [&>*]:leading-none rounded-lg border border-transparent transition-200-out-quart',
+        'transition-200-out-quart flex justify-center gap-4 rounded-lg border border-transparent leading-none [&>*]:leading-none',
         fullWidth && 'w-full',
         !icon && 'px-6 py-3',
         icon === 'icon-only' && 'p-[10px] text-xl',
-        icon === 'icon-left' && 'pl-4 pr-6 py-3',
-        icon === 'icon-right' && 'pl-6 pr-4 py-3',
+        icon === 'icon-left' && 'py-3 pl-4 pr-6',
+        icon === 'icon-right' && 'py-3 pl-6 pr-4',
         icon === 'icon-both' && 'px-4 py-3',
         intent === 'primary' &&
           !(fill === 'ghost') &&
-          'font-semibold bg-coachify-teal-500 text-coachify-teal-1300 hover:bg-coachify-teal-400',
+          'bg-coachify-teal-500 font-semibold text-coachify-teal-1300 hover:bg-coachify-teal-400',
         intent === 'secondary' &&
           !(fill === 'ghost') &&
-          'font-semibold bg-amber-400 text-coachify-teal-1300 hover:bg-yellow-400',
+          'bg-amber-400 font-semibold text-coachify-teal-1300 hover:bg-yellow-400',
         intent === 'primary' &&
           fill === 'ghost' &&
           'bg-transparent text-white hover:bg-white/5',
         intent === 'primary' &&
           fill === 'outline' &&
-          '!bg-transparent font-normal !text-white hover:!bg-white/5 !border-white',
-        disabled && '!opacity-50 pointer-events-none',
+          '!border-white !bg-transparent font-normal !text-white hover:!bg-white/5',
+        disabled && 'pointer-events-none !opacity-50',
         className
       )}
       type={type}
