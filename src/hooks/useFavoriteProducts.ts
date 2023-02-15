@@ -8,7 +8,12 @@ export default function useFavoriteProducts() {
   const user = useUser();
 
   useEffect(() => {
-    mutate('/api/users/products/favorites');
+    let isCurrent = true;
+    if (isCurrent) mutate('/api/users/products/favorites');
+
+    return () => {
+      isCurrent = false;
+    };
   }, [user]);
 
   return {

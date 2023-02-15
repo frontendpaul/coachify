@@ -9,7 +9,12 @@ export default function useUserContracts() {
   const user = useUser();
 
   useEffect(() => {
-    mutate('/api/users/contracts');
+    let isCurrent = true;
+    if (isCurrent) mutate('/api/users/contracts');
+
+    return () => {
+      isCurrent = false;
+    };
   }, [user]);
 
   return {
