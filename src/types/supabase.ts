@@ -20,6 +20,8 @@ export type Product = {
   //
   owner?: User;
   metadata?: ProductMetadata;
+  content?: ProductContent;
+  reviews?: Review[];
 };
 
 export type ProductMetadata = {
@@ -58,6 +60,7 @@ export type Chapter = {
   video_id: string; // references video.id
   //
   video: Video;
+  resources?: Resource[];
 };
 
 export type Video = {

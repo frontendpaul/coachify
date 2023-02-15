@@ -1,10 +1,8 @@
-import Avatar from '@components/ui/Avatar';
 import Button from '@components/ui/Button';
 import SectionTitle from '@components/ui/SectionTitle';
 import { AiFillStar } from 'react-icons/ai';
-import { Review } from 'server/courses';
+import { Review } from 'types/supabase';
 import { toPercentage } from 'utils/helpers';
-import Stars from '../../Reviews/Review/Stars';
 import RatingBar from './RatingBar';
 import ReviewCard from './Review';
 

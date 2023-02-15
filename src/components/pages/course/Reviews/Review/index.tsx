@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import { useRef, useState, useEffect } from 'react';
 import { Review } from 'types/supabase';
 import Stars from './Stars';
+import { toReadableDate } from 'utils/helpers';
 
 const Review = ({
   review,
@@ -26,16 +27,6 @@ const Review = ({
 
     if (scrollHeight > offsetHeight) setIsOverflowing(true);
   });
-
-  const toReadableDate = (isoDate: string) => {
-    const date = new Date(isoDate);
-    const config = {
-      year: 'numeric',
-      month: 'numeric',
-      day: 'numeric',
-    } as const;
-    return date.toLocaleDateString('de-DE', config);
-  };
 
   return (
     <li

@@ -2,7 +2,6 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
-import { Chapter, getCourseById } from 'server/courses';
 import Content from '@components/pages/course/learn/Content';
 import * as Tabs from '@radix-ui/react-tabs';
 import SectionTitle from '@components/ui/SectionTitle';
@@ -14,45 +13,53 @@ import Resources from '@components/pages/course/learn/Resources';
 import TabTriggerList from '@components/pages/course/learn/TabTriggerList';
 import { isCourseOwnedByUser } from 'utils/helpers';
 import useUserContracts from 'hooks/useUserContracts';
+import useProduct from 'hooks/useProduct';
+import { Chapter } from 'types/supabase';
+import { GetServerSidePropsContext } from 'next';
 
-const Learn = () => {
+const Learn = ({ id }: { id: string }) => {
   const router = useRouter();
-  const id = router.query.id as string;
-  const course = getCourseById(id);
+  const { product, isLoading } = useProduct(id);
 
   const videoPlayer = useRef<HTMLVideoElement>(null);
-  const [currentChapter, setCurrentChapter] = useState<Chapter | null>(null);
+  const [currentChapter, setCurrentChapter] = useState<Chapter | undefined>(
+    undefined
+  );
   const [currentSection, setCurrentSection] = useState<string>('');
 
   useEffect(() => {
-    if (course) {
-      setCurrentChapter(course.course_content.sections[0].chapters[0]);
+    if (product) {
+      setCurrentChapter(product.content?.sections[0].chapters[0]);
     }
-  }, [course]);
+  }, [product]);
 
   useEffect(() => {
-    if (course && currentChapter) {
-      course.course_content.sections.forEach((section) => {
-        section.chapters.some((chapter) => chapter.id === currentChapter.id) &&
-          setCurrentSection(section.id);
-        return;
+    if (product && currentChapter) {
+      product.content?.sections.forEach((section) => {
+        const isChapterInSection = section.chapters.some(
+          (chapter) => chapter.id === currentChapter.id
+        );
+
+        if (isChapterInSection) {
+          setCurrentSection(section.id as string);
+          return;
+        }
       });
     }
-  }, [course, currentChapter]);
+  }, [product, currentChapter]);
 
   const [isMediumScreen] = useAtom(isMediumScreenAtom);
 
-  const [value, setValue] = useState('about');
-  const [isLoading, setIsLoading] = useState(true);
+  const [openTab, setOpenTab] = useState('about');
 
   useEffect(() => {
-    !isMediumScreen && value === 'content' && setValue('about');
-  }, [isMediumScreen, value, setValue]);
+    !isMediumScreen && openTab === 'content' && setOpenTab('about');
+  }, [isMediumScreen, openTab, setOpenTab]);
 
   const { contracts } = useUserContracts();
 
   useEffect(() => {
-    if (id) {
+    if (id && contracts) {
       const isOwned = isCourseOwnedByUser(contracts, id);
       if (!isOwned) {
         router.push('/course/' + id);
@@ -68,7 +75,7 @@ const Learn = () => {
     );
   }
 
-  if (!course) {
+  if (!product) {
     return (
       <>
         <Head>
@@ -88,61 +95,61 @@ const Learn = () => {
     );
   }
 
-  if (!currentChapter || !currentSection) {
-    return <div>Loading...</div>;
-  }
-
   return (
     <>
       <Head>
-        <title>{course.title}</title>
+        <title>{product.metadata?.title}</title>
         <meta
           name="description"
-          content={course.course_metadata.short_description}
+          content={product.metadata?.short_description}
         />
       </Head>
 
       <section className="flex min-h-screen flex-col">
-        <h1 className="sr-only">{course.title}</h1>
+        <h1 className="sr-only">{product.metadata?.title}</h1>
         <div className="border-white/10 lg:grid lg:grid-cols-[1fr,min(30%,550px)]">
           <h2 className="sr-only">Video for {currentChapter?.title}</h2>
           <video
             className="max-h-[50vh] w-full bg-coachify-teal-1200 lg:max-h-[70vh]"
-            src={course.course_content.sections[0].chapters[0].video.src}
+            src={product.content?.sections[0].chapters[0].video.src}
             controls
             ref={videoPlayer}
           ></video>
           <div className="custom-scrollbar hidden h-0 min-h-full overflow-auto px-2 lg:block lg:px-4">
             <SectionTitle className="mb-4">Course content</SectionTitle>
-            <Content
-              content={course.course_content}
-              currentSectionId={currentSection}
-              currentChapter={currentChapter}
-              setCurrentChapter={setCurrentChapter}
-              videoPlayer={videoPlayer}
-            />
+            {product.content && currentChapter && (
+              <Content
+                content={product.content}
+                currentSectionId={currentSection}
+                currentChapter={currentChapter}
+                setCurrentChapter={setCurrentChapter}
+                videoPlayer={videoPlayer}
+              />
+            )}
           </div>
         </div>
         <div className="flex-1 bg-coachify-teal-1200 px-4 pb-4 md:px-6 md:pb-6">
-          <Tabs.Root value={value} onValueChange={setValue}>
+          <Tabs.Root value={openTab} onValueChange={setOpenTab}>
             {/* TODO: add scroll on mouse drag */}
             <TabTriggerList />
 
             <div className="mx-auto py-4 md:max-w-2xl md:py-6">
               {isMediumScreen && (
                 <Tabs.Content value="content">
-                  <Content
-                    content={course.course_content}
-                    currentSectionId={currentSection}
-                    currentChapter={currentChapter}
-                    setCurrentChapter={setCurrentChapter}
-                    videoPlayer={videoPlayer}
-                  />
+                  {product.content && currentChapter && (
+                    <Content
+                      content={product.content}
+                      currentSectionId={currentSection}
+                      currentChapter={currentChapter}
+                      setCurrentChapter={setCurrentChapter}
+                      videoPlayer={videoPlayer}
+                    />
+                  )}
                 </Tabs.Content>
               )}
 
               <Tabs.Content value="about">
-                {currentChapter.description ? (
+                {currentChapter?.description ? (
                   <About description={currentChapter.description} />
                 ) : (
                   <h2>
@@ -152,7 +159,7 @@ const Learn = () => {
                 )}
               </Tabs.Content>
               <Tabs.Content value="resources">
-                {currentChapter.resources ? (
+                {currentChapter?.resources ? (
                   <Resources resources={currentChapter.resources} />
                 ) : (
                   <h2>No resources attached to this chapter.</h2>
@@ -169,7 +176,7 @@ const Learn = () => {
                 </div>
               </Tabs.Content>
               <Tabs.Content value="reviews">
-                <Reviews reviews={course.reviews} />
+                <Reviews reviews={product.reviews} />
               </Tabs.Content>
             </div>
           </Tabs.Root>
@@ -178,4 +185,14 @@ const Learn = () => {
     </>
   );
 };
+
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const id = context.params?.id;
+  return {
+    props: {
+      id: id,
+    },
+  };
+}
+
 export default Learn;

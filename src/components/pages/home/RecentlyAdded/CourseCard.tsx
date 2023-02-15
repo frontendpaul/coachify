@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { FiClock, FiImage, FiStar, FiUser } from 'react-icons/fi';
 import { Contract, Product } from 'types/supabase';
-import { isCourseOwnedByUser, toHumanReadableTime } from 'utils/helpers';
+import { isCourseOwnedByUser, toReadableTime } from 'utils/helpers';
 
 const CourseCard = ({
   course,
@@ -55,7 +55,7 @@ const CourseCard = ({
             <div className="flex items-center gap-2">
               <FiClock />
               {course.metadata?.duration
-                ? toHumanReadableTime(course.metadata?.duration)
+                ? toReadableTime(course.metadata?.duration)
                 : '-'}
             </div>
           </div>

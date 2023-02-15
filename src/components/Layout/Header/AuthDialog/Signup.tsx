@@ -75,7 +75,7 @@ const Signup = () => {
   return (
     <Dialog.Root open={isSignupDialogOpen} onOpenChange={setIsSignupDialogOpen}>
       <Dialog.Trigger asChild>
-        <Button className="ml-4 hidden lg:flex">Sign Up</Button>
+        <Button className="hidden lg:flex">Sign Up</Button>
       </Dialog.Trigger>
       <Dialog.Portal>
         <DialogContent>

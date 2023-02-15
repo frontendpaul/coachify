@@ -1,6 +1,6 @@
 import SectionTitle from '@components/ui/SectionTitle';
 import { FiDownload } from 'react-icons/fi';
-import { Resource } from 'server/courses';
+import { Resource } from 'types/supabase';
 
 const Resources = ({ resources }: { resources: Resource[] }) => {
   return (

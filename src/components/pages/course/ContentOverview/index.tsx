@@ -6,7 +6,7 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import { FiPlay, FiLock, FiChevronDown } from 'react-icons/fi';
 import { ProductContent } from 'types/supabase';
-import { toHumanReadableTime } from 'utils/helpers';
+import { toReadableTime } from 'utils/helpers';
 
 type Props = {
   content: ProductContent;
@@ -57,7 +57,7 @@ const ContentOverview = ({ content, videoPlayer }: Props) => {
         <SectionTitle>Content of this course</SectionTitle>
         <p className="text-sm text-white/75 xl:text-base">
           {numberOfSections} Sections • {numberOfVideos} Videos •{' '}
-          {toHumanReadableTime(totalDuration || 0)}
+          {toReadableTime(totalDuration || 0)}
         </p>
       </div>
 
@@ -134,9 +134,7 @@ const ContentOverview = ({ content, videoPlayer }: Props) => {
                               <div className="ml-1 flex-1 sm:flex sm:justify-between">
                                 <p>{chapter.title || '-'}</p>
                                 <p className="">
-                                  {toHumanReadableTime(
-                                    chapter.video?.duration || 0
-                                  )}
+                                  {toReadableTime(chapter.video?.duration || 0)}
                                 </p>
                               </div>
                             </button>
@@ -148,9 +146,7 @@ const ContentOverview = ({ content, videoPlayer }: Props) => {
                               <div className="ml-1 flex-1 sm:flex sm:justify-between">
                                 <p>{chapter.title || ''}</p>
                                 <p className="">
-                                  {toHumanReadableTime(
-                                    chapter.video.duration || 0
-                                  )}
+                                  {toReadableTime(chapter.video.duration || 0)}
                                 </p>
                               </div>
                             </div>
@@ -223,9 +219,7 @@ const ContentOverview = ({ content, videoPlayer }: Props) => {
                             <div className="ml-1 flex-1 sm:flex sm:justify-between">
                               <p>{chapter.title || ''}</p>
                               <p className="">
-                                {toHumanReadableTime(
-                                  chapter.video.duration || 0
-                                )}
+                                {toReadableTime(chapter.video.duration || 0)}
                               </p>
                             </div>
                           </li>

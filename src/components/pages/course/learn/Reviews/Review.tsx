@@ -1,8 +1,9 @@
 import Avatar from '@components/ui/Avatar';
 import LinkWithChevron from '@components/ui/LinkWithChevron';
 import { useRef, useState, useEffect } from 'react';
-import { Review } from 'server/courses';
 import Stars from '../../Reviews/Review/Stars';
+import { Review } from 'types/supabase';
+import { toReadableDate } from 'utils/helpers';
 
 const Review = ({ review }: { review: Review }) => {
   const reviewParagraph = useRef<HTMLParagraphElement>(null);
@@ -24,15 +25,15 @@ const Review = ({ review }: { review: Review }) => {
     <li className="flex flex-col gap-4 rounded-lg bg-coachify-teal-1100/75 p-3 sm:p-4 md:p-6">
       <div className="flex items-center gap-3">
         <div className="h-8 w-8">
-          <Avatar user={review.author} />
+          <Avatar user={review.owner} />
         </div>
         <div className="flex-1">
-          <p className="mb-1 font-semibold">{review.author.name}</p>
+          <p className="mb-1 font-semibold">{review.owner.name}</p>
           <div className="flex items-center justify-between text-xs">
             <Stars rating={review.rating} />
             <p className="text-white/75">
               <span className="hidden sm:inline">Posted on </span>
-              {review.created_at}
+              {review.created_at && toReadableDate(review.created_at)}
             </p>
           </div>
         </div>
@@ -41,7 +42,7 @@ const Review = ({ review }: { review: Review }) => {
         ref={reviewParagraph}
         className="text-sm text-coachify-gray-200 line-clamp-6"
       >
-        {review.copy}
+        {review.body}
       </p>
       {isOverflowing && <LinkWithChevron href="/" text="Read full review" />}
     </li>

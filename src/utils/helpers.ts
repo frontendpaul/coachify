@@ -22,7 +22,17 @@ export const toPercentage = (total: number, value: number): number => {
   return (value / total) * 100;
 };
 
-export const toHumanReadableTime = (totalSeconds: number): string => {
+export const toReadableDate = (isoDate: string) => {
+  const date = new Date(isoDate);
+  const config = {
+    year: 'numeric',
+    month: 'numeric',
+    day: 'numeric',
+  } as const;
+  return date.toLocaleDateString('de-DE', config);
+};
+
+export const toReadableTime = (totalSeconds: number): string => {
   var hours = Math.floor(totalSeconds / 3600);
   var minutes = Math.floor((totalSeconds - hours * 3600) / 60);
 

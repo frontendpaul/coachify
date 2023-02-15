@@ -1,6 +1,4 @@
-import SectionTitle from '@components/ui/SectionTitle';
 import * as Accordion from '@radix-ui/react-accordion';
-import clsx from 'clsx';
 import {
   Dispatch,
   RefObject,
@@ -9,13 +7,14 @@ import {
   useState,
 } from 'react';
 import { FiPlay, FiChevronDown } from 'react-icons/fi';
-import { Chapter, CourseContent } from 'server/courses';
+import { Chapter, ProductContent } from 'types/supabase';
+import { toReadableTime } from 'utils/helpers';
 
 type Props = {
-  content: CourseContent;
+  content: ProductContent;
   currentSectionId: string;
   currentChapter: Chapter;
-  setCurrentChapter: Dispatch<SetStateAction<Chapter | null>>;
+  setCurrentChapter: Dispatch<SetStateAction<Chapter | undefined>>;
   videoPlayer: RefObject<HTMLVideoElement>;
 };
 
@@ -26,11 +25,11 @@ const Content = ({
   setCurrentChapter,
   videoPlayer,
 }: Props) => {
-  const [value, setValue] = useState(currentSectionId);
+  const [value, setValue] = useState('');
 
-  if (!content || !currentChapter) {
-    return <div>Loading...</div>;
-  }
+  useEffect(() => {
+    setValue(currentSectionId);
+  }, [currentSectionId]);
 
   return (
     <Accordion.Root
@@ -39,11 +38,10 @@ const Content = ({
       onValueChange={setValue}
       collapsible
     >
-      {/** Initially render only first @param sectionsOnInit sections */}
       <ol className="grid gap-1">
         {content.sections.map((section, sectionIndex) => (
           <li key={section.id}>
-            <Accordion.Item value={section.id} className="group">
+            <Accordion.Item value={section.id as string} className="group">
               <Accordion.Header>
                 <Accordion.Trigger
                   className="transition-200-out-quart flex w-full items-center justify-between 
@@ -96,7 +94,9 @@ const Content = ({
                         </span>
                         <div className="ml-1 flex-1 gap-2 xl:flex xl:justify-between">
                           <p>{chapter.title}</p>
-                          <p className="">{chapter.video.duration}</p>
+                          <p className="">
+                            {toReadableTime(chapter.video.duration)}
+                          </p>
                         </div>
                       </button>
                     </li>
