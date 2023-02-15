@@ -24,7 +24,7 @@ const CoursesList = ({
     <ol
       ref={sliderRef}
       {...events}
-      className="scrollbar-hide grid auto-cols-[min(452px,90%)] grid-flow-col
+      className="scrollbar-hide grid auto-cols-[min(452px,95%)] grid-flow-col
         gap-4 overflow-auto pr-4 md:gap-6 md:pr-6 xl:auto-cols-[40%] 2xl:auto-cols-[min(452px,30%)]"
     >
       {isLoading ? (

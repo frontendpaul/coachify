@@ -1,7 +1,7 @@
 const Loader = () => {
   return (
     <>
-      {Array.from({ length: 20 }, (_, index) => (
+      {Array.from({ length: 6 }, (_, index) => (
         <LoaderCard key={index} />
       ))}
     </>
@@ -10,14 +10,9 @@ const Loader = () => {
 
 const LoaderCard = () => {
   return (
-    <li className="overflow-hidden rounded-xl bg-coachify-teal-1100 p-4">
-      <div className="animate-pulse">
-        <div className="aspect-video rounded-lg bg-white/5"></div>
-        <div className="flex flex-1 flex-col pt-3">
-          <div className="mb-3 mt-1 h-4 rounded-full bg-white/5"></div>
-          <div className="mb-3 h-[14px] w-32 rounded-full bg-white/5"></div>
-          <div className="my-1 h-4 w-14 rounded-full bg-white/5"></div>
-        </div>
+    <li className="aspect-square overflow-hidden rounded-xl bg-coachify-teal-1100 p-4">
+      <div className="flex h-full animate-pulse">
+        <div className="my-1 mt-auto h-4 w-32 rounded-full bg-white/5"></div>
       </div>
     </li>
   );
