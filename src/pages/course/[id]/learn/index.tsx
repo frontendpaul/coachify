@@ -131,7 +131,7 @@ const Learn = ({ id }: { id: string }) => {
         <div className="flex-1 bg-coachify-teal-1200 px-4 pb-4 md:px-6 md:pb-6">
           <Tabs.Root value={openTab} onValueChange={setOpenTab}>
             {/* TODO: add scroll on mouse drag */}
-            <TabTriggerList />
+            <TabTriggerList productId={product.id ?? ''} />
 
             <div className="mx-auto py-4 md:max-w-2xl md:py-6">
               {isMediumScreen && (

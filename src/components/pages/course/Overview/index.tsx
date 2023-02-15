@@ -1,17 +1,16 @@
+import FavoriteProductButton from '@components/common/FavoriteProductButton';
 import { isLoginDialogOpenAtom } from '@components/Layout/Header/AuthDialog/Login';
 import Avatar from '@components/ui/Avatar';
 import Button from '@components/ui/Button';
 import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react';
-import useFavoriteProducts from 'hooks/useFavoriteProducts';
 import useUserContracts from 'hooks/useUserContracts';
 import { useAtom } from 'jotai';
-import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { BiLoaderAlt } from 'react-icons/bi';
-import { FiHeart, FiInfo } from 'react-icons/fi';
+import { FiInfo } from 'react-icons/fi';
 import { User } from 'server/courses';
 import { mutate } from 'swr';
-import { isCourseOwnedByUser, isProductInUserFavorites } from 'utils/helpers';
+import { isCourseOwnedByUser } from 'utils/helpers';
 import Share from './Share';
 
 type Props = {
@@ -55,7 +54,6 @@ const Overview = ({
 
   const supabase = useSupabaseClient();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const router = useRouter();
 
   const createContract = async (
     buyerId: string,
@@ -80,53 +78,6 @@ const Overview = ({
   useEffect(() => {
     setIsOwned(isCourseOwnedByUser(contracts, id));
   }, [contracts, id, setIsOwned]);
-
-  const { favorites } = useFavoriteProducts();
-  const [isFavorite, setIsFavorite] = useState<boolean>(false);
-  const [isFavoriteLoading, setIsFavoriteLoading] = useState(false);
-
-  useEffect(() => {
-    setIsFavorite(isProductInUserFavorites(favorites, id));
-  }, [favorites, id, setIsFavorite, isFavorite]);
-
-  const handleFavorite = () => {
-    if (!user) {
-      setIsLoginDialogOpen(true);
-      return;
-    }
-
-    if (!isFavorite) {
-      createFavorite(user.id, id);
-    } else {
-      deleteFavorite(user.id, id);
-    }
-  };
-
-  const createFavorite = async (userId: string, productId: string) => {
-    setIsFavoriteLoading(true);
-
-    const { error } = await supabase.from('favorite_product').insert({
-      user_id: userId,
-      product_id: productId,
-    });
-
-    if (error) console.log(error);
-    mutate('/api/users/products/favorites');
-    setIsFavoriteLoading(false);
-  };
-
-  const deleteFavorite = async (userId: string, productId: string) => {
-    setIsFavoriteLoading(true);
-
-    const { error } = await supabase
-      .from('favorite_product')
-      .delete()
-      .match({ user_id: userId, product_id: productId });
-
-    if (error) console.log(error);
-    mutate('/api/users/products/favorites');
-    setIsFavoriteLoading(false);
-  };
 
   return (
     <div className="grid gap-6">
@@ -182,24 +133,11 @@ const Overview = ({
           </Button>
         )}
         {/* Owner can't like his own product -> disabled */}
-        <Button
-          fill="outline"
-          icon="icon-left"
+        <FavoriteProductButton
+          id={id}
           className="w-full sm:w-auto md:w-full md:px-0"
-          disabled={isOwner || isFavoriteLoading}
-          onClick={() => handleFavorite()}
-        >
-          <FiHeart style={{ fill: isFavorite ? 'currentcolor' : 'none' }} />
-          <span>
-            {isFavorite ? (
-              'Saved'
-            ) : (
-              <span>
-                Save <span className="hidden sm:inline">for later</span>
-              </span>
-            )}
-          </span>
-        </Button>
+          disabled={isOwner}
+        />
         <Share />
       </div>
     </div>

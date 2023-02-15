@@ -6,8 +6,9 @@ import Button from '@components/ui/Button';
 import { FiHeart, FiShare2 } from 'react-icons/fi';
 import { useAtom } from 'jotai';
 import { isMediumScreenAtom } from '@components/Layout';
+import FavoriteProductButton from '@components/common/FavoriteProductButton';
 
-const TabTriggerList = () => {
+const TabTriggerList = ({ productId }: { productId: string }) => {
   const sliderRef = useRef<HTMLDivElement>(
     null
   ) as React.MutableRefObject<HTMLDivElement>;
@@ -30,10 +31,7 @@ const TabTriggerList = () => {
         <TabTrigger value="reviews" text="Reviews" />
       </div>
       <div className="flex gap-2 md:gap-4">
-        <Button fill="outline" icon="icon-left">
-          <FiHeart />
-          Save
-        </Button>
+        <FavoriteProductButton id={productId} />
         <Button fill="outline" icon="icon-left">
           <FiShare2 />
           Share
