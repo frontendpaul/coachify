@@ -138,7 +138,7 @@ const Overview = ({
           className="w-full sm:w-auto md:w-full md:px-0"
           disabled={isOwner}
         />
-        <Share />
+        <Share iconOnyly />
       </div>
     </div>
   );

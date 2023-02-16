@@ -7,6 +7,7 @@ import { FiHeart, FiShare2 } from 'react-icons/fi';
 import { useAtom } from 'jotai';
 import { isMediumScreenAtom } from '@components/Layout';
 import FavoriteProductButton from '@components/common/FavoriteProductButton';
+import Share from '../Overview/Share';
 
 const TabTriggerList = ({ productId }: { productId: string }) => {
   const sliderRef = useRef<HTMLDivElement>(
@@ -32,10 +33,7 @@ const TabTriggerList = ({ productId }: { productId: string }) => {
       </div>
       <div className="flex gap-2 md:gap-4">
         <FavoriteProductButton id={productId} />
-        <Button fill="outline" icon="icon-left">
-          <FiShare2 />
-          Share
-        </Button>
+        <Share />
       </div>
     </Tabs.List>
   );
