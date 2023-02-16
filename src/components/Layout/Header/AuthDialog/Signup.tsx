@@ -77,79 +77,77 @@ const Signup = () => {
       <Dialog.Trigger asChild>
         <Button className="hidden lg:flex">Sign Up</Button>
       </Dialog.Trigger>
-      <Dialog.Portal>
-        <DialogContent>
-          <div className="transition-200-out-quart relative w-[min(90vw,24rem)] overflow-hidden rounded-lg bg-coachify-teal-1100 p-4 text-white shadow-xl sm:my-8 sm:p-6">
-            <Dialog.Close asChild>
-              <Button
-                fill="ghost"
-                icon="icon-only"
-                className="absolute top-2 right-2 sm:top-4 sm:right-4"
-                aria-label="Close"
-              >
-                <FiX />
-              </Button>
-            </Dialog.Close>
-            <div className="grid gap-6">
-              <Dialog.Title className="text-xl font-medium">
-                We’re glad you’re here!
-              </Dialog.Title>
-              <Dialog.Description className="text-coachify-gray-200">
-                {isCreator
-                  ? 'Create a free account and start teaching today!'
-                  : 'Create a free account and start learning today from world-class teachers!'}
-              </Dialog.Description>
+      <DialogContent>
+        <div className="transition-200-out-quart relative w-[min(90vw,24rem)] overflow-hidden rounded-lg bg-coachify-teal-1100 p-4 text-white shadow-xl sm:my-8 sm:p-6">
+          <Dialog.Close asChild>
+            <Button
+              fill="ghost"
+              icon="icon-only"
+              className="absolute top-2 right-2 sm:top-4 sm:right-4"
+              aria-label="Close"
+            >
+              <FiX />
+            </Button>
+          </Dialog.Close>
+          <div className="grid gap-6">
+            <Dialog.Title className="text-xl font-medium">
+              We’re glad you’re here!
+            </Dialog.Title>
+            <Dialog.Description className="text-coachify-gray-200">
+              {isCreator
+                ? 'Create a free account and start teaching today!'
+                : 'Create a free account and start learning today from world-class teachers!'}
+            </Dialog.Description>
 
-              {/* Form */}
-              <SignUpForm
-                isCreator={isCreator}
-                signUpWithEmail={signUpWithEmail}
-                isLoading={isLoading}
-              />
+            {/* Form */}
+            <SignUpForm
+              isCreator={isCreator}
+              signUpWithEmail={signUpWithEmail}
+              isLoading={isLoading}
+            />
 
-              {/* Intent changing links */}
-              <div className="grid gap-2">
+            {/* Intent changing links */}
+            <div className="grid gap-2">
+              <p className="text-sm text-white/75">
+                Aleady have an account?{' '}
+                <button
+                  className="transition-200-out-quart text-coachify-teal-500 underline hover:text-coachify-teal-400"
+                  onClick={() => {
+                    setIsLoginDialogOpen(true);
+                    setIsSignupDialogOpen(false);
+                  }}
+                >
+                  Log In
+                </button>
+              </p>
+              {!isCreator && (
                 <p className="text-sm text-white/75">
-                  Aleady have an account?{' '}
+                  Are you a teacher?{' '}
                   <button
                     className="transition-200-out-quart text-coachify-teal-500 underline hover:text-coachify-teal-400"
-                    onClick={() => {
-                      setIsLoginDialogOpen(true);
-                      setIsSignupDialogOpen(false);
-                    }}
+                    onClick={() => setIsCreator(true)}
                   >
-                    Log In
+                    Register a creator account
                   </button>
                 </p>
-                {!isCreator && (
-                  <p className="text-sm text-white/75">
-                    Are you a teacher?{' '}
-                    <button
-                      className="transition-200-out-quart text-coachify-teal-500 underline hover:text-coachify-teal-400"
-                      onClick={() => setIsCreator(true)}
-                    >
-                      Register a creator account
-                    </button>
-                  </p>
-                )}
-                {isCreator && (
-                  <p className="text-sm text-white/75">
-                    Are you a student?{' '}
-                    <button
-                      className="transition-200-out-quart text-coachify-teal-500 underline hover:text-coachify-teal-400"
-                      onClick={() => setIsCreator(false)}
-                    >
-                      Register a student account
-                    </button>
-                  </p>
-                )}
+              )}
+              {isCreator && (
+                <p className="text-sm text-white/75">
+                  Are you a student?{' '}
+                  <button
+                    className="transition-200-out-quart text-coachify-teal-500 underline hover:text-coachify-teal-400"
+                    onClick={() => setIsCreator(false)}
+                  >
+                    Register a student account
+                  </button>
+                </p>
+              )}
 
-                <Footer />
-              </div>
+              <Footer />
             </div>
           </div>
-        </DialogContent>
-      </Dialog.Portal>
+        </div>
+      </DialogContent>
     </Dialog.Root>
   );
 };
