@@ -4,6 +4,7 @@ import { useRef, useState, useEffect } from 'react';
 import Stars from '../../Reviews/Review/Stars';
 import { Review } from 'types/supabase';
 import { toReadableDate } from 'utils/helpers';
+import clsx from 'clsx';
 
 const Review = ({ review }: { review: Review }) => {
   const reviewParagraph = useRef<HTMLParagraphElement>(null);
@@ -40,7 +41,10 @@ const Review = ({ review }: { review: Review }) => {
       </div>
       <p
         ref={reviewParagraph}
-        className="text-sm text-coachify-gray-200 line-clamp-6"
+        className={clsx(
+          'text-sm text-coachify-gray-200 line-clamp-6',
+          review.body || '!hidden'
+        )}
       >
         {review.body}
       </p>

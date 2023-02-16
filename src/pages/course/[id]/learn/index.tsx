@@ -14,7 +14,7 @@ import TabTriggerList from '@components/pages/course/learn/TabTriggerList';
 import { isCourseOwnedByUser } from 'utils/helpers';
 import useUserContracts from 'hooks/useUserContracts';
 import useProduct from 'hooks/useProduct';
-import { Chapter } from 'types/supabase';
+import { Chapter, Review } from 'types/supabase';
 import { GetServerSidePropsContext } from 'next';
 
 const Learn = ({ id }: { id: string }) => {
@@ -66,6 +66,8 @@ const Learn = ({ id }: { id: string }) => {
       }
     }
   }, [id, contracts, router]);
+
+  // const reviews: Review[] = [];
 
   if (isLoading) {
     return (
@@ -176,7 +178,7 @@ const Learn = ({ id }: { id: string }) => {
                 </div>
               </Tabs.Content>
               <Tabs.Content value="reviews">
-                <Reviews reviews={product.reviews} />
+                <Reviews productId={product.id as string} />
               </Tabs.Content>
             </div>
           </Tabs.Root>

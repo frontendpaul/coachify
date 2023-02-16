@@ -1,5 +1,5 @@
 import Button from '@components/ui/Button';
-import InputWithLabel from '@components/ui/InputWithLabel';
+import InputWithLabel from '@components/ui/Inputs/InputWithLabel';
 import SectionTitle from '@components/ui/SectionTitle';
 import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react';
 import { useState } from 'react';

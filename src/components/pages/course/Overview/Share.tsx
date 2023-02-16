@@ -1,6 +1,6 @@
 import Button from '@components/ui/Button';
 import DialogContent from '@components/ui/Dialog/DialogContent';
-import InputWithLabel from '@components/ui/InputWithLabel';
+import InputWithLabel from '@components/ui/Inputs/InputWithLabel';
 import LinkWithChevron from '@components/ui/LinkWithChevron';
 import * as Dialog from '@radix-ui/react-dialog';
 import { useState } from 'react';

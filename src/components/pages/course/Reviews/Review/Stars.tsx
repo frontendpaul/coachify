@@ -2,7 +2,7 @@ import { FiStar } from 'react-icons/fi';
 
 const Stars = ({ rating }: { rating: number }) => {
   return (
-    <div className="flex gap-1">
+    <div className="flex gap-0.5">
       <span className="sr-only">rate: {rating} out of 5</span>
       {Array(5)
         .fill(1)

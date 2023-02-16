@@ -2,6 +2,7 @@ import Button from '@components/ui/Button';
 import SectionTitle from '@components/ui/SectionTitle';
 import { AiFillStar } from 'react-icons/ai';
 import Review from './Review';
+import StarsAverage from './StarsAverage';
 
 const Reviews = ({
   reviews,
@@ -22,8 +23,8 @@ const Reviews = ({
           <>
             <div>
               <div className="flex items-center gap-2 text-xl">
-                <AiFillStar />
-                <p>{rating || '-'}</p>
+                <p>{rating ?? '-'}</p>
+                <StarsAverage rating={rating ?? 0} />
               </div>
               <p className="text-sm text-white/75">
                 {reviews.length} {reviews.length === 1 ? 'review' : 'reviews'}

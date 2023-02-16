@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import Button from '@components/ui/Button';
 import { FiX } from 'react-icons/fi';
-import InputWithLabel from '@components/ui/InputWithLabel';
+import InputWithLabel from '@components/ui/Inputs/InputWithLabel';
 import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react';
 import { BiLoaderAlt } from 'react-icons/bi';
 import * as Dialog from '@radix-ui/react-dialog';
