@@ -197,13 +197,9 @@ const SignUpForm = ({
           e.preventDefault();
           signUpWithEmail(email, password, name, role);
         }}
-        disabled={isLoading}
+        isLoading={isLoading}
       >
-        {isLoading ? (
-          <BiLoaderAlt className="-m-1 h-6 w-6 animate-spin" />
-        ) : (
-          'Create an account'
-        )}
+        Create an account
       </Button>
     </form>
   );

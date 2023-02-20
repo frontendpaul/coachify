@@ -131,13 +131,9 @@ const LogInForm = ({
           e.preventDefault();
           logInWithEmail(email, password);
         }}
-        disabled={isLoading}
+        isLoading={isLoading}
       >
-        {isLoading ? (
-          <BiLoaderAlt className="-m-1 h-6 w-6 animate-spin" />
-        ) : (
-          'Log In'
-        )}
+        Log In
       </Button>
       <button
         className="transition-200-out-quart mr-auto text-sm text-coachify-teal-500 underline hover:text-coachify-teal-400"

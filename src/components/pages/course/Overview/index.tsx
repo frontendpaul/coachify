@@ -122,13 +122,10 @@ const Overview = ({
           <Button
             className="w-full sm:w-44 md:w-full"
             onClick={handleBuy}
-            disabled={isOwner || isLoading}
+            disabled={isOwner}
+            isLoading={isLoading}
           >
-            {isLoading ? (
-              <BiLoaderAlt className="-m-1 h-6 w-6 animate-spin" />
-            ) : (
-              <>{free ? 'Enroll now' : 'Buy now'}</>
-            )}
+            {free ? 'Enroll now' : 'Buy now'}
           </Button>
         )}
         {/* Owner can't like his own product -> disabled */}

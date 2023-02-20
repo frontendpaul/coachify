@@ -1,6 +1,7 @@
 import clsx from 'clsx';
 import Link from 'next/link';
 import { forwardRef, ReactEventHandler } from 'react';
+import { BiLoaderAlt } from 'react-icons/bi';
 
 type Props = {
   children: React.ReactNode;
@@ -12,6 +13,7 @@ type Props = {
   href?: string;
   disabled?: boolean;
   className?: string;
+  isLoading?: boolean;
   onClick?: ReactEventHandler;
   [x: string]: any; // additional props
 };
@@ -27,6 +29,7 @@ const ButtonElement = (
     href,
     disabled,
     className,
+    isLoading,
     ...props
   }: Props,
   ref: any
@@ -87,13 +90,17 @@ const ButtonElement = (
         intent === 'primary' &&
           fill === 'outline' &&
           '!border-white !bg-transparent font-normal !text-white hover:!bg-white/5',
-        disabled && 'pointer-events-none !opacity-50',
+        disabled || (isLoading && 'pointer-events-none !opacity-50'),
         className
       )}
       type={type}
       {...props}
     >
-      {children}
+      {isLoading ? (
+        <BiLoaderAlt className="-m-1 h-6 w-6 animate-spin" />
+      ) : (
+        children
+      )}
     </button>
   );
 };
