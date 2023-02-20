@@ -18,8 +18,8 @@ export const sanitizeText = (text: string): string => {
   });
 };
 
-export const toPercentage = (total: number, value: number): number => {
-  return (value / total) * 100;
+export const toPercent = (total: number, value: number): number => {
+  return (value / total || 0) * 100;
 };
 
 export const toReadableDate = (isoDate: string) => {
@@ -52,4 +52,12 @@ export const isCourseOwnedByUser = (
 export const isProductInUserFavorites = (favorites: any, courseId: string) => {
   if (!favorites) return false;
   return favorites.some((favorite: any) => favorite.product_id === courseId);
+};
+
+export const getPagination = (page: number, size: number) => {
+  const limit = size ? size : 10;
+  const from = page ? (page - 1) * limit : 0;
+  const to = page ? from + size - 1 : size - 1;
+
+  return { from, to };
 };

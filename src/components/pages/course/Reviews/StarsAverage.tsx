@@ -9,8 +9,6 @@ const StarsAverage = ({ rating }: { rating: number }) => {
   const width =
     (border * 2 + inner + space) * fullNumber + fraction * inner + border;
 
-  console.log(width);
-
   return (
     <div className="relative">
       <Image src="/stars.svg" width={116} height={20} alt="" />
