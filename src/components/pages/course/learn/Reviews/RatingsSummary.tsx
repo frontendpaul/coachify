@@ -1,5 +1,6 @@
 import useReviewsMetadata from 'hooks/useReviewsMetadata';
 import { useEffect, useState } from 'react';
+import { getAverageRating, toFixed } from 'utils/helpers';
 import StarsAverage from '../../Reviews/StarsAverage';
 import RatingBar from './RatingBar';
 
@@ -8,21 +9,11 @@ const RatingsSummary = ({ productId }: { productId: string }) => {
   const [average, setAverage] = useState(0);
   const [ratings, setRatings] = useState([0]);
 
-  const calcAverage = (ratings: number[], total: number) => {
-    const sumOfRatings = ratings.reduce(
-      (accumulator, rating) => accumulator + rating,
-      0
-    );
-    return sumOfRatings / total || 0;
-  };
-
-  const numberFormat = new Intl.NumberFormat('en-US', {
-    maximumFractionDigits: 1,
-  });
-
   useEffect(() => {
     if (metadata) {
-      setAverage(calcAverage(metadata.ratings, metadata.number_of_reviews));
+      setAverage(
+        getAverageRating(metadata.ratings, metadata.number_of_reviews)
+      );
       setRatings(metadata.ratings);
     }
   }, [metadata]);
@@ -39,7 +30,7 @@ const RatingsSummary = ({ productId }: { productId: string }) => {
     <div className="grid gap-4">
       <div className="grid gap-1">
         <div className="flex items-center gap-2 text-2xl">
-          <h3 className="font-semibold">{numberFormat.format(average)}</h3>
+          <h3 className="font-semibold">{toFixed(average)}</h3>
           <StarsAverage rating={average} />
         </div>
         <p className="text-sm text-coachify-gray-300">

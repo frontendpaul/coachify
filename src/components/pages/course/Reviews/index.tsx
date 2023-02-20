@@ -1,17 +1,20 @@
 import Button from '@components/ui/Button';
 import SectionTitle from '@components/ui/SectionTitle';
-import { AiFillStar } from 'react-icons/ai';
+import useReviews from 'hooks/useReviews';
+import { toFixed } from 'utils/helpers';
 import Review from './Review';
 import StarsAverage from './StarsAverage';
 
 const Reviews = ({
-  reviews,
+  productId,
   rating,
 }: {
-  reviews: Review[];
+  productId: string;
   rating: number;
 }) => {
-  const moreThan3 = reviews?.length > 3;
+  const { reviews, count, isLoading } = useReviews(productId, undefined, '4');
+
+  const moreThan3 = count > 3;
 
   return (
     <section>
@@ -23,7 +26,7 @@ const Reviews = ({
           <>
             <div>
               <div className="flex items-center gap-2 text-xl">
-                <p>{rating ?? '-'}</p>
+                <p>{rating ? toFixed(rating) : '-'}</p>
                 <StarsAverage rating={rating ?? 0} />
               </div>
               <p className="text-sm text-white/75">
@@ -33,7 +36,7 @@ const Reviews = ({
 
             <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 2xl:grid-cols-3">
               {/* Display at most 4 reviews */}
-              {reviews.slice(0, 4).map((review) => (
+              {reviews.map((review) => (
                 <Review key={review.id} review={review} moreThan3={moreThan3} />
               ))}
             </ul>

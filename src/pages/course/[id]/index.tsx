@@ -14,6 +14,7 @@ import OtherCourses from '@components/pages/course/OtherCourses';
 import { useSupabaseClient } from '@supabase/auth-helpers-react';
 import Card from '@components/pages/course/InfoCards/Card';
 import Loader from './Loader';
+import { getAverageRating } from 'utils/helpers';
 
 const Course = () => {
   const router = useRouter();
@@ -45,6 +46,10 @@ const Course = () => {
         old_price,
         category(name),
         metadata:product_metadata(*),
+        reviews_metadata(
+          number_of_reviews,
+          ratings
+        ),
         content:product_content(
           sections:section(
             *,
@@ -54,17 +59,6 @@ const Course = () => {
               resources:resource(*)
             )
           )
-        ),
-        reviews:review(
-          id,
-          owner:user(
-            name,
-            avatar_url
-          ),
-          body,
-          rating,
-          created_at,
-          updated_at
         ),
         created_at,
         updated_at
@@ -84,6 +78,17 @@ const Course = () => {
       fetchCourse();
     }
   }, [id]);
+
+  const [averageRating, setAverageRating] = useState(0);
+  useEffect(() => {
+    if (course)
+      setAverageRating(
+        getAverageRating(
+          course.reviews_metadata?.ratings || [0],
+          course.reviews_metadata?.number_of_reviews || 0
+        )
+      );
+  }, [course]);
 
   const videoPlayer = useRef<HTMLVideoElement>(null);
 
@@ -218,7 +223,7 @@ const Course = () => {
             level={course.metadata?.level}
             language={course.metadata?.language}
             participants={course.metadata?.participants}
-            rating={course.metadata?.rating}
+            rating={averageRating}
           />
 
           <ContentOverview content={course.content} videoPlayer={videoPlayer} />
@@ -229,10 +234,7 @@ const Course = () => {
 
           <Teacher owner={course.owner} />
 
-          <Reviews
-            reviews={course.reviews as Review[]}
-            rating={course.metadata?.rating}
-          />
+          <Reviews productId={course.id} rating={averageRating} />
 
           <OtherCourses ownerName={course.owner.name} courses={moreCourses} />
         </div>

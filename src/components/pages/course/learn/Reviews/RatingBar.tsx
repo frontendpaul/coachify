@@ -17,7 +17,7 @@ const RatingBar = ({ total, rating, index }: Props) => {
           style={{ width: `${percent}%` }}
         ></div>
       </div>
-      <span className="block w-8 text-right">{Math.round(percent)} %</span>
+      <span className="block w-10 text-right">{Math.round(percent)} %</span>
     </li>
   );
 };

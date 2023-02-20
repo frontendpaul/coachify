@@ -61,3 +61,19 @@ export const getPagination = (page: number, size: number) => {
 
   return { from, to };
 };
+
+export const getAverageRating = (ratings: number[], total: number) => {
+  const sumOfStars = ratings
+    .map((rating, index) => rating * (index + 1))
+    .reduce((accumulator, rating) => accumulator + rating, 0);
+
+  return sumOfStars / total || 0;
+};
+
+export const toFixed = (number: number, digits = 1) => {
+  const numberFormat = new Intl.NumberFormat('en-US', {
+    maximumFractionDigits: digits,
+  });
+
+  return numberFormat.format(number);
+};

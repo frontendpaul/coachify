@@ -3,6 +3,7 @@ import DialogContent from '@components/ui/Dialog/DialogContent';
 import TextareaWithLabel from '@components/ui/Inputs/TextareaWithLabel';
 import * as Dialog from '@radix-ui/react-dialog';
 import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react';
+import useReviewsMetadata from 'hooks/useReviewsMetadata';
 import { useEffect, useRef, useState } from 'react';
 import { FiX } from 'react-icons/fi';
 import { mutate } from 'swr';
@@ -17,10 +18,6 @@ const ReviewDialog = ({ productId }: { productId: string }) => {
   const [userReviewText, setUserReviewText] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
-
-  useEffect(() => {
-    console.log({ userRating, userReviewText });
-  }, [userRating, userReviewText]);
 
   const handleInput = (e: React.FormEvent<HTMLInputElement>) => {
     setIsError(false);
@@ -38,6 +35,18 @@ const ReviewDialog = ({ productId }: { productId: string }) => {
 
     setIsLoading(true);
 
+    create();
+    updateMetadata();
+
+    setIsLoading(false);
+    setIsOpen(false);
+  };
+
+  const create = async () => {
+    if (!user) {
+      return;
+    }
+
     const review = {
       user_id: user.id,
       product_id: productId,
@@ -50,13 +59,41 @@ const ReviewDialog = ({ productId }: { productId: string }) => {
       .insert(review)
       .select();
 
-    mutate(`/api/products/${productId}/reviews`);
-    setIsLoading(false);
-    setIsOpen(false);
-
     if (error) {
       console.log(error);
       return;
+    }
+
+    mutate(`/api/products/${productId}/reviews`);
+  };
+
+  const { metadata } = useReviewsMetadata(productId);
+
+  const updateMetadata = async () => {
+    if (metadata) {
+      const newTotal = metadata.number_of_reviews + 1;
+      const newRatings = [...metadata.ratings].map((rating, index) => {
+        if (index === userRating - 1) {
+          return rating + 1;
+        }
+        return rating;
+      });
+
+      const { data, error } = await supabase.from('reviews_metadata').upsert(
+        {
+          product_id: productId,
+          number_of_reviews: newTotal,
+          ratings: newRatings,
+        },
+        { ignoreDuplicates: false, onConflict: 'product_id' }
+      );
+
+      if (error) {
+        console.log(error);
+        return;
+      }
+
+      mutate(`/api/products/${productId}/reviews/metadata`);
     }
   };
 
@@ -97,7 +134,7 @@ const ReviewDialog = ({ productId }: { productId: string }) => {
                         key={index}
                         index={index + 1}
                         userRating={userRating}
-                        eventHandler={(e) => handleInput(e)}
+                        eventHandler={handleInput}
                       />
                     )
                   )}
@@ -118,7 +155,7 @@ const ReviewDialog = ({ productId }: { productId: string }) => {
                 <Button fill="outline" onClick={() => setIsOpen(false)}>
                   Cancel
                 </Button>
-                <Button onClick={() => publish()}>Publish</Button>
+                <Button onClick={publish}>Publish</Button>
               </div>
             </form>
           </div>

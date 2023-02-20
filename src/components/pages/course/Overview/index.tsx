@@ -41,9 +41,8 @@ const Overview = ({
     setIsOwner(user?.id === owner.id);
   }, [user, owner]);
 
-  const handelBuy = (e: any) => {
+  const handleBuy = () => {
     if (!user) {
-      e.preventDefault();
       setIsLoginDialogOpen(true);
       return;
     }
@@ -122,7 +121,7 @@ const Overview = ({
         ) : (
           <Button
             className="w-full sm:w-44 md:w-full"
-            onClick={(e: React.MouseEvent) => handelBuy(e)}
+            onClick={handleBuy}
             disabled={isOwner || isLoading}
           >
             {isLoading ? (

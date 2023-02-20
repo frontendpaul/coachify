@@ -4,7 +4,12 @@ import { useEffect, useState } from 'react';
 import { AiOutlineTrophy } from 'react-icons/ai';
 import { FiClock, FiImage, FiStar, FiUser } from 'react-icons/fi';
 import { Contract, Product } from 'types/supabase';
-import { isCourseOwnedByUser, toReadableTime } from 'utils/helpers';
+import {
+  getAverageRating,
+  isCourseOwnedByUser,
+  toFixed,
+  toReadableTime,
+} from 'utils/helpers';
 const CourseCard = ({
   course,
   index,
@@ -21,6 +26,11 @@ const CourseCard = ({
   useEffect(() => {
     setIsOwned(isCourseOwnedByUser(contracts, course.id as string));
   }, [contracts, course.id, setIsOwned]);
+
+  const average = getAverageRating(
+    course.reviews_metadata?.ratings || [0],
+    course.reviews_metadata?.number_of_reviews || 0
+  );
 
   return (
     <li className="overflow-hidden">
@@ -76,7 +86,7 @@ const CourseCard = ({
           <div className="flex gap-8 text-sm leading-none md:gap-10">
             <div className="flex items-center gap-2">
               <FiStar />
-              {course.metadata?.rating ? course.metadata?.rating : '-'}
+              {average ? toFixed(average) : '-'}
             </div>
             <div className="flex items-center gap-2">
               <FiUser />

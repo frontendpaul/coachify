@@ -33,6 +33,10 @@ const TopRanked = () => {
           participants,
           duration
         ),
+        reviews_metadata(
+          number_of_reviews,
+          ratings
+        ),
         created_at
         `
       )

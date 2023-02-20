@@ -12,14 +12,18 @@ const RatingInput = ({ index, userRating, eventHandler }: Props) => {
       className="group relative cursor-pointer"
       data-state={userRating >= index ? 'checked' : ''}
     >
-      <FiStar className={'text-4xl group-[[data-state=checked]]:fill-white'} />
+      <FiStar
+        className={
+          'text-4xl group-[[data-state=checked]]:fill-coachify-teal-500 group-[[data-state=checked]]:stroke-coachify-teal-500'
+        }
+      />
       <input
         className="sr-only"
         type="radio"
         name="rating"
         id="rating"
         value={index}
-        onChange={(e) => eventHandler(e)}
+        onChange={eventHandler}
       />
       <span className="sr-only">{index} Star</span>
     </label>

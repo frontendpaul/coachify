@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { AiFillStar } from 'react-icons/ai';
 import { FiGlobe } from 'react-icons/fi';
 import { Language, Level } from 'types/supabase';
+import { toFixed } from 'utils/helpers';
 import Card from './Card';
 
 type Props = {
@@ -48,7 +49,7 @@ const InfoCards = ({ level, language, participants, rating }: Props) => {
         </Card>
         <Card>
           <div className="flex items-center gap-2 text-2xl">
-            <span className="font-bold">{rating ? rating : '-'}</span>
+            <span className="font-bold">{rating ? toFixed(rating) : '-'}</span>
             <AiFillStar aria-hidden />
           </div>
           <span>Avg. Rating</span>
