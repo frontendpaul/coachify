@@ -11,7 +11,7 @@ export default async function handler(
     res,
   });
 
-  const { id, page = '1', size = '100' } = req.query;
+  const { id, page = '1', size = '10' } = req.query;
   const { from, to } = getPagination(
     parseInt(page as string),
     parseInt(size as string)
@@ -44,5 +44,5 @@ export default async function handler(
     .range(from, to);
 
   // TODO: better error handling and proper responses
-  res.status(200).json({ reviews, count, page: parseInt(page as string) });
+  res.status(200).json(reviews);
 }

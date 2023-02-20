@@ -8,7 +8,7 @@ import { useAtom } from 'jotai';
 import { useEffect, useState } from 'react';
 import { BiLoaderAlt } from 'react-icons/bi';
 import { FiInfo } from 'react-icons/fi';
-import { User } from 'server/courses';
+import { User } from 'types/supabase';
 import { mutate } from 'swr';
 import { isCourseOwnedByUser } from 'utils/helpers';
 import Share from './Share';

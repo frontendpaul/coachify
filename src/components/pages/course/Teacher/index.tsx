@@ -1,9 +1,9 @@
 import Avatar from '@components/ui/Avatar';
 import SectionTitle from '@components/ui/SectionTitle';
-import { Creator } from 'server/courses';
+import { User } from 'types/supabase';
 import { sanitizeText } from 'utils/helpers';
 
-const Teacher = ({ owner }: { owner: Creator }) => {
+const Teacher = ({ owner }: { owner: User }) => {
   const sanitizedCreatorDescription = sanitizeText(owner.description as string);
 
   return (

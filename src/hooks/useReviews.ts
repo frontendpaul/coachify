@@ -13,9 +13,7 @@ export default function useReviews(id: string, page?: string, size?: string) {
   const { data, error, isLoading } = useSWR(queryUrl);
 
   return {
-    reviews: data?.reviews as Review[],
-    count: data?.count,
-    page: data?.page,
+    reviews: data as Review[],
     isLoading,
     isError: error,
   };

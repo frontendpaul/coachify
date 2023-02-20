@@ -234,7 +234,11 @@ const Course = () => {
 
           <Teacher owner={course.owner} />
 
-          <Reviews productId={course.id} rating={averageRating} />
+          <Reviews
+            productId={course.id}
+            reviewsTotal={course.reviews_metadata?.number_of_reviews || 0}
+            rating={averageRating}
+          />
 
           <OtherCourses ownerName={course.owner.name} courses={moreCourses} />
         </div>

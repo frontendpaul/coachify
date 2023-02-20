@@ -7,19 +7,22 @@ import StarsAverage from './StarsAverage';
 
 const Reviews = ({
   productId,
+  reviewsTotal,
   rating,
 }: {
   productId: string;
+  reviewsTotal: number;
   rating: number;
 }) => {
-  const { reviews, count, isLoading } = useReviews(productId, undefined, '4');
+  const { reviews } = useReviews(productId, undefined, '4');
 
-  const moreThan3 = count > 3;
+  const moreThan3 = reviews?.length > 3;
 
   return (
     <section>
       <div className="grid gap-6">
         <SectionTitle>What others say</SectionTitle>
+        {/* TODO: add loader */}
         {!reviews || reviews.length === 0 ? (
           <p>No reviews yet.</p>
         ) : (
@@ -30,7 +33,7 @@ const Reviews = ({
                 <StarsAverage rating={rating ?? 0} />
               </div>
               <p className="text-sm text-white/75">
-                {reviews.length} {reviews.length === 1 ? 'review' : 'reviews'}
+                {reviewsTotal} {reviewsTotal === 1 ? 'review' : 'reviews'}
               </p>
             </div>
 
