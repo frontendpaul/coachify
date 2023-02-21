@@ -5,7 +5,7 @@ import * as Dialog from '@radix-ui/react-dialog';
 import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react';
 import useReviewsMetadata from 'hooks/useReviewsMetadata';
 import { useEffect, useRef, useState } from 'react';
-import { FiEdit, FiEdit2, FiEdit3, FiX } from 'react-icons/fi';
+import { FiEdit2, FiX } from 'react-icons/fi';
 import { mutate } from 'swr';
 import { Review } from 'types/supabase';
 import RatingInput from './RatingInput';
@@ -136,7 +136,7 @@ const ReviewDialog = ({ productId, userReview }: Props) => {
       <Dialog.Trigger asChild>
         {userReview ? (
           <Button fill="ghost" icon="icon-only" title="Edit">
-            <FiEdit />
+            <FiEdit2 />
           </Button>
         ) : (
           <Button className="sm:justify-self-start">Write a review</Button>

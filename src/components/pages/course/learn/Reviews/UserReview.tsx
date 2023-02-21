@@ -6,10 +6,14 @@ import { Review as UserReview } from 'types/supabase';
 import { toReadableDate } from 'utils/helpers';
 import clsx from 'clsx';
 import ReviewDialog from './ReviewDialog';
+import { FiChevronDown } from 'react-icons/fi';
 
 const UserReview = ({ review }: { review: UserReview }) => {
   const reviewParagraph = useRef<HTMLParagraphElement>(null);
+  const [scrollHeight, setScrollHeight] = useState(0);
   const [isOverflowing, setIsOverflowing] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   /*
   On initial render ref is undefined.
@@ -17,10 +21,24 @@ const UserReview = ({ review }: { review: UserReview }) => {
   */
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
-    const scrollHeight = reviewParagraph.current?.scrollHeight as number;
-    const offsetHeight = reviewParagraph.current?.offsetHeight as number;
+    const handleResize = () => {
+      const maxOffsetHeight = 120; // maxLines * fontSize * lineHeight
+      const sh = reviewParagraph.current?.scrollHeight as number;
+      setScrollHeight(sh);
 
-    if (scrollHeight > offsetHeight) setIsOverflowing(true);
+      reviewParagraph.current?.style.setProperty('--scroll-height', sh + 'px');
+
+      if (scrollHeight > maxOffsetHeight) {
+        setIsOverflowing(true);
+      } else {
+        setIsOverflowing(false);
+      }
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
   });
 
   return (
@@ -42,15 +60,34 @@ const UserReview = ({ review }: { review: UserReview }) => {
       </div>
       <p
         ref={reviewParagraph}
+        onTransitionEnd={() => setIsTransitioning(false)}
         className={clsx(
-          'text-sm text-coachify-gray-200 line-clamp-6',
-          review.body || '!hidden'
+          'transition-200-out-quart max-h-[120px] overflow-hidden text-sm text-coachify-gray-200',
+          !isExpanded && !isTransitioning && 'line-clamp-6',
+          isExpanded && '!max-h-[var(--scroll-height)] line-clamp-none',
+          !!review.body || '!hidden'
         )}
       >
         {review.body}
       </p>
       <div className="flex justify-between">
-        {isOverflowing && <LinkWithChevron href="/" text="Read full review" />}
+        {isOverflowing && (
+          <button
+            className="group flex items-center gap-2 text-sm"
+            onClick={() => {
+              setIsExpanded(!isExpanded);
+              setIsTransitioning(true);
+            }}
+          >
+            <span>Read full review</span>
+            <FiChevronDown
+              className={clsx(
+                'transition-200-out-quart',
+                isExpanded && 'rotate-180'
+              )}
+            />
+          </button>
+        )}
 
         <div className="ml-auto">
           <ReviewDialog productId={review.product_id} userReview={review} />
