@@ -34,7 +34,7 @@ const Review = ({ review }: { review: Review }) => {
             <Stars rating={review.rating} />
             <p className="text-white/75">
               <span className="hidden sm:inline">Posted on </span>
-              {review.created_at && toReadableDate(review.created_at)}
+              {review.updated_at && toReadableDate(review.updated_at)}
             </p>
           </div>
         </div>

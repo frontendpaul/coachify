@@ -57,7 +57,7 @@ export const isProductInUserFavorites = (favorites: any, courseId: string) => {
 export const getPagination = (page: number, size: number) => {
   const limit = size ? size : 10;
   const from = page ? (page - 1) * limit : 0;
-  const to = page ? from + size - 1 : size - 1;
+  const to = page ? from + limit - 1 : limit - 1;
 
   return { from, to };
 };

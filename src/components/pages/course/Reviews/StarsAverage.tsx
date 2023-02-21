@@ -10,7 +10,7 @@ const StarsAverage = ({ rating }: { rating: number }) => {
     (border * 2 + inner + space) * fullNumber + fraction * inner + border;
 
   return (
-    <div className="relative">
+    <div className="relative overflow-hidden">
       <Image src="/stars.svg" width={116} height={20} alt="" />
       <div
         className="absolute top-0 left-0 h-5 bg-white"

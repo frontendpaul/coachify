@@ -1,5 +1,5 @@
 import useReviewsMetadata from 'hooks/useReviewsMetadata';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { getAverageRating, toFixed } from 'utils/helpers';
 import StarsAverage from '../../Reviews/StarsAverage';
 import RatingBar from './RatingBar';
@@ -17,6 +17,14 @@ const RatingsSummary = ({ productId }: { productId: string }) => {
       setRatings(metadata.ratings);
     }
   }, [metadata]);
+
+  const [percentWidth, setPercentWidth] = useState(0);
+  const ref = useRef<HTMLUListElement>(null);
+
+  useEffect(() => {
+    if (ref)
+      ref.current?.style.setProperty('--percent-width', percentWidth + 'px');
+  }, [percentWidth]);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -39,13 +47,15 @@ const RatingsSummary = ({ productId }: { productId: string }) => {
         </p>
       </div>
 
-      <ul className="flex flex-col-reverse gap-1 text-sm">
+      <ul ref={ref} className="flex flex-col-reverse gap-1 text-sm">
         {ratings.map((rating, index) => (
           <RatingBar
             key={index}
             total={metadata.number_of_reviews}
             rating={rating}
             index={index}
+            percentWidth={percentWidth}
+            setPercentWidth={setPercentWidth}
           />
         ))}
       </ul>

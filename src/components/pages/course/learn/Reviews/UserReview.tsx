@@ -1,18 +1,13 @@
 import Avatar from '@components/ui/Avatar';
 import LinkWithChevron from '@components/ui/LinkWithChevron';
-import clsx from 'clsx';
 import { useRef, useState, useEffect } from 'react';
-import { Review } from 'types/supabase';
-import Stars from './Stars';
+import Stars from '../../Reviews/Review/Stars';
+import { Review as UserReview } from 'types/supabase';
 import { toReadableDate } from 'utils/helpers';
+import clsx from 'clsx';
+import ReviewDialog from './ReviewDialog';
 
-const Review = ({
-  review,
-  moreThan3,
-}: {
-  review: Review;
-  moreThan3?: boolean;
-}) => {
+const UserReview = ({ review }: { review: UserReview }) => {
   const reviewParagraph = useRef<HTMLParagraphElement>(null);
   const [isOverflowing, setIsOverflowing] = useState(false);
 
@@ -29,12 +24,7 @@ const Review = ({
   });
 
   return (
-    <li
-      className={clsx(
-        'flex flex-col gap-4 rounded-lg bg-coachify-teal-1100 p-3 sm:p-4',
-        moreThan3 && 'last:hidden sm:last:flex 2xl:last:hidden'
-      )}
-    >
+    <div className="flex flex-col gap-4 rounded-lg bg-coachify-teal-1000/75 p-3 sm:p-4 md:p-6">
       <div className="flex items-center gap-3">
         <div className="h-8 w-8">
           <Avatar user={review.owner} />
@@ -44,6 +34,7 @@ const Review = ({
           <div className="flex items-center justify-between text-xs">
             <Stars rating={review.rating} />
             <p className="text-white/75">
+              <span className="hidden sm:inline">Posted on </span>
               {review.updated_at && toReadableDate(review.updated_at)}
             </p>
           </div>
@@ -51,13 +42,21 @@ const Review = ({
       </div>
       <p
         ref={reviewParagraph}
-        className="text-sm text-coachify-gray-200 line-clamp-8"
+        className={clsx(
+          'text-sm text-coachify-gray-200 line-clamp-6',
+          review.body || '!hidden'
+        )}
       >
         {review.body}
       </p>
-      {isOverflowing && <LinkWithChevron href="/" text="Read full review" />}
-    </li>
+      <div className="flex justify-between">
+        {isOverflowing && <LinkWithChevron href="/" text="Read full review" />}
+
+        <div className="ml-auto">
+          <ReviewDialog productId={review.product_id} userReview={review} />
+        </div>
+      </div>
+    </div>
   );
 };
-
-export default Review;
+export default UserReview;

@@ -1,6 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { createServerSupabaseClient } from '@supabase/auth-helpers-nextjs';
-import { getPagination } from 'utils/helpers';
 
 export default async function handler(
   req: NextApiRequest,
@@ -11,16 +10,14 @@ export default async function handler(
     res,
   });
 
-  const { id, page, size, ascending } = req.query;
-  const { from, to } = getPagination(
-    parseInt(page as string),
-    parseInt(size as string)
-  );
+  const { id } = req.query;
   const {
     data: { user },
   } = await supabaseServerClient.auth.getUser();
+  const userId = user?.id ?? undefined;
 
-  const query = supabaseServerClient
+  // TODO: instead of limit to one, ensure that user can create only one review per product
+  const { data: review, error } = await supabaseServerClient
     .from('review')
     .select(
       `
@@ -35,18 +32,15 @@ export default async function handler(
       rating,
       created_at,
       updated_at
-    `
+    `,
+      { count: 'exact' }
     )
-    .eq('product_id', id);
+    .match({ product_id: id, 'user.id': userId })
+    .order('created_at', { ascending: false })
+    .limit(1);
 
-  if (user) query.neq('user.id', user.id);
-  if (page || size) query.range(from, to);
-  if (!ascending || ascending === 'false')
-    query.order('updated_at', { ascending: false });
-  if (ascending) query.order('updated_at', { ascending: true });
-
-  const { data: reviews, error } = await query;
+  if (error) console.log(error);
 
   // TODO: better error handling and proper responses
-  res.status(200).json(reviews);
+  res.status(200).json(review || []);
 }

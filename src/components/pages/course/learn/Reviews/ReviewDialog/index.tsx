@@ -5,17 +5,23 @@ import * as Dialog from '@radix-ui/react-dialog';
 import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react';
 import useReviewsMetadata from 'hooks/useReviewsMetadata';
 import { useEffect, useRef, useState } from 'react';
-import { FiX } from 'react-icons/fi';
+import { FiEdit, FiEdit2, FiEdit3, FiX } from 'react-icons/fi';
 import { mutate } from 'swr';
+import { Review } from 'types/supabase';
 import RatingInput from './RatingInput';
 
-const ReviewDialog = ({ productId }: { productId: string }) => {
+type Props = {
+  productId: string;
+  userReview?: Review;
+};
+
+const ReviewDialog = ({ productId, userReview }: Props) => {
   const [isgOpen, setIsOpen] = useState(false);
   const supabase = useSupabaseClient();
   const user = useUser();
   const ratingGroup = useRef<HTMLDivElement>(null);
-  const [userRating, setUserRating] = useState(0);
-  const [userReviewText, setUserReviewText] = useState('');
+  const [userRating, setUserRating] = useState(userReview?.rating ?? 0);
+  const [userReviewText, setUserReviewText] = useState(userReview?.body ?? '');
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
@@ -35,7 +41,11 @@ const ReviewDialog = ({ productId }: { productId: string }) => {
 
     setIsLoading(true);
 
-    create();
+    if (userReview) {
+      update();
+    } else {
+      create();
+    }
     updateMetadata();
 
     setIsLoading(false);
@@ -64,7 +74,31 @@ const ReviewDialog = ({ productId }: { productId: string }) => {
       return;
     }
 
-    mutate(`/api/products/${productId}/reviews`);
+    mutate(`/api/products/${productId}/reviews/user-review`);
+  };
+
+  const update = async () => {
+    if (!user) {
+      return;
+    }
+
+    const review = {
+      id: userReview?.id,
+      rating: userRating,
+      body: userReviewText,
+    };
+
+    const { data, error } = await supabase
+      .from('review')
+      .update(review)
+      .eq('id', review.id);
+
+    if (error) {
+      console.log(error);
+      return;
+    }
+
+    mutate(`/api/products/${productId}/reviews/user-review`);
   };
 
   const { metadata } = useReviewsMetadata(productId);
@@ -100,7 +134,13 @@ const ReviewDialog = ({ productId }: { productId: string }) => {
   return (
     <Dialog.Root open={isgOpen} onOpenChange={setIsOpen}>
       <Dialog.Trigger asChild>
-        <Button className="sm:justify-self-start">Write a review</Button>
+        {userReview ? (
+          <Button fill="ghost" icon="icon-only" title="Edit">
+            <FiEdit />
+          </Button>
+        ) : (
+          <Button className="sm:justify-self-start">Write a review</Button>
+        )}
       </Dialog.Trigger>
       <DialogContent>
         <div className="transition-200-out-quart relative w-[min(90vw,32rem)] overflow-hidden rounded-lg bg-coachify-teal-1100 p-4 text-white shadow-xl sm:my-8 sm:p-6">
@@ -149,6 +189,7 @@ const ReviewDialog = ({ productId }: { productId: string }) => {
                 label="Review text (optional)"
                 id="review_body"
                 rows={5}
+                value={userReviewText}
                 onChange={(e) => setUserReviewText(e.currentTarget.value)}
               />
               <div className="flex justify-end gap-4">

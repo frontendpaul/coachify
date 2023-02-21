@@ -4,6 +4,9 @@ import RatingsSummary from './RatingsSummary';
 import ReviewCard from './Review';
 import ReviewDialog from './ReviewDialog';
 import useInfiniteReviews from 'hooks/useInfiniteReviews';
+import { useEffect, useState } from 'react';
+import useUserReview from 'hooks/useUserReview';
+import UserReview from './UserReview';
 
 const Reviews = ({ productId }: { productId: string }) => {
   const {
@@ -16,6 +19,16 @@ const Reviews = ({ productId }: { productId: string }) => {
     isReachingEnd,
   } = useInfiniteReviews(productId);
 
+  // TODO:
+  const { data: userReview } = useUserReview(productId);
+  const [hasUserReview, setHasUserReview] = useState(false);
+
+  useEffect(() => {
+    if (userReview && userReview.length) {
+      setHasUserReview(true);
+    }
+  }, [userReview]);
+
   if (isLoading) {
     return (
       <section className="grid gap-6">
@@ -25,7 +38,7 @@ const Reviews = ({ productId }: { productId: string }) => {
     );
   }
 
-  if (!data || isEmpty) {
+  if (!data || !hasUserReview) {
     return (
       <section className="grid gap-6">
         <SectionTitle>How other students rated this course</SectionTitle>
@@ -39,9 +52,19 @@ const Reviews = ({ productId }: { productId: string }) => {
     <section className="grid gap-6">
       <SectionTitle>How other students rated this course</SectionTitle>
       <RatingsSummary productId={productId} />
-      <div className="mb-4 mt-2 sm:justify-self-start">
-        <ReviewDialog productId={productId} />
-      </div>
+      {!hasUserReview && (
+        <div className="mb-4 mt-2 sm:justify-self-start">
+          <ReviewDialog productId={productId} />
+        </div>
+      )}
+
+      {hasUserReview && (
+        <div>
+          <h3 className="mb-2 font-semibold">Your review</h3>
+          <UserReview review={userReview[0]} />
+        </div>
+      )}
+
       <div className="grid gap-2">
         <ul className="grid gap-2">
           {data.map((review: any) => (

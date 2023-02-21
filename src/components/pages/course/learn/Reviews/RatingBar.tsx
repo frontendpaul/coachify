@@ -1,12 +1,29 @@
+import { useEffect, useRef } from 'react';
 import { toPercent } from 'utils/helpers';
 
 type Props = {
   total: number;
   rating: number;
   index: number;
+  percentWidth: number;
+  setPercentWidth: any;
 };
-const RatingBar = ({ total, rating, index }: Props) => {
+const RatingBar = ({
+  total,
+  rating,
+  index,
+  percentWidth,
+  setPercentWidth,
+}: Props) => {
   const percent = toPercent(total, rating);
+  const ref = useRef<HTMLSpanElement>(null);
+
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.scrollWidth > percentWidth &&
+        setPercentWidth(ref.current.scrollWidth);
+    }
+  }, [ref, percentWidth, setPercentWidth]);
 
   return (
     <li className="flex items-center gap-3 md:gap-4">
@@ -17,7 +34,12 @@ const RatingBar = ({ total, rating, index }: Props) => {
           style={{ width: `${percent}%` }}
         ></div>
       </div>
-      <span className="block w-10 text-right">{Math.round(percent)} %</span>
+      <span
+        ref={ref}
+        className="block w-[var(--percent-width)] whitespace-nowrap text-right"
+      >
+        {Math.round(percent)} %
+      </span>
     </li>
   );
 };
