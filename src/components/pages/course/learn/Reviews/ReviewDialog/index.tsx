@@ -25,6 +25,8 @@ const ReviewDialog = ({ productId, userReview }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
+  const oldRating = userReview?.rating;
+
   const handleInput = (e: React.FormEvent<HTMLInputElement>) => {
     setIsError(false);
     setUserRating(parseInt(e.currentTarget.value));
@@ -105,10 +107,15 @@ const ReviewDialog = ({ productId, userReview }: Props) => {
 
   const updateMetadata = async () => {
     if (metadata) {
-      const newTotal = metadata.number_of_reviews + 1;
+      const newTotal = userReview
+        ? metadata.number_of_reviews
+        : metadata.number_of_reviews + 1;
+
       const newRatings = [...metadata.ratings].map((rating, index) => {
         if (index === userRating - 1) {
           return rating + 1;
+        } else if (oldRating && index === oldRating - 1) {
+          return rating - 1;
         }
         return rating;
       });
