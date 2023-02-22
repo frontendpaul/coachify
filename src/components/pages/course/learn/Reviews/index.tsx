@@ -7,6 +7,7 @@ import useInfiniteReviews from 'hooks/useInfiniteReviews';
 import { useEffect, useState } from 'react';
 import useUserReview from 'hooks/useUserReview';
 import UserReview from './UserReview';
+import { useUser } from '@supabase/auth-helpers-react';
 
 const Reviews = ({ productId }: { productId: string }) => {
   const {
@@ -19,8 +20,8 @@ const Reviews = ({ productId }: { productId: string }) => {
     isReachingEnd,
   } = useInfiniteReviews(productId);
 
-  // TODO:
-  const { data: userReview } = useUserReview(productId);
+  const user = useUser();
+  const { data: userReview } = useUserReview(productId, user?.id as string);
   const [hasUserReview, setHasUserReview] = useState(false);
 
   useEffect(() => {

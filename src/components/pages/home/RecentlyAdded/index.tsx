@@ -1,5 +1,5 @@
 import TitleWithLink from '@components/ui/TitleWithLink';
-import { useSupabaseClient } from '@supabase/auth-helpers-react';
+import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react';
 import useUserContracts from 'hooks/useUserContracts';
 import { useEffect, useState } from 'react';
 import { Contract, Product } from 'types/supabase';
@@ -57,7 +57,8 @@ const RecentlyAdded = () => {
     fetchCourses();
   }, []);
 
-  const { contracts } = useUserContracts();
+  const user = useUser();
+  const { contracts } = useUserContracts(user?.id as string);
 
   return (
     <section className="px-4 md:px-6">

@@ -10,10 +10,12 @@ export default async function handler(
     res,
   });
 
-  const {
-    data: { user },
-  } = await supabaseServerClient.auth.getUser();
-  const userId = user?.id ?? undefined;
+  const userId = req.query.user;
+
+  // const {
+  //   data: { user },
+  // } = await supabaseServerClient.auth.getUser();
+  // const userId = user?.id ?? undefined;
 
   // if (!userId) {
   //   res.status(500).json({ message: 'user not found' });

@@ -16,6 +16,7 @@ import useUserContracts from 'hooks/useUserContracts';
 import useProduct from 'hooks/useProduct';
 import { Chapter, Review } from 'types/supabase';
 import { GetServerSidePropsContext } from 'next';
+import { useUser } from '@supabase/auth-helpers-react';
 
 const Learn = ({ id }: { id: string }) => {
   const router = useRouter();
@@ -56,7 +57,8 @@ const Learn = ({ id }: { id: string }) => {
     !isMediumScreen && openTab === 'content' && setOpenTab('about');
   }, [isMediumScreen, openTab, setOpenTab]);
 
-  const { contracts } = useUserContracts();
+  const user = useUser();
+  const { contracts } = useUserContracts(user?.id as string);
 
   useEffect(() => {
     if (id && contracts) {
@@ -66,8 +68,6 @@ const Learn = ({ id }: { id: string }) => {
       }
     }
   }, [id, contracts, router]);
-
-  // const reviews: Review[] = [];
 
   if (isLoading) {
     return (
@@ -113,7 +113,7 @@ const Learn = ({ id }: { id: string }) => {
           <h2 className="sr-only">Video for {currentChapter?.title}</h2>
           <video
             className="max-h-[50vh] w-full bg-coachify-teal-1200 lg:max-h-[70vh]"
-            src={product.content?.sections[0].chapters[0].video.src}
+            src={product.content?.sections[0]?.chapters[0]?.video?.src || ''}
             controls
             ref={videoPlayer}
           ></video>

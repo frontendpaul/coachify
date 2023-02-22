@@ -10,11 +10,7 @@ export default async function handler(
     res,
   });
 
-  const { id } = req.query;
-  const {
-    data: { user },
-  } = await supabaseServerClient.auth.getUser();
-  const userId = user?.id ?? undefined;
+  const { id, user: userId } = req.query;
 
   // TODO: instead of limit to one, ensure that user can create only one review per product
   const { data: review, error } = await supabaseServerClient

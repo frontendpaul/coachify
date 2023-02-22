@@ -13,7 +13,7 @@ import Reviews from '@components/pages/course/Reviews';
 import OtherCourses from '@components/pages/course/OtherCourses';
 import { useSupabaseClient } from '@supabase/auth-helpers-react';
 import Card from '@components/pages/course/InfoCards/Card';
-import Loader from './Loader';
+import Loader from '@components/pages/course/learn/Loader';
 import { getAverageRating } from 'utils/helpers';
 
 const Course = () => {

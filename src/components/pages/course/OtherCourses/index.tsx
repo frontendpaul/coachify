@@ -1,6 +1,7 @@
 import CourseCard from '@components/pages/home/RecentlyAdded/CourseCard';
 import Button from '@components/ui/Button';
 import SectionTitle from '@components/ui/SectionTitle';
+import { useUser } from '@supabase/auth-helpers-react';
 import clsx from 'clsx';
 import useUserContracts from 'hooks/useUserContracts';
 import Link from 'next/link';
@@ -14,7 +15,8 @@ type Props = {
 const OtherCourses = ({ ownerName, courses }: Props) => {
   const moreThan3 = courses?.length > 3;
 
-  const { contracts } = useUserContracts();
+  const user = useUser();
+  const { contracts } = useUserContracts(user?.id as string);
 
   return (
     <section>

@@ -87,7 +87,7 @@ const Content = ({
                         <input
                           id="video_src"
                           type="hidden"
-                          value={chapter.video.src}
+                          value={chapter?.video?.src || ''}
                         />
                         <span>
                           {sectionIndex + 1}.{chapterIndex + 1}.
@@ -95,7 +95,7 @@ const Content = ({
                         <div className="ml-1 flex-1 gap-2 xl:flex xl:justify-between">
                           <p>{chapter.title}</p>
                           <p className="">
-                            {toReadableTime(chapter.video.duration)}
+                            {toReadableTime(chapter?.video?.duration || 0)}
                           </p>
                         </div>
                       </button>

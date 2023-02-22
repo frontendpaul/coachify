@@ -1,5 +1,3 @@
-import { nanoid } from 'nanoid';
-
 export type Course = {
   id: string;
   title: string;

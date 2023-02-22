@@ -4,6 +4,7 @@ import Loader from './Loader';
 import { useDraggable } from 'react-use-draggable-scroll';
 import { useRef } from 'react';
 import useUserContracts from 'hooks/useUserContracts';
+import { useUser } from '@supabase/auth-helpers-react';
 
 const CoursesList = ({
   isLoading,
@@ -18,7 +19,8 @@ const CoursesList = ({
 
   const { events } = useDraggable(sliderRef);
 
-  const { contracts } = useUserContracts();
+  const user = useUser();
+  const { contracts } = useUserContracts(user?.id as string);
 
   return (
     <ol

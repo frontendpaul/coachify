@@ -59,6 +59,9 @@ const Overview = ({
     sellerId: string,
     productId: string
   ) => {
+    if (!user) {
+      return;
+    }
     setIsLoading(true);
 
     const { error } = await supabase.from('contract').insert({
@@ -69,9 +72,10 @@ const Overview = ({
 
     if (error) console.log(error);
     setIsLoading(false);
-    mutate('/api/users/contracts');
+    mutate(`/api/users/contracts?user=${user.id}`);
   };
-  const { contracts } = useUserContracts();
+
+  const { contracts } = useUserContracts(user?.id as string);
   const [isOwned, setIsOwned] = useState<boolean>(false);
 
   useEffect(() => {
