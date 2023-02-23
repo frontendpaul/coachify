@@ -102,7 +102,9 @@ const Overview = ({
         {isOwned ? (
           <span className="flex items-center gap-3">
             <FiInfo />
-            <span className="text-lg">You already own this course</span>
+            <span className="text-lg font-normal">
+              You already own this course
+            </span>
           </span>
         ) : (
           <>

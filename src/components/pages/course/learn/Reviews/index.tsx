@@ -47,7 +47,12 @@ const Reviews = ({ productId }: { productId: string }) => {
       {(!data || isEmpty) && !hasUserReview ? (
         <>
           <h2>There are no reviews yet. Be the first to write one!</h2>
-          <Button onClick={() => setIsOpen(true)}>Write a review</Button>
+          <Button
+            className="sm:justify-self-start"
+            onClick={() => setIsOpen(true)}
+          >
+            Write a review
+          </Button>
         </>
       ) : (
         <>
