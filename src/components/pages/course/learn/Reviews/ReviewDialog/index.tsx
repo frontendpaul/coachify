@@ -134,10 +134,12 @@ const ReviewDialog = ({
         : metadata.number_of_reviews + 1;
 
       const newRatings = [...metadata.ratings].map((rating, index) => {
-        if (index === userRating - 1) {
-          return rating + 1;
+        if (userRating === oldRating) {
+          return rating;
         } else if (oldRating && index === oldRating - 1) {
           return rating - 1;
+        } else if (index === userRating - 1) {
+          return rating + 1;
         }
         return rating;
       });
