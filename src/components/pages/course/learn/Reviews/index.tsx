@@ -2,7 +2,6 @@ import Button from '@components/ui/Button';
 import SectionTitle from '@components/ui/SectionTitle';
 import RatingsSummary from './RatingsSummary';
 import ReviewCard from './Review';
-import ReviewDialog from './ReviewDialog';
 import useInfiniteReviews from 'hooks/useInfiniteReviews';
 import { useEffect, useState } from 'react';
 import useUserReview from 'hooks/useUserReview';
@@ -62,7 +61,10 @@ const Reviews = ({ productId }: { productId: string }) => {
           {hasUserReview && (
             <div>
               <h3 className="mb-2 font-semibold">Your review</h3>
-              <UserReview review={userReview[0]} setIsDialogOpen={setIsOpen} />
+              <UserReview
+                review={userReview?.[0]}
+                setIsDialogOpen={setIsOpen}
+              />
             </div>
           )}
 
@@ -89,7 +91,7 @@ const Reviews = ({ productId }: { productId: string }) => {
 
       <ReviewDialogWrapper
         productId={productId}
-        userReview={userReview[0]}
+        userReview={userReview?.[0]}
         isOpen={isOpen}
         setIsOpen={setIsOpen}
       />

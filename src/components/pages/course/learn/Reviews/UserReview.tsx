@@ -50,15 +50,15 @@ const UserReview = ({ review, setIsDialogOpen }: Props) => {
     <div className="flex flex-col gap-4 rounded-lg bg-coachify-teal-1000/75 p-3 sm:p-4 md:p-6">
       <div className="flex items-center gap-3">
         <div className="h-8 w-8">
-          <Avatar user={review.owner} />
+          <Avatar user={review?.owner} />
         </div>
         <div className="flex-1">
-          <p className="mb-1 font-semibold">{review.owner.name}</p>
+          <p className="mb-1 font-semibold">{review?.owner?.name}</p>
           <div className="flex items-center justify-between text-xs">
-            <Stars rating={review.rating} />
+            <Stars rating={review?.rating} />
             <p className="text-white/75">
               <span className="hidden sm:inline">Posted on </span>
-              {review.updated_at && toReadableDate(review.updated_at)}
+              {review?.updated_at && toReadableDate(review.updated_at)}
             </p>
           </div>
         </div>
@@ -70,10 +70,10 @@ const UserReview = ({ review, setIsDialogOpen }: Props) => {
           'transition-200-out-quart max-h-[120px] overflow-hidden text-sm text-coachify-gray-200',
           !isExpanded && !isTransitioning && 'line-clamp-6',
           isExpanded && '!max-h-[var(--scroll-height)] line-clamp-none',
-          !!review.body || '!hidden'
+          !!review?.body || '!hidden'
         )}
       >
-        {review.body}
+        {review?.body}
       </p>
       <div className="flex justify-between">
         {isOverflowing && (
