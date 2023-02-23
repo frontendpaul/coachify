@@ -4,7 +4,8 @@ import React from 'react';
 import { FiUser } from 'react-icons/fi';
 import Button from '@ui/Button';
 import { useSupabaseClient } from '@supabase/auth-helpers-react';
-import { mutate } from 'swr';
+import { useAtom } from 'jotai';
+import { isLoginDialogOpenAtom } from './AuthDialog/Login';
 
 const SignedUserPopover = ({
   className,
@@ -14,9 +15,11 @@ const SignedUserPopover = ({
   user: any;
 }) => {
   const supabaseClient = useSupabaseClient();
+  const [_, setIsLoginDialogOpen] = useAtom(isLoginDialogOpenAtom);
 
   const handleSignOut = () => {
     supabaseClient.auth.signOut();
+    setIsLoginDialogOpen(false);
   };
 
   return (

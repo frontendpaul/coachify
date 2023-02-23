@@ -3,7 +3,6 @@ import Button from '@components/ui/Button';
 import { FiX } from 'react-icons/fi';
 import InputWithLabel from '@components/ui/Inputs/InputWithLabel';
 import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react';
-import { BiLoaderAlt } from 'react-icons/bi';
 import * as Dialog from '@radix-ui/react-dialog';
 import DialogContent from '@components/ui/Dialog/DialogContent';
 import { atom, useAtom } from 'jotai';
