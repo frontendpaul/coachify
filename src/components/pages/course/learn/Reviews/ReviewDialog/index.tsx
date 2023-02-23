@@ -4,7 +4,7 @@ import TextareaWithLabel from '@components/ui/Inputs/TextareaWithLabel';
 import * as Dialog from '@radix-ui/react-dialog';
 import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react';
 import useReviewsMetadata from 'hooks/useReviewsMetadata';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { FiEdit2, FiX } from 'react-icons/fi';
 import { mutate } from 'swr';
 import { Review } from 'types/supabase';
@@ -13,10 +13,22 @@ import RatingInput from './RatingInput';
 type Props = {
   productId: string;
   userReview?: Review;
+  isOpen: boolean;
+  setIsOpen: any;
+  setIsPublishToastOpen: any;
+  setIsUpdateToastOpen: any;
+  setIsErrorToastOpen: any;
 };
 
-const ReviewDialog = ({ productId, userReview }: Props) => {
-  const [isgOpen, setIsOpen] = useState(false);
+const ReviewDialog = ({
+  productId,
+  userReview,
+  isOpen,
+  setIsOpen,
+  setIsPublishToastOpen,
+  setIsUpdateToastOpen,
+  setIsErrorToastOpen,
+}: Props) => {
   const supabase = useSupabaseClient();
   const user = useUser();
   const ratingGroup = useRef<HTMLDivElement>(null);
@@ -72,11 +84,16 @@ const ReviewDialog = ({ productId, userReview }: Props) => {
       .select();
 
     if (error) {
+      setIsErrorToastOpen(true);
       console.log(error);
       return;
     }
 
-    mutate(`/api/products/${productId}/reviews/user-review`);
+    await mutate(
+      `/api/products/${productId}/reviews/user-review?user=${user.id}`
+    );
+
+    setIsPublishToastOpen(true);
   };
 
   const update = async () => {
@@ -96,11 +113,16 @@ const ReviewDialog = ({ productId, userReview }: Props) => {
       .eq('id', review.id);
 
     if (error) {
+      setIsErrorToastOpen(true);
       console.log(error);
       return;
     }
 
-    mutate(`/api/products/${productId}/reviews/user-review`);
+    await mutate(
+      `/api/products/${productId}/reviews/user-review?user=${user.id}`
+    );
+
+    setIsUpdateToastOpen(true);
   };
 
   const { metadata } = useReviewsMetadata(productId);
@@ -134,21 +156,12 @@ const ReviewDialog = ({ productId, userReview }: Props) => {
         return;
       }
 
-      mutate(`/api/products/${productId}/reviews/metadata`);
+      await mutate(`/api/products/${productId}/reviews/metadata`);
     }
   };
 
   return (
-    <Dialog.Root open={isgOpen} onOpenChange={setIsOpen}>
-      <Dialog.Trigger asChild>
-        {userReview ? (
-          <Button fill="ghost" icon="icon-only" title="Edit">
-            <FiEdit2 />
-          </Button>
-        ) : (
-          <Button className="sm:justify-self-start">Write a review</Button>
-        )}
-      </Dialog.Trigger>
+    <Dialog.Root open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent>
         <div className="transition-200-out-quart relative w-[min(90vw,32rem)] overflow-hidden rounded-lg bg-coachify-teal-1100 p-4 text-white shadow-xl sm:my-8 sm:p-6">
           <Dialog.Close asChild>

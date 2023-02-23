@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import useUserReview from 'hooks/useUserReview';
 import UserReview from './UserReview';
 import { useUser } from '@supabase/auth-helpers-react';
+import ReviewDialogWrapper from './ReviewDialogWrapper';
 
 const Reviews = ({ productId }: { productId: string }) => {
   const {
@@ -30,6 +31,8 @@ const Reviews = ({ productId }: { productId: string }) => {
     }
   }, [userReview]);
 
+  const [isOpen, setIsOpen] = useState(false);
+
   if (isLoading) {
     return (
       <section className="grid gap-6">
@@ -39,51 +42,57 @@ const Reviews = ({ productId }: { productId: string }) => {
     );
   }
 
-  if (!data || !hasUserReview) {
-    return (
-      <section className="grid gap-6">
-        <SectionTitle>How other students rated this course</SectionTitle>
-        <h2>There are no reviews yet. Be the first to write one!</h2>
-        <ReviewDialog productId={productId} />
-      </section>
-    );
-  }
-
   return (
     <section className="grid gap-6">
       <SectionTitle>How other students rated this course</SectionTitle>
-      <RatingsSummary productId={productId} />
-      {!hasUserReview && (
-        <div className="mb-4 mt-2 sm:justify-self-start">
-          <ReviewDialog productId={productId} />
-        </div>
-      )}
-
-      {hasUserReview && (
-        <div>
-          <h3 className="mb-2 font-semibold">Your review</h3>
-          <UserReview review={userReview[0]} />
-        </div>
-      )}
-
-      <div className="grid gap-2">
-        <ul className="grid gap-2">
-          {data.map((review: any) => (
-            <ReviewCard key={review.id} review={review} />
-          ))}
-        </ul>
-      </div>
-      {isReachingEnd ? (
-        <p className="text-coachify-gray-300">No more reviews</p>
+      {(!data || isEmpty) && !hasUserReview ? (
+        <>
+          <h2>There are no reviews yet. Be the first to write one!</h2>
+          <Button onClick={() => setIsOpen(true)}>Write a review</Button>
+        </>
       ) : (
-        <Button
-          fill="outline"
-          onClick={() => setSize(size + 1)}
-          isLoading={isLoadingMore}
-        >
-          Load more reviews
-        </Button>
+        <>
+          <RatingsSummary productId={productId} />
+          {!hasUserReview && (
+            <div className="mb-4 mt-2 sm:justify-self-start">
+              <Button onClick={() => setIsOpen(true)}>Write a review</Button>
+            </div>
+          )}
+
+          {hasUserReview && (
+            <div>
+              <h3 className="mb-2 font-semibold">Your review</h3>
+              <UserReview review={userReview[0]} setIsDialogOpen={setIsOpen} />
+            </div>
+          )}
+
+          <div className="grid gap-2">
+            <ul className="grid gap-2">
+              {data.map((review: any) => (
+                <ReviewCard key={review.id} review={review} />
+              ))}
+            </ul>
+          </div>
+          {isReachingEnd ? (
+            <p className="text-coachify-gray-300">No more reviews</p>
+          ) : (
+            <Button
+              fill="outline"
+              onClick={() => setSize(size + 1)}
+              isLoading={isLoadingMore}
+            >
+              Load more reviews
+            </Button>
+          )}
+        </>
       )}
+
+      <ReviewDialogWrapper
+        productId={productId}
+        userReview={userReview[0]}
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+      />
     </section>
   );
 };

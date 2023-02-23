@@ -1,14 +1,19 @@
 import Avatar from '@components/ui/Avatar';
-import LinkWithChevron from '@components/ui/LinkWithChevron';
 import { useRef, useState, useEffect } from 'react';
 import Stars from '../../Reviews/Review/Stars';
 import { Review as UserReview } from 'types/supabase';
 import { toReadableDate } from 'utils/helpers';
 import clsx from 'clsx';
 import ReviewDialog from './ReviewDialog';
-import { FiChevronDown } from 'react-icons/fi';
+import { FiChevronDown, FiEdit2 } from 'react-icons/fi';
+import Button from '@components/ui/Button';
 
-const UserReview = ({ review }: { review: UserReview }) => {
+type Props = {
+  review: UserReview;
+  setIsDialogOpen: any;
+};
+
+const UserReview = ({ review, setIsDialogOpen }: Props) => {
   const reviewParagraph = useRef<HTMLParagraphElement>(null);
   const [scrollHeight, setScrollHeight] = useState(0);
   const [isOverflowing, setIsOverflowing] = useState(false);
@@ -90,7 +95,14 @@ const UserReview = ({ review }: { review: UserReview }) => {
         )}
 
         <div className="ml-auto">
-          <ReviewDialog productId={review.product_id} userReview={review} />
+          <Button
+            fill="ghost"
+            icon="icon-only"
+            title="Edit"
+            onClick={() => setIsDialogOpen(true)}
+          >
+            <FiEdit2 />
+          </Button>
         </div>
       </div>
     </div>
