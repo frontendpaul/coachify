@@ -26,7 +26,7 @@ const UserPopover = ({ className }: { className?: string }) => {
         leaveFrom="transform scale-100 opacity-100"
         leaveTo="transform scale-95 opacity-0"
       >
-        <Popover.Panel className="absolute right-0 z-10 mt-4 flex w-40 flex-col gap-1 rounded-xl bg-coachify-teal-1100 p-4 shadow-lg">
+        <Popover.Panel className="absolute right-0 z-10 mt-4 flex w-40 flex-col rounded-xl bg-coachify-teal-1100 p-2 shadow-lg">
           <Button fill="ghost" onClick={() => setIsLoginDialogOpen(true)}>
             Log In
           </Button>

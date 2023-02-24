@@ -45,7 +45,7 @@ const LanguageSelect = ({
   );
 
   return (
-    <div className={clsx('w-min relative', className)}>
+    <div className={clsx('relative w-min', className)}>
       <Listbox value={selectedLanguage} onChange={setSelectedLanguage}>
         <Listbox.Button as={React.Fragment}>{button}</Listbox.Button>
         <Transition
@@ -58,7 +58,7 @@ const LanguageSelect = ({
         >
           <Listbox.Options
             className={clsx(
-              'absolute z-10 right-0 lg:right-1/2 lg:translate-x-1/2 flex flex-col gap-1 mt-4 p-4 rounded-xl bg-coachify-teal-1100 shadow-lg',
+              'absolute right-1/2 z-10 mt-4 flex translate-x-1/2 flex-col rounded-xl bg-coachify-teal-1100 p-2 shadow-lg',
               footer ? 'w-full' : 'w-40'
             )}
           >
@@ -67,7 +67,7 @@ const LanguageSelect = ({
                 key={language.id}
                 value={language}
                 className={clsx(
-                  'flex justify-between items-center p-2 rounded-lg cursor-pointer hover:bg-white/5',
+                  'flex cursor-pointer items-center justify-between rounded-lg p-2 hover:bg-white/5',
                   language.id === selectedLanguage.id && 'active'
                 )}
               >

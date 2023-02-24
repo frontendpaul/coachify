@@ -31,8 +31,8 @@ const Sidenav = () => {
     <aside>
       <div
         className={clsx(
-          'fixed z-20 invisible inset-0 bg-coachify-teal-1300/75 backdrop-brightness-[.5] opacity-0 transition-200-out-quart',
-          isSidenavExpanded && '!opacity-100 !visible',
+          'transition-200-out-quart invisible fixed inset-0 z-20 bg-coachify-teal-1300/75 opacity-0 backdrop-brightness-[.5]',
+          isSidenavExpanded && '!visible !opacity-100',
           isSidenavTransitioning && '!visible'
         )}
         onClick={() => toggleSidenav()}
@@ -40,14 +40,14 @@ const Sidenav = () => {
       ></div>
       <div
         className={clsx(
-          'fixed z-40 top-0',
+          'fixed top-0 z-40',
           'h-screen',
-          'pb-6 pt-3 pl-3 bg-coachify-gradient text-white',
-          '-translate-x-60 custom-scrollbar !overflow-x-hidden isolate',
+          'bg-coachify-gradient px-3 pb-6 pt-3 text-white',
+          'custom-scrollbar isolate -translate-x-60 !overflow-x-hidden',
           'invisible lg:!visible',
           isSidenavTransitioning &&
             'transition-x transition-200-out-quart !visible',
-          isSidenavExpanded ? 'w-60 pr-6 !translate-x-0 !visible' : 'w-60 pr-3'
+          isSidenavExpanded && '!visible w-60 !translate-x-0'
         )}
       >
         <div className="mb-9">

@@ -55,8 +55,8 @@ const Sidenav = () => {
     <aside>
       <div
         className={clsx(
-          'fixed z-20 invisible inset-0 bg-coachify-teal-1300/75 backdrop-brightness-[.5] opacity-0 transition-200-out-quart lg:hidden',
-          isSidenavExpanded && '!opacity-100 !visible',
+          'transition-200-out-quart invisible fixed inset-0 z-20 bg-coachify-teal-1300/75 opacity-0 backdrop-brightness-[.5] lg:hidden',
+          isSidenavExpanded && '!visible !opacity-100',
           isSidenavTransitioning && '!visible'
         )}
         onClick={() => toggleSidenav()}
@@ -64,19 +64,17 @@ const Sidenav = () => {
       ></div>
       <div
         className={clsx(
-          'fixed z-40 top-0 lg:top-[var(--header-height)]',
+          'fixed top-0 z-40 lg:top-[var(--header-height)]',
           'h-screen lg:h-[calc(100vh-var(--header-height))]',
-          'pb-6 pt-3 lg:pt-6 pl-3 bg-coachify-gradient lg:bg-none text-white',
-          '-translate-x-60 lg:transform-none custom-scrollbar !overflow-x-hidden isolate',
+          'bg-coachify-gradient px-3 pb-6 pt-3 text-white lg:bg-none lg:pt-6',
+          'custom-scrollbar isolate -translate-x-60 !overflow-x-hidden lg:transform-none',
           'invisible lg:!visible',
           isSidenavTransitioning &&
             'transition-x transition-200-out-quart !visible',
-          isSidenavExpanded
-            ? 'w-60 pr-6 !translate-x-0 !visible'
-            : 'w-60 lg:w-16 pr-3'
+          isSidenavExpanded ? '!visible w-60 !translate-x-0' : 'w-60 lg:w-16'
         )}
       >
-        <div className="lg:hidden mb-9">
+        <div className="mb-9 lg:hidden">
           <Button
             fill="ghost"
             icon="icon-only"
@@ -109,8 +107,8 @@ const Sidenav = () => {
       <nav
         id="icons-for-tablet"
         className={clsx(
-          'hidden md:block lg:hidden fixed z-30 top-[var(--header-height)] h-[calc(100vh-var(--header-height))]',
-          'text-white py-6 px-3  custom-scrollbar !overflow-x-hidden isolate w-16'
+          'fixed top-[var(--header-height)] z-30 hidden h-[calc(100vh-var(--header-height))] md:block lg:hidden',
+          'custom-scrollbar isolate w-16  !overflow-x-hidden py-6 px-3 text-white'
         )}
       >
         <ul className="flex flex-col gap-2">

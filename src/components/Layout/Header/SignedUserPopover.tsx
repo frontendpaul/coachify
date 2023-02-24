@@ -6,6 +6,7 @@ import Button from '@ui/Button';
 import { useSupabaseClient } from '@supabase/auth-helpers-react';
 import { useAtom } from 'jotai';
 import { isLoginDialogOpenAtom } from './AuthDialog/Login';
+import { isSignupDialogOpenAtom } from './AuthDialog/Signup';
 
 const SignedUserPopover = ({
   className,
@@ -16,9 +17,11 @@ const SignedUserPopover = ({
 }) => {
   const supabaseClient = useSupabaseClient();
   const [_, setIsLoginDialogOpen] = useAtom(isLoginDialogOpenAtom);
+  const [, setIsSignupDialogOpen] = useAtom(isSignupDialogOpenAtom);
 
   const handleSignOut = () => {
     supabaseClient.auth.signOut();
+    setIsLoginDialogOpen(false);
     setIsLoginDialogOpen(false);
   };
 
@@ -42,7 +45,7 @@ const SignedUserPopover = ({
         leaveFrom="transform scale-100 opacity-100"
         leaveTo="transform scale-95 opacity-0"
       >
-        <Popover.Panel className="absolute right-0 z-10 mt-4 flex w-40 flex-col gap-1 rounded-xl bg-coachify-teal-1100 p-4 shadow-lg">
+        <Popover.Panel className="absolute right-0 z-10 mt-4 flex w-40 flex-col rounded-xl bg-coachify-teal-1100 p-2 shadow-lg">
           <Button fill="ghost" onClick={() => handleSignOut()}>
             Sign Out
           </Button>

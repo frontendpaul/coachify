@@ -36,13 +36,13 @@ const ActiveLink = ({
 
   return (
     <Link
-      className="flex items-center gap-6 rounded-lg transition-200-out-quart hover:bg-white/5"
+      className="transition-200-out-quart flex items-center gap-3 rounded-lg hover:bg-white/5"
       title={title}
       {...props}
     >
       <div
         className={clsx(
-          'p-[10px] text-xl rounded-lg',
+          'rounded-lg p-[10px] text-xl',
           isActive && 'bg-coachify-teal-500 text-coachify-teal-1300'
         )}
       >
