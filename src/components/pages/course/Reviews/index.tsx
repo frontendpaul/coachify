@@ -1,6 +1,7 @@
 import Button from '@components/ui/Button';
 import SectionTitle from '@components/ui/SectionTitle';
 import useReviews from 'hooks/useReviews';
+import Link from 'next/link';
 import { toFixed } from 'utils/helpers';
 import Review from './Review';
 import StarsAverage from './StarsAverage';
@@ -43,9 +44,11 @@ const Reviews = ({
                 <Review key={review.id} review={review} moreThan3={moreThan3} />
               ))}
             </ul>
-            <Button fill="outline" className="place-self-start">
-              Show all reviews
-            </Button>
+            <Link href={`/course/${productId}/reviews`}>
+              <Button fill="outline" className="place-self-start">
+                Show all reviews
+              </Button>
+            </Link>
           </>
         )}
       </div>
