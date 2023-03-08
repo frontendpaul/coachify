@@ -6,7 +6,6 @@ import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react';
 import useUserContracts from 'hooks/useUserContracts';
 import { useAtom } from 'jotai';
 import { useEffect, useState } from 'react';
-import { BiLoaderAlt } from 'react-icons/bi';
 import { FiInfo } from 'react-icons/fi';
 import { User } from 'types/supabase';
 import { mutate } from 'swr';
@@ -21,6 +20,7 @@ type Props = {
   free: boolean;
   price?: number;
   old_price?: number;
+  playlist: string[];
 };
 
 const Overview = ({
@@ -31,6 +31,7 @@ const Overview = ({
   free,
   price,
   old_price,
+  playlist,
 }: Props) => {
   const [_, setIsLoginDialogOpen] = useAtom(isLoginDialogOpenAtom);
   const user = useUser();
@@ -46,8 +47,12 @@ const Overview = ({
       setIsLoginDialogOpen(true);
       return;
     }
+    if (isOwner) {
+      return;
+    }
     if (!isOwned) {
       createContract(user.id, owner.id, id);
+      createUserProgress(user.id, id, playlist);
     }
   };
 
@@ -73,6 +78,27 @@ const Overview = ({
     if (error) console.log(error);
     setIsLoading(false);
     mutate(`/api/users/contracts?user=${user.id}`);
+  };
+
+  const createUserProgress = async (
+    buyerId: string,
+    productId: string,
+    playlist: string[]
+  ) => {
+    if (!user) {
+      return;
+    }
+    setIsLoading(true);
+
+    const { error } = await supabase.from('progress').insert({
+      user_id: buyerId,
+      product_id: productId,
+      playlist: playlist,
+      current_chapter: playlist[0],
+    });
+
+    if (error) console.log(error);
+    setIsLoading(false);
   };
 
   const { contracts } = useUserContracts(user?.id as string);

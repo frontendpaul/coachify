@@ -79,6 +79,17 @@ const Course = () => {
     }
   }, [id]);
 
+  const [playlist, setPlaylist] = useState<string[]>([]);
+  useEffect(() => {
+    if (course) {
+      const chapters: string[] = [];
+      course.content?.sections?.forEach((section: any) =>
+        section.chapters?.forEach((chapter: any) => chapters.push(chapter.id))
+      );
+      setPlaylist(chapters);
+    }
+  }, [course]);
+
   const [averageRating, setAverageRating] = useState(0);
   useEffect(() => {
     if (course)
@@ -217,6 +228,7 @@ const Course = () => {
             free={course.free}
             price={course.price}
             old_price={course.old_price}
+            playlist={playlist}
           />
 
           <InfoCards

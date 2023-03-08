@@ -47,7 +47,6 @@ const Reviews = ({ productId }: { productId: string }) => {
     if (userReview && userReview.length) {
       setHasUserReview(true);
     }
-    console.log(userReview);
   }, [userReview]);
 
   const [isOpen, setIsOpen] = useState(false);

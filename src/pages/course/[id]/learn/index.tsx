@@ -14,9 +14,10 @@ import TabTriggerList from '@components/pages/course/learn/TabTriggerList';
 import { isCourseOwnedByUser } from 'utils/helpers';
 import useUserContracts from 'hooks/useUserContracts';
 import useProduct from 'hooks/useProduct';
-import { Chapter, Review } from 'types/supabase';
+import { Chapter } from 'types/supabase';
 import { GetServerSidePropsContext } from 'next';
 import { useUser } from '@supabase/auth-helpers-react';
+import useUserProgress from 'hooks/useUserProgress';
 
 const Learn = ({ id }: { id: string }) => {
   const router = useRouter();
@@ -27,6 +28,19 @@ const Learn = ({ id }: { id: string }) => {
     undefined
   );
   const [currentSection, setCurrentSection] = useState<string>('');
+
+  const { data: progress } = useUserProgress(id);
+
+  useEffect(() => {
+    if (progress?.current_chapter && product?.content?.sections) {
+      const current_chapter = product.content.sections.find((section) =>
+        section.chapters.find((chapter) => {
+          if (chapter.id === progress.current_chapter)
+            setCurrentChapter(chapter);
+        })
+      );
+    }
+  }, [progress]);
 
   useEffect(() => {
     if (product) {
@@ -113,7 +127,7 @@ const Learn = ({ id }: { id: string }) => {
           <h2 className="sr-only">Video for {currentChapter?.title}</h2>
           <video
             className="max-h-[50vh] w-full bg-coachify-teal-1200 lg:max-h-[70vh]"
-            src={product.content?.sections[0]?.chapters[0]?.video?.src || ''}
+            src={currentChapter?.video?.src || ''}
             controls
             ref={videoPlayer}
           ></video>

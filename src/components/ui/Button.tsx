@@ -90,7 +90,7 @@ const ButtonElement = (
         intent === 'primary' &&
           fill === 'outline' &&
           '!border-white !bg-transparent font-normal !text-white hover:!bg-white/5',
-        disabled || (isLoading && 'pointer-events-none !opacity-50'),
+        (disabled || isLoading) && 'pointer-events-none !opacity-50',
         className
       )}
       type={type}
