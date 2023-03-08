@@ -210,7 +210,7 @@ const Learn = ({ id }: { id: string }) => {
                 content={product.content}
                 currentSectionId={currentSection}
                 currentChapter={currentChapter}
-                setCurrentChapter={setCurrentChapter}
+                handleChapterChange={handleChapterChange}
                 videoPlayer={videoPlayer}
               />
             )}
@@ -229,7 +229,7 @@ const Learn = ({ id }: { id: string }) => {
                       content={product.content}
                       currentSectionId={currentSection}
                       currentChapter={currentChapter}
-                      setCurrentChapter={setCurrentChapter}
+                      handleChapterChange={handleChapterChange}
                       videoPlayer={videoPlayer}
                     />
                   )}

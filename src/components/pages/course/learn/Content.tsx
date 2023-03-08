@@ -1,11 +1,5 @@
 import * as Accordion from '@radix-ui/react-accordion';
-import {
-  Dispatch,
-  RefObject,
-  SetStateAction,
-  useEffect,
-  useState,
-} from 'react';
+import { RefObject, useEffect, useState } from 'react';
 import { FiPlay, FiChevronDown } from 'react-icons/fi';
 import { Chapter, ProductContent } from 'types/supabase';
 import { toReadableTime } from 'utils/helpers';
@@ -14,7 +8,7 @@ type Props = {
   content: ProductContent;
   currentSectionId: string;
   currentChapter: Chapter;
-  setCurrentChapter: Dispatch<SetStateAction<Chapter | undefined>>;
+  handleChapterChange: any;
   videoPlayer: RefObject<HTMLVideoElement>;
 };
 
@@ -22,7 +16,7 @@ const Content = ({
   content,
   currentSectionId,
   currentChapter,
-  setCurrentChapter,
+  handleChapterChange,
   videoPlayer,
 }: Props) => {
   const [value, setValue] = useState('');
@@ -81,7 +75,7 @@ const Content = ({
                           videoPlayer.current?.focus();
                           videoPlayer.current?.scrollIntoView(true);
 
-                          setCurrentChapter(chapter);
+                          handleChapterChange(chapter.id);
                         }}
                       >
                         <input
