@@ -16,8 +16,10 @@ import useUserContracts from 'hooks/useUserContracts';
 import useProduct from 'hooks/useProduct';
 import { Chapter } from 'types/supabase';
 import { GetServerSidePropsContext } from 'next';
-import { useUser } from '@supabase/auth-helpers-react';
+import { useSupabaseClient, useUser } from '@supabase/auth-helpers-react';
 import useUserProgress from 'hooks/useUserProgress';
+import { FiSkipBack, FiSkipForward } from 'react-icons/fi';
+import { mutate } from 'swr';
 
 const Learn = ({ id }: { id: string }) => {
   const router = useRouter();
@@ -33,7 +35,7 @@ const Learn = ({ id }: { id: string }) => {
 
   useEffect(() => {
     if (progress?.current_chapter && product?.content?.sections) {
-      const current_chapter = product.content.sections.find((section) =>
+      product.content.sections.find((section) =>
         section.chapters.find((chapter) => {
           if (chapter.id === progress.current_chapter)
             setCurrentChapter(chapter);
@@ -41,12 +43,6 @@ const Learn = ({ id }: { id: string }) => {
       );
     }
   }, [progress]);
-
-  useEffect(() => {
-    if (product) {
-      setCurrentChapter(product.content?.sections[0].chapters[0]);
-    }
-  }, [product]);
 
   useEffect(() => {
     if (product && currentChapter) {
@@ -62,6 +58,62 @@ const Learn = ({ id }: { id: string }) => {
       });
     }
   }, [product, currentChapter]);
+
+  const [hasPrevious, setHasPrevious] = useState(false);
+  const [hasNext, setHasNext] = useState(false);
+
+  useEffect(() => {
+    if (progress?.playlist.length && currentChapter) {
+      const index = progress.playlist.findIndex(
+        (chapter) => chapter === currentChapter.id
+      );
+      progress.playlist[index - 1]
+        ? setHasPrevious(true)
+        : setHasPrevious(false);
+      progress.playlist[index + 1] ? setHasNext(true) : setHasNext(false);
+    }
+  }, [progress, currentChapter]);
+
+  const supabase = useSupabaseClient();
+
+  const handleChapterChange = async (chapterId: string) => {
+    product?.content?.sections.find((section) =>
+      section.chapters.find((chapter) => {
+        if (chapter.id === chapterId) setCurrentChapter(chapter);
+      })
+    );
+
+    if (user && progress) {
+      const { data, error } = await supabase
+        .from('progress')
+        .update({ current_chapter: chapterId })
+        .match({ user_id: user.id, product_id: id });
+
+      if (error) {
+        console.log(error);
+        return;
+      }
+
+      mutate(`/api/users/products/${id}/progress`);
+    }
+  };
+
+  const playPrevious = () => {
+    if (progress?.playlist.length && currentChapter) {
+      const index = progress.playlist.findIndex(
+        (chapter) => chapter === currentChapter.id
+      );
+      handleChapterChange(progress?.playlist[index - 1]);
+    }
+  };
+  const playNext = () => {
+    if (progress?.playlist.length && currentChapter) {
+      const index = progress.playlist.findIndex(
+        (chapter) => chapter === currentChapter.id
+      );
+      handleChapterChange(progress?.playlist[index + 1]);
+    }
+  };
 
   const [isMediumScreen] = useAtom(isMediumScreenAtom);
 
@@ -125,12 +177,32 @@ const Learn = ({ id }: { id: string }) => {
         <h1 className="sr-only">{product.metadata?.title}</h1>
         <div className="border-white/10 lg:grid lg:grid-cols-[1fr,min(30%,550px)]">
           <h2 className="sr-only">Video for {currentChapter?.title}</h2>
-          <video
-            className="max-h-[50vh] w-full bg-coachify-teal-1200 lg:max-h-[70vh]"
-            src={currentChapter?.video?.src || ''}
-            controls
-            ref={videoPlayer}
-          ></video>
+          <div className="group relative">
+            {hasPrevious && (
+              <button
+                onClick={playPrevious}
+                className="transition-200-out-quart absolute bottom-1/2 left-1 z-10 grid h-10 w-10 cursor-pointer place-items-center rounded-full text-xl opacity-0 hover:bg-[#17181b]/80 group-hover:opacity-100 2xl:left-6"
+              >
+                <span className="sr-only">Previous</span>
+                <FiSkipBack fill="white" />
+              </button>
+            )}
+            {hasNext && (
+              <button
+                onClick={playNext}
+                className="transition-200-out-quart absolute bottom-1/2 right-1 z-10 grid h-10 w-10 cursor-pointer place-items-center rounded-full text-xl opacity-0 hover:bg-[#17181b]/80 group-hover:opacity-100 2xl:right-6"
+              >
+                <span className="sr-only">Next</span>
+                <FiSkipForward fill="white" />
+              </button>
+            )}
+            <video
+              className="max-h-[50vh] w-full bg-coachify-teal-1200 lg:max-h-[70vh]"
+              src={currentChapter?.video?.src || ''}
+              controls
+              ref={videoPlayer}
+            ></video>
+          </div>
           <div className="custom-scrollbar hidden h-0 min-h-full overflow-auto px-2 lg:block lg:px-4">
             <SectionTitle className="mb-4">Course content</SectionTitle>
             {product.content && currentChapter && (
